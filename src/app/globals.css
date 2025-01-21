@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: 240 100% 98%; /* #fbfbfe */
+    --foreground: 240 5% 2%;   /* #050316 */
+    --card: 240 100% 98%;      /* #fbfbfe */
+    --card-foreground: 240 5% 2%; /* #050316 */
+    --popover: 240 100% 98%;   /* #fbfbfe */
+    --popover-foreground: 240 5% 2%; /* #050316 */
+    --primary: 210 57% 60%;    /* #5691cd */
+    --primary-foreground: 0 0% 98%; /* Light text for contrast */
+    --secondary: 195 85% 85%;  /* #aaddf8 */
+    --secondary-foreground: 210 57% 60%; /* #5691cd */
+    --muted: 210 30% 93%;      /* Muted light tone */
+    --muted-foreground: 210 30% 40%; /* Muted dark tone */
+    --accent: 256 81% 54%;     /* #5d13e5 */
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 210 20% 85%;     /* Subtle border */
+    --input: 210 20% 85%;      /* Match border color */
+    --ring: 210 57% 60%;       /* Match primary */
+    --radius: 0.5rem;
+  }
+  .dark {
+    --background: 240 5% 2%;   /* #050316 */
+    --foreground: 240 100% 98%; /* #fbfbfe */
+    --card: 240 5% 2%;
+    --card-foreground: 240 100% 98%;
+    --popover: 240 5% 2%;
+    --popover-foreground: 240 100% 98%;
+    --primary: 210 57% 60%;    /* #5691cd */
+    --primary-foreground: 240 100% 98%;
+    --secondary: 195 85% 30%;  /* Darker secondary for dark mode */
+    --secondary-foreground: 240 100% 98%;
+    --muted: 240 5% 10%;       /* Muted tone for dark mode */
+    --muted-foreground: 240 30% 85%; /* Muted light for contrast */
+    --accent: 256 81% 54%;     /* #5d13e5 */
+    --accent-foreground: 240 100% 98%;
+    --destructive: 0 62% 35%;
+    --destructive-foreground: 240 100% 98%;
+    --border: 240 5% 10%;
+    --input: 240 5% 10%;
+    --ring: 256 81% 54%;       /* Accent */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
