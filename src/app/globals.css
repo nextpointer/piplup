@@ -6,6 +6,21 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+main{
+  padding: 2rem;
+}
+
+@layer utilities{
+  .flex-center {
+    @apply flex items-center justify-center
+  }
+}
 @layer base {
   :root {
     --background: 240 100% 98%; /* #fbfbfe */
