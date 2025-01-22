@@ -6,7 +6,7 @@ import { Button } from '../ui/button'
 export const HistoryCard = (params:HistoryBar) => {
   return (
     <>
-        <Card className='flex flex-col m-4 p-4'>
+        <Card className='flex flex-col m-4 p-4 rounded-[24px]'>
           {params.date}
           <div className='flex flex-row justify-between'>
             {params.title}

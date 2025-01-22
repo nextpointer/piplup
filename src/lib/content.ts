@@ -46,3 +46,49 @@ export const quizData = [
     },
   ];
   
+
+  export const participationData = [
+    {
+      date: "2023-10-01",
+      title: "Introduction to TypeScript",
+      noOfQuestion: 10,
+      noOfGiveAnswer: 8,
+    },
+    {
+      date: "2023-10-05",
+      title: "Advanced JavaScript Concepts",
+      noOfQuestion: 15,
+      noOfGiveAnswer: 10,
+    },
+    {
+      date: "2023-10-10",
+      title: "React Fundamentals",
+      noOfQuestion: 12,
+      noOfGiveAnswer: 12,
+    },
+    {
+      date: "2023-10-15",
+      title: "CSS Grid and Flexbox",
+      noOfQuestion: 8,
+      noOfGiveAnswer: 6,
+    },
+    {
+      date: "2023-10-20",
+      title: "Node.js Basics",
+      noOfQuestion: 14,
+      noOfGiveAnswer: 10,
+    },
+    {
+      date: "2023-10-25",
+      title: "Database Management Systems",
+      noOfQuestion: 20,
+      noOfGiveAnswer: 15,
+    },
+    {
+      date: "2023-10-30",
+      title: "Web Development Best Practices",
+      noOfQuestion: 18,
+      noOfGiveAnswer: 16,
+    },
+  ];
+  
