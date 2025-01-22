@@ -20,6 +20,12 @@ main{
   .flex-center {
     @apply flex items-center justify-center
   }
+  .header-text{
+    @apply text-[18px] font-bold text-center
+  }
+  .normal-text{
+    @apply text-[14px] text-center
+  }
 }
 @layer base {
   :root {
