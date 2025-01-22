@@ -6,10 +6,14 @@ export default function Home() {
   return (
     <>
       <main>
-        <h1 className="text-[5rem] text-center" >{heroline}</h1>
-        <p>{subHeroLine}</p>
-        <Button>Get Started</Button>
-        
+        <div className="xl:p-36 flex-center flex-col">
+        <h1 className="text-3xl xl:text-7xl sm:text-5xl  text-center font-bold tracking-tighter m-2 " >{heroline}</h1>
+        <p className="text-base xl:ml-44 xl:mr-44 xl:text-2xl md:text-2xl text-center m-2">{subHeroLine}</p>
+        <div>
+        <Button className="bg-secondary text-black">Know More</Button>
+        <Button className="m-2">Get Started</Button>
+        </div>
+        </div>
       </main>
     </>
   );
