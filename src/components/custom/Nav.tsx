@@ -39,18 +39,19 @@ function Nav() {
         </Menubar>
         {user ? (
           <div className="flex flex-row gap-2 flex-center">
-            <Moon/><Switch onClick={()=>{
+            <Sun size={18}/><Switch onClick={()=>{
               document.body.classList.toggle("dark")
-            }}/><Sun/>
+            }}/><Moon size={18}/>
             <Link href={"/api/auth/logout"}>
               <Button className="rounded-[24px]">Logout</Button>
             </Link>
           </div>
         ) : (
-          <div className="flex flex-row gap-2 flex-center">
-            <Moon/><Switch onClick={()=>{
+          <div className="flex flex-row gap-4 flex-center">
+            <div className="flex flex-row gap-1 flex-center rounded-[24px] border shadow p-1">
+            <Sun size={18}/><Switch onClick={()=>{
               document.body.classList.toggle("dark")
-            }}/><Sun/>
+            }}/><Moon size={18}/></div>
             <Link href={"/api/auth/login"}>
               <Button className="rounded-[24px]">Login</Button>
             </Link>
