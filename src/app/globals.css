@@ -18,6 +18,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: #ffffff;
 }
 
 @layer utilities {
@@ -42,9 +43,9 @@ main {
 }
 @layer base {
   :root {
-    --background: 240 100% 98%; /* #fbfbfe */
+    --background: 0 0% 100%; /* #fbfbfe */
     --foreground: 240 5% 2%; /* #050316 */
-    --card: 240 100% 98%; /* #fbfbfe */
+    --card: 0 0% 100%; /* #fbfbfe */
     --card-foreground: 240 5% 2%; /* #050316 */
     --popover: 240 100% 98%; /* #fbfbfe */
     --popover-foreground: 240 5% 2%; /* #050316 */
