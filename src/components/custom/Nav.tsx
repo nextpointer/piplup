@@ -6,6 +6,8 @@ import Image from "next/image";
 import { NavElement } from "@/lib/content";
 import Link from "next/link";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import { Switch } from "../ui/switch";
+import { Sun, Moon } from "lucide-react";
 
 function Nav() {
   const { user } = useUser();
@@ -36,13 +38,19 @@ function Nav() {
           ))}
         </Menubar>
         {user ? (
-          <div>
+          <div className="flex flex-row gap-2 flex-center">
+            <Moon/><Switch onClick={()=>{
+              document.body.classList.toggle("dark")
+            }}/><Sun/>
             <Link href={"/api/auth/logout"}>
               <Button className="rounded-[24px]">Logout</Button>
             </Link>
           </div>
         ) : (
-          <div>
+          <div className="flex flex-row gap-2 flex-center">
+            <Moon/><Switch onClick={()=>{
+              document.body.classList.toggle("dark")
+            }}/><Sun/>
             <Link href={"/api/auth/login"}>
               <Button className="rounded-[24px]">Login</Button>
             </Link>
