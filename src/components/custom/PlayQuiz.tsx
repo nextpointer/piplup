@@ -33,7 +33,7 @@ const PlayQuiz = () => {
 
     setTimeout(() => {
       questionNo+1 === PlayQuizData.Questions.length
-        ? redirect("/")
+        ? redirect("/quiz/result/1")
         : setQuestionNo(questionNo + 1);
         setButtonDisable(false);
     }, 1200);
