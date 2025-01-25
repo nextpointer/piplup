@@ -16,7 +16,7 @@ function Nav() {
 
   return (
     <>
-      <div className="h-12 w-full flex justify-between items-center  pl-6 pr-6 md:pl-12 md:pr-12 pt-4 pb-2 absolute top-0 left-0">
+      <div className="h-12 w-full flex justify-between items-center  pl-6 pr-6 md:pl-12 md:pr-12 pt-4 pb-2 absolute top-0 left-0 z-50">
         <Link href={"/"} className="flex-center gap-2">
           <Image src={"/logo.png"} width={25} height={25} alt="Piplup Logo" />
           <h2 className="text-xl font-[600] tracking-wider">PiPluP</h2>

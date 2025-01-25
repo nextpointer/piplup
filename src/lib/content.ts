@@ -98,3 +98,102 @@ export const quizData = [
     },
   ];
   
+  export const PlayQuizData = {
+    Title: "Web Development Basics",
+    About: "Test your knowledge on the fundamentals of web development.",
+    Questions: [
+      {
+        QuestionName: "What does HTML stand for?",
+        Options: [
+          { label: "Hyper Text Markup Language", isCorrect: true },
+          { label: "High Text Markup Language", isCorrect: false },
+          { label: "Hyperlinks and Text Markup Language", isCorrect: false },
+          { label: "Hyper Text Markup Link", isCorrect: false },
+        ],
+      },
+      {
+        QuestionName: "Which of the following is a JavaScript framework?",
+        Options: [
+          { label: "React", isCorrect: true },
+          { label: "Django", isCorrect: false },
+          { label: "Ruby on Rails", isCorrect: false },
+          { label: "Laravel", isCorrect: false },
+        ],
+      },
+      {
+        QuestionName: "What does CSS stand for?",
+        Options: [
+          { label: "Cascading Style Sheets", isCorrect: true },
+          { label: "Colorful Style Sheets", isCorrect: false },
+          { label: "Computer Style Sheets", isCorrect: false },
+          { label: "Creative Style Sheets", isCorrect: false },
+        ],
+      },
+      {
+        QuestionName: "Which HTML tag is used to define an internal style sheet?",
+        Options: [
+          { label: "<style>", isCorrect: true },
+          { label: "<css>", isCorrect: false },
+          { label: "<script>", isCorrect: false },
+          { label: "<link>", isCorrect: false },
+        ],
+      },
+      {
+        QuestionName: "Which of the following is a valid way to declare a variable in JavaScript?",
+        Options: [
+          { label: "var myVariable;", isCorrect: true },
+          { label: "variable myVariable;", isCorrect: false },
+          { label: "v myVariable;", isCorrect: false },
+          { label: "myVariable := 10;", isCorrect: false },
+        ],
+      },
+      {
+        QuestionName: "What is the purpose of the <head> tag in HTML?",
+        Options: [
+          { label: "To contain metadata and links to scripts and styles", isCorrect: true },
+          { label: "To display the main content of the page", isCorrect: false },
+          { label: "To create a footer for the page", isCorrect: false },
+          { label: "To define the title of the page", isCorrect: false },
+        ],
+      },
+      {
+        QuestionName: "Which of the following is used to style a web page?",
+        Options: [
+          { label: "CSS", isCorrect: true },
+          { label: "HTML", isCorrect: false },
+          { label: "JavaScript", isCorrect: false },
+          { label: "XML", isCorrect: false },
+        ],
+      },
+      {
+        QuestionName: "What is the correct HTML element for inserting a line break?",
+        Options: [
+          { label: "<break>", isCorrect: false },
+          { label: "<br>", isCorrect: true },
+          { label: "<lb>", isCorrect: false },
+          { label: "<linebreak>", isCorrect: false },
+        ],
+      },
+      {
+        QuestionName: "Which of the following is a front-end JavaScript library?",
+        Options: [
+          { label: "Vue.js", isCorrect: true },
+          { label: "Node.js", isCorrect: false },
+          { label: "Express.js", isCorrect: false },
+          { label: "Django", isCorrect: false },
+        ],
+      },
+      {
+        QuestionName: "What does API stand for?",
+        Options: [
+          { label: "Application Programming Interface", isCorrect: true },
+          { label: "Application Programming Integration", isCorrect: false },
+          { label: "Application Protocol Interface", isCorrect: false },
+          { label: "Application Programming Interaction", isCorrect: false },
+        ],
+      },
+    ],
+  };
+  
+  export default quizData;
+  
