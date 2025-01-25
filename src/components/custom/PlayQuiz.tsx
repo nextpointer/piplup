@@ -6,6 +6,7 @@ import { Progress } from "../ui/progress";
 import React from "react";
 import { PlayQuizData } from "@/lib/content";
 import { Button } from "../ui/button";
+import { result } from "@/app/store/atom";
 
 interface Option {
   label: string;
@@ -15,7 +16,6 @@ const No = atom(0);
 const selectedOptionAtom = atom<string | null>(null);
 const isCorrectAtom = atom<boolean | null>(null);
 const disable  = atom<boolean>(false);
-const result = atom<boolean[]>([]);
 
 const PlayQuiz = () => {
   const [questionNo, setQuestionNo] = useAtom(No);
