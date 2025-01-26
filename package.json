@@ -9,7 +9,10 @@
     "lint": "next lint",
     "DbGenerate": "drizzle-kit generate",
     "SchemaDrop": "drizzle-kit drop",
-    "DbStudio": "drizzle-kit studio"
+    "DbStudio": "drizzle-kit studio",
+    "DbMigrate": "drizzle-kit migrate",
+    "DbPush": "drizzle-kit push",
+    "DbPull": "drizzle-kit pull"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.5.0",
