@@ -8,6 +8,11 @@ import Link from "next/link";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { Switch } from "../ui/switch";
 import { Sun, Moon } from "lucide-react";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@radix-ui/react-popover";
 
 function Nav() {
   const { user } = useUser();
@@ -32,26 +37,34 @@ function Nav() {
                 }`}
               >
                 <Link href={element.href}>{element.name}</Link>
-                
               </MenubarTrigger>
             </MenubarMenu>
           ))}
         </Menubar>
         {user ? (
           <div className="flex flex-row gap-2 flex-center">
-            <Sun size={18}/><Switch onClick={()=>{
-              document.body.classList.toggle("dark")
-            }}/><Moon size={18}/>
-            <Link href={"/api/auth/logout"}>
-              <Button className="rounded-[24px]">Logout</Button>
-            </Link>
+            <Popover>
+              <PopoverTrigger className="h-8 w-8 rounded-full flex-center border-2 border-accent">
+                <p className="">{user.name?.at(0)?.toUpperCase()}</p>
+              </PopoverTrigger>
+              <PopoverContent className="shadow-lg p-4 rounded-[24px] flex flex-center gap-2 flex-col border mt-1 z-50">
+                <div className="flex flex-row gap-1 flex-center rounded-[24px] border shadow p-1 ">
+                  <Sun size={18} />
+                  <Switch
+                    onClick={() => {
+                      document.body.classList.toggle("dark");
+                    }}
+                  />
+                  <Moon size={18} />
+                </div>
+                <Link href={"/api/auth/logout"}>
+                  <Button className="rounded-[24px]">Logout</Button>
+                </Link>
+              </PopoverContent>
+            </Popover>
           </div>
         ) : (
           <div className="flex flex-row gap-4 flex-center">
-            <div className="flex flex-row gap-1 flex-center rounded-[24px] border shadow p-1">
-            <Sun size={18}/><Switch onClick={()=>{
-              document.body.classList.toggle("dark")
-            }}/><Moon size={18}/></div>
             <Link href={"/api/auth/login"}>
               <Button className="rounded-[24px]">Login</Button>
             </Link>
