@@ -31,9 +31,12 @@ export const QuizTable = pgTable('quizes',{
 })
 
 // relation of quiz and user
-export const QuizToUserRelation = relations(QuizTable,({one})=>({
-    UserTable:one(UserTable)
-}))
+export const QuizToUserRelation = relations(QuizTable, ({ one }) => ({
+    UserTable: one(UserTable, {
+      fields: [QuizTable.userId],
+      references: [UserTable.id],
+    }),
+  }));
 
 // relation of quiz and question
 export const QuizToQuestionRelation = relations(QuizTable,({many})=>({
@@ -53,7 +56,10 @@ export const QuestionTable = pgTable('questions',{
 
 // relation of question and quiz
 export const QuestionToQuizRelation = relations(QuestionTable,({one})=>({
-    QuizTable:one(QuizTable)
+    QuizTable:one(QuizTable,{
+        fields:[QuestionTable.quizId],
+        references:[QuizTable.id]
+    })
 }))
 
 // relation of question and option
@@ -74,9 +80,12 @@ export const OptionTable = pgTable('options',{
 })
 
 // relation of option and question
-export const OptionToQuestionRelation = relations(OptionTable,({one})=>({
-    QuestionTable:one(QuestionTable)
-}))
+export const OptionToQuestionRelation = relations(OptionTable, ({ one }) => ({
+    QuestionTable: one(QuestionTable, {
+      fields: [OptionTable.questionId],
+      references: [QuestionTable.id],
+    }),
+  }));
 
 // relation of user and partcipation
 export const UserToParticipationRelation = relations(UserTable,({many})=>({
@@ -98,5 +107,8 @@ export const PartcipationTable = pgTable('participations',{
 
 // relation of participation and user
 export const ParticipationToUserRelation = relations(PartcipationTable,({one})=>({
-    UserTable:one(UserTable)
+    UserTable:one(UserTable,{
+        fields:[PartcipationTable.userId],
+        references:[UserTable.id]
+    })
 }))
