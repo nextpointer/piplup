@@ -5,11 +5,12 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { redirect } from "next/navigation";
 
 
+
 export default function Home() {
   const { user } = useUser();
-  if(!user){
-    redirect("/dashboard");
-  }
+  // if(!user){
+  //   redirect("/dashboard");
+  // }
   return (
     <>
       <main>
