@@ -80,8 +80,8 @@ main {
     --accent-foreground: 240 100% 98%;
     --destructive: 0 62% 35%;
     --destructive-foreground: 240 100% 98%;
-    --border: 240 5% 10%;
-    --input: 240 5% 10%;
+    --border: 240 5% 25%;
+    --input: 240 5% 15%;
     --ring: 256 81% 54%; /* Accent */
   }
 }
