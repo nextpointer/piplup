@@ -1,5 +1,7 @@
+
+
 import { HistoryCard } from "@/components/custom/HistoryCard";
-import React from "react";
+import React, { useEffect } from "react";
 import { participationData, quizData } from "@/lib/content";
 import { Progress } from "@/components/ui/progress";
 import { ParticipationCard } from "@/components/custom/ParticipationCard";
@@ -13,7 +15,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+
 const page = () => {
+
   return (
     <>
       <main>

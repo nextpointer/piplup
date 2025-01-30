@@ -8,6 +8,13 @@
       "when": 1738084720842,
       "tag": "0000_past_dexter_bennett",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1738247453811,
+      "tag": "0001_living_sprite",
+      "breakpoints": true
     }
   ]
 }
