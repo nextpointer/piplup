@@ -1,4 +1,4 @@
-
+"use client";
 
 import { HistoryCard } from "@/components/custom/HistoryCard";
 import React, { useEffect } from "react";
@@ -14,10 +14,30 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-
+import { getAllDetailsofUser } from "../db/queries/select";
+import { useAtom } from "jotai";
+import { allUserDetailsAtom } from "../store/atom";
+import { QuizDatawithUserAndPartcipant } from "@/lib/types";
 
 const page = () => {
+  const [userData, setUserData] = useAtom< QuizDatawithUserAndPartcipant[] | undefined>(allUserDetailsAtom);
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await getAllDetailsofUser();;
+        if (data.success) {
+          //setUserData(data?.quizzes?.at(0))// Store fetched quizzes in the atom
+        } else {
+          console.error("Error fetching quizzes");
+        }
+        console.log("data", data);
+      } catch (error) {
+        console.log("Failed to fetch the data", error);
+      }
+    })();
+  }, []);
+  
   return (
     <>
       <main>
@@ -29,12 +49,12 @@ const page = () => {
                 <Card className="p-2 xl:p-4 bg-secondary flex-center ">
                   <div className="flex gap-2 items-center">
                     <Box size={48} />
-                    <span className="text-2xl font-bold">
-                      Create a Quiz 
-                    </span>
+                    <span className="text-2xl font-bold">Create a Quiz</span>
                     <TooltipProvider>
-                      <Tooltip >
-                        <TooltipTrigger><Info/></TooltipTrigger>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <Info />
+                        </TooltipTrigger>
                         <TooltipContent className="bg-black text-white rounded-[24px]">
                           <p>Design your own quiz with custom questions</p>
                         </TooltipContent>
@@ -51,8 +71,10 @@ const page = () => {
                       Create quiz with AI{" "}
                     </span>
                     <TooltipProvider>
-                      <Tooltip >
-                        <TooltipTrigger><Info/></TooltipTrigger>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <Info />
+                        </TooltipTrigger>
                         <TooltipContent className="bg-black text-white rounded-[24px]">
                           <p>Participate in exciting public quizzes now!</p>
                         </TooltipContent>
@@ -67,8 +89,10 @@ const page = () => {
                     <Gamepad2 size={48} />
                     <span className="text-2xl font-bold">Play public Quiz</span>
                     <TooltipProvider>
-                      <Tooltip >
-                        <TooltipTrigger><Info/></TooltipTrigger>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <Info />
+                        </TooltipTrigger>
                         <TooltipContent className="bg-black text-white rounded-[24px]">
                           <p>Design your own quiz with custom questions</p>
                         </TooltipContent>
