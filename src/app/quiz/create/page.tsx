@@ -17,6 +17,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Card } from "@/components/ui/card";
+import { inserQuiz } from "@/app/db/queries/insert";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 const formSchema = z.object({
   Title: z
@@ -142,8 +144,19 @@ const Page = () => {
     name: "Questions",
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.table(values);
+  // fetching nickname from user
+  const { user } = useUser();
+  const nickname = user?.nickname;
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log(values);
+    if (nickname) {
+      await inserQuiz(nickname, values);
+      alert("Quiz created successfully");
+    } else {
+      console.error("Nickname is undefined");
+      alert("Failed to create quiz");
+    }
   };
 
   return (
