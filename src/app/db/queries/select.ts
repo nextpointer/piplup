@@ -1,21 +1,25 @@
 "use server"
 import { db } from "..";
 
-export async function getAllQuizzes() {
+export async function getAllDetailsofUser() {
     try {
-      // Fetch all quizzes with related questions & options in one query
-      const quizzes = await db.query.QuizTable.findMany({
-        with: {
-          UserTable: true, // Include user details (quiz creator)
-          QuestionTable: {
+        const quizzes = await db.query.QuizTable.findMany({
             with: {
-              OptionTable: true, // Include options for each question
+              UserTable: true, // Fetch quiz creator details
+              QuestionTable: {
+                with: {
+                  OptionTable: true, // Fetch options for each question
+                },
+              },
+              ParticipationTable: {
+                with: {
+                  UserTable: true, // Include the user who participated
+                },
+              },
             },
-          },
-        },
-      });
-  
-      return { success: true, quizzes };
+          });
+      
+          return { success: true, quizzes };
     } catch (error) {
       console.error("Error fetching quizzes:", error);
       return { success: false, message: "Failed to fetch quizzes" };
