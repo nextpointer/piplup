@@ -24,7 +24,7 @@ export async function POST(req: Request) {
 
     // Check if the user exists
     const existingUser = await db.select().from(UserTable).where(eq(UserTable.username, nickname)).limit(1);
-    console.log(existingUser);
+    console.log("existing user:",existingUser);
     
 
     if (existingUser.length === 0) {

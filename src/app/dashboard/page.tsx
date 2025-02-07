@@ -14,30 +14,33 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { getAllDetailsofUser } from "../db/queries/select";
+import { getAllDetailsOfUser } from "../db/queries/select";
 import { useAtom } from "jotai";
-import { allUserDetailsAtom } from "../store/atom";
-import { QuizDatawithUserAndPartcipant } from "@/lib/types";
+import { FetchQuizDetails } from "../store/atom";
+import { QuizDetails } from "@/lib/types";
 
 const page = () => {
-  const [userData, setUserData] = useAtom< QuizDatawithUserAndPartcipant[] | undefined>(allUserDetailsAtom);
+  const [FetchQuizDetail, setFetchQuizDetail] = useAtom<
+    QuizDetails[] | undefined
+  >(FetchQuizDetails);
 
   useEffect(() => {
     (async () => {
       try {
-        const data = await getAllDetailsofUser();;
-        if (data.success) {
-          //setUserData(data?.quizzes?.at(0))// Store fetched quizzes in the atom
-        } else {
-          console.error("Error fetching quizzes");
+        if (FetchQuizDetail?.length===0){
+          const data = await getAllDetailsOfUser();
+          if (data.success) {
+            setFetchQuizDetail(data.quizzes); // Store fetched quizzes in the atom
+          } else {
+            console.error("Error fetching quizzes");
+          }
         }
-        console.log("data", data);
       } catch (error) {
         console.log("Failed to fetch the data", error);
       }
     })();
   }, []);
-  
+
   return (
     <>
       <main>
@@ -105,10 +108,10 @@ const page = () => {
           </div>
           <div className=" row-span-3 col-span-3 xl:col-span-2 p-2 overflow-y-scroll no-scrollbar snap-y relative mt-2">
             <h2 className="text-2xl font-bold sticky block">History</h2>
-            {quizData.map((data, key) => (
+            {FetchQuizDetail?.map((data, key) => (
               <HistoryCard
                 key={key}
-                date={data.date}
+                date={data.created_At.toLocaleDateString()}
                 about={data.about}
                 title={data.title}
                 visibility={data.visibility}

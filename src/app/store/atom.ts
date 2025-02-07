@@ -1,5 +1,6 @@
-import { QuizDatawithUserAndPartcipant } from "@/lib/types";
+
+import { QuizDetails } from "@/lib/types";
 import { atom } from "jotai";
 export const result = atom<boolean[]>([]);
 // Create an atom to store user details (default: empty array)
-export const allUserDetailsAtom = atom<QuizDatawithUserAndPartcipant[] | undefined>([]);
+export const FetchQuizDetails = atom<QuizDetails[] | undefined>(undefined);
