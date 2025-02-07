@@ -18,6 +18,18 @@ import { getAllDetailsOfUser } from "../db/queries/select";
 import { useAtom } from "jotai";
 import { FetchQuizDetails } from "../store/atom";
 import { QuizDetails } from "@/lib/types";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const page = () => {
   const [FetchQuizDetail, setFetchQuizDetail] = useAtom<
@@ -41,8 +53,7 @@ const page = () => {
   //   })();
   // }, []);
 
-  console.log("FetchQuizDetail",FetchQuizDetail);
-  
+  console.log("FetchQuizDetail", FetchQuizDetail);
 
   return (
     <>
@@ -69,26 +80,66 @@ const page = () => {
                   </div>
                 </Card>
               </Link>
-              <Link href="/quiz/create" className="flex-1">
-                <Card className="p-2 xl:p-4 bg-gradient-to-r from-primary to-accent text-white flex-center">
-                  <div className="flex gap-2 items-center">
-                    <Sparkles size={48} />
-                    <span className="text-2xl font-bold">
-                      Create quiz with AI{" "}
-                    </span>
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger>
-                          <Info />
-                        </TooltipTrigger>
-                        <TooltipContent className="bg-black text-white rounded-[24px]">
-                          <p>Participate in exciting public quizzes now!</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
+
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Link href="#" className="flex-1">
+                    <Card className="p-2 xl:p-4 bg-gradient-to-r from-primary to-accent text-white flex-center">
+                      <div className="flex gap-2 items-center">
+                        <Sparkles size={48} />
+                        <span className="text-2xl font-bold">
+                          Create quiz with AI{" "}
+                        </span>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <Info />
+                            </TooltipTrigger>
+                            <TooltipContent className="bg-black text-white rounded-[24px]">
+                              <p>Participate in exciting public quizzes now!</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </div>
+                    </Card>
+                  </Link>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>Edit profile</DialogTitle>
+                    <DialogDescription>
+                      Make changes to your profile here. Click save when you're
+                      done.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="grid gap-4 py-4">
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="name" className="text-right">
+                        Name
+                      </Label>
+                      <Input
+                        id="name"
+                        value="Pedro Duarte"
+                        className="col-span-3"
+                      />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="username" className="text-right">
+                        Username
+                      </Label>
+                      <Input
+                        id="username"
+                        value="@peduarte"
+                        className="col-span-3"
+                      />
+                    </div>
                   </div>
-                </Card>
-              </Link>
+                  <DialogFooter>
+                    <Button type="submit">Save changes</Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+
               <Link href="/quiz/create" className="flex-1">
                 <Card className="p-2 xl:p-4 bg-secondary flex-center">
                   <div className="flex gap-2 items-center">
