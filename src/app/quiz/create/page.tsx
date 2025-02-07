@@ -25,7 +25,7 @@ const formSchema = z.object({
     .string()
     .min(2, { message: "Title must be at least 2 characters." })
     .max(15, { message: "Title maximum length is 15 characters" }),
-  About: z.string().max(30, { message: "About maximum length 30 characters." }),
+  About: z.string().max(30, { message: "About maximum length 40 characters." }),
   publicQuiz: z.boolean(),
   Questions: z.array(
     z.object({
@@ -151,7 +151,7 @@ const Page = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log(values);
     if (nickname) {
-      await inserQuiz(nickname, values);
+      await inserQuiz(values);
       alert("Quiz created successfully");
     } else {
       console.error("Nickname is undefined");

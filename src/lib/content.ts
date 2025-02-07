@@ -99,101 +99,433 @@ export const quizData = [
   ];
   
   export const PlayQuizData = {
-    Title: "Web Development Basics",
-    About: "Test your knowledge on the fundamentals of web development.",
-    Questions: [
+    "Title": "SHA Deep Dive",
+    "About": "Hashing & SHA algorithms",
+    "publicQuiz": true,
+    "Questions": [
       {
-        QuestionName: "What does HTML stand for?",
-        Options: [
-          { label: "Hyper Text Markup Language", isCorrect: true },
-          { label: "High Text Markup Language", isCorrect: false },
-          { label: "Hyperlinks and Text Markup Language", isCorrect: false },
-          { label: "Hyper Text Markup Link", isCorrect: false },
-        ],
+        "QuestionName": "Which property ensures a hash function's output is unpredictable given a known input?",
+        "Options": [
+          {
+            "label": "Avalanche effect",
+            "isCorrect": false
+          },
+          {
+            "label": "Preimage resistance",
+            "isCorrect": true
+          },
+          {
+            "label": "Collision resistance",
+            "isCorrect": false
+          },
+          {
+            "label": "Second preimage resistance",
+            "isCorrect": false
+          }
+        ]
       },
       {
-        QuestionName: "Which of the following is a JavaScript framework?",
-        Options: [
-          { label: "React", isCorrect: true },
-          { label: "Django", isCorrect: false },
-          { label: "Ruby on Rails", isCorrect: false },
-          { label: "Laravel", isCorrect: false },
-        ],
+        "QuestionName": "Hashing algorithms are primarily what type of functions?",
+        "Options": [
+          {
+            "label": "Symmetric",
+            "isCorrect": false
+          },
+          {
+            "label": "Asymmetric",
+            "isCorrect": false
+          },
+          {
+            "label": "One-way",
+            "isCorrect": true
+          },
+          {
+            "label": "Two-way",
+            "isCorrect": false
+          }
+        ]
       },
       {
-        QuestionName: "What does CSS stand for?",
-        Options: [
-          { label: "Cascading Style Sheets", isCorrect: true },
-          { label: "Colorful Style Sheets", isCorrect: false },
-          { label: "Computer Style Sheets", isCorrect: false },
-          { label: "Creative Style Sheets", isCorrect: false },
-        ],
+        "QuestionName": "Which hashing algorithm is generally considered more secure against collision attacks?",
+        "Options": [
+          {
+            "label": "MD5",
+            "isCorrect": false
+          },
+          {
+            "label": "SHA-1",
+            "isCorrect": false
+          },
+          {
+            "label": "SHA-256",
+            "isCorrect": true
+          },
+          {
+            "label": "CRC32",
+            "isCorrect": false
+          }
+        ]
       },
       {
-        QuestionName: "Which HTML tag is used to define an internal style sheet?",
-        Options: [
-          { label: "<style>", isCorrect: true },
-          { label: "<css>", isCorrect: false },
-          { label: "<script>", isCorrect: false },
-          { label: "<link>", isCorrect: false },
-        ],
+        "QuestionName": "What is the primary use of hashing algorithms in security?",
+        "Options": [
+          {
+            "label": "Encryption",
+            "isCorrect": false
+          },
+          {
+            "label": "Integrity check",
+            "isCorrect": true
+          },
+          {
+            "label": "Authentication",
+            "isCorrect": false
+          },
+          {
+            "label": "Authorization",
+            "isCorrect": false
+          }
+        ]
       },
       {
-        QuestionName: "Which of the following is a valid way to declare a variable in JavaScript?",
-        Options: [
-          { label: "var myVariable;", isCorrect: true },
-          { label: "variable myVariable;", isCorrect: false },
-          { label: "v myVariable;", isCorrect: false },
-          { label: "myVariable := 10;", isCorrect: false },
-        ],
+        "QuestionName": "What is the main purpose of a hashing algorithm?",
+        "Options": [
+          {
+            "label": "Increasing entropy",
+            "isCorrect": false
+          },
+          {
+            "label": "Creating a fixed-size representation",
+            "isCorrect": true
+          },
+          {
+            "label": "Data compression",
+            "isCorrect": false
+          },
+          {
+            "label": "Data encryption",
+            "isCorrect": false
+          }
+        ]
       },
       {
-        QuestionName: "What is the purpose of the <head> tag in HTML?",
-        Options: [
-          { label: "To contain metadata and links to scripts and styles", isCorrect: true },
-          { label: "To display the main content of the page", isCorrect: false },
-          { label: "To create a footer for the page", isCorrect: false },
-          { label: "To define the title of the page", isCorrect: false },
-        ],
+        "QuestionName": "Which SHA version uses the Keccak algorithm?",
+        "Options": [
+          {
+            "label": "SHA-0",
+            "isCorrect": false
+          },
+          {
+            "label": "SHA-1",
+            "isCorrect": false
+          },
+          {
+            "label": "SHA-3",
+            "isCorrect": true
+          },
+          {
+            "label": "SHA-2",
+            "isCorrect": false
+          }
+        ]
       },
       {
-        QuestionName: "Which of the following is used to style a web page?",
-        Options: [
-          { label: "CSS", isCorrect: true },
-          { label: "HTML", isCorrect: false },
-          { label: "JavaScript", isCorrect: false },
-          { label: "XML", isCorrect: false },
-        ],
+        "QuestionName": "What is a secret value added to the hashing process to protect against rainbow table attacks, not stored with the password hash?",
+        "Options": [
+          {
+            "label": "Salt",
+            "isCorrect": false
+          },
+          {
+            "label": "Pepper",
+            "isCorrect": true
+          },
+          {
+            "label": "Spice",
+            "isCorrect": false
+          },
+          {
+            "label": "Herb",
+            "isCorrect": false
+          }
+        ]
       },
       {
-        QuestionName: "What is the correct HTML element for inserting a line break?",
-        Options: [
-          { label: "<break>", isCorrect: false },
-          { label: "<br>", isCorrect: true },
-          { label: "<lb>", isCorrect: false },
-          { label: "<linebreak>", isCorrect: false },
-        ],
+        "QuestionName": "What type of attack exploits the mathematics of probability to find collisions in hash functions?",
+        "Options": [
+          {
+            "label": "Birthday attack",
+            "isCorrect": true
+          },
+          {
+            "label": "Dictionary attack",
+            "isCorrect": false
+          },
+          {
+            "label": "Brute force attack",
+            "isCorrect": false
+          },
+          {
+            "label": "Rainbow table attack",
+            "isCorrect": false
+          }
+        ]
       },
       {
-        QuestionName: "Which of the following is a front-end JavaScript library?",
-        Options: [
-          { label: "Vue.js", isCorrect: true },
-          { label: "Node.js", isCorrect: false },
-          { label: "Express.js", isCorrect: false },
-          { label: "Django", isCorrect: false },
-        ],
+        "QuestionName": "In what application is salting most commonly used?",
+        "Options": [
+          {
+            "label": "Key exchange",
+            "isCorrect": false
+          },
+          {
+            "label": "Digital signature",
+            "isCorrect": false
+          },
+          {
+            "label": "Password storage",
+            "isCorrect": true
+          },
+          {
+            "label": "Data encryption",
+            "isCorrect": false
+          }
+        ]
       },
       {
-        QuestionName: "What does API stand for?",
-        Options: [
-          { label: "Application Programming Interface", isCorrect: true },
-          { label: "Application Programming Integration", isCorrect: false },
-          { label: "Application Protocol Interface", isCorrect: false },
-          { label: "Application Programming Interaction", isCorrect: false },
-        ],
+        "QuestionName": "Which of these algorithms is specifically designed for password hashing?",
+        "Options": [
+          {
+            "label": "SHA-512",
+            "isCorrect": false
+          },
+          {
+            "label": "bcrypt",
+            "isCorrect": true
+          },
+          {
+            "label": "MD5",
+            "isCorrect": false
+          },
+          {
+            "label": "SHA-3",
+            "isCorrect": false
+          }
+        ]
       },
-    ],
+      {
+        "QuestionName": "What does it mean when a hashing algorithm is considered \"broken\"?",
+        "Options": [
+          {
+            "label": "Less computation",
+            "isCorrect": false
+          },
+          {
+            "label": "More predictability",
+            "isCorrect": false
+          },
+          {
+            "label": "More collisions",
+            "isCorrect": true
+          },
+          {
+            "label": "Higher entropy",
+            "isCorrect": false
+          }
+        ]
+      },
+      {
+        "QuestionName": "Which SHA algorithm produces the longest hash output?",
+        "Options": [
+          {
+            "label": "SHA-224",
+            "isCorrect": false
+          },
+          {
+            "label": "SHA-384",
+            "isCorrect": false
+          },
+          {
+            "label": "SHA-512",
+            "isCorrect": true
+          },
+          {
+            "label": "SHA-256",
+            "isCorrect": false
+          }
+        ]
+      },
+      {
+        "QuestionName": "What is HMAC primarily used for?",
+        "Options": [
+          {
+            "label": "Data compression",
+            "isCorrect": false
+          },
+          {
+            "label": "Encryption",
+            "isCorrect": false
+          },
+          {
+            "label": "Message authentication",
+            "isCorrect": true
+          },
+          {
+            "label": "Key generation",
+            "isCorrect": false
+          }
+        ]
+      },
+      {
+        "QuestionName": "Why is salting important in password hashing?",
+        "Options": [
+          {
+            "label": "Increasing processing speed",
+            "isCorrect": false
+          },
+          {
+            "label": "Mitigating collision attacks",
+            "isCorrect": true
+          },
+          {
+            "label": "Reducing storage requirements",
+            "isCorrect": false
+          },
+          {
+            "label": "Enhancing encryption strength",
+            "isCorrect": false
+          }
+        ]
+      },
+      {
+        "QuestionName": "What is the best practice when using salts for password hashing?",
+        "Options": [
+          {
+            "label": "Hashing the salt",
+            "isCorrect": false
+          },
+          {
+            "label": "Using a unique salt for each password",
+            "isCorrect": true
+          },
+          {
+            "label": "Using a static salt for all passwords",
+            "isCorrect": false
+          },
+          {
+            "label": "Not storing the salt",
+            "isCorrect": false
+          }
+        ]
+      },
+      {
+        "QuestionName": "What is the primary benefit of using SHA algorithms over simpler checksums like CRC32?",
+        "Options": [
+          {
+            "label": "Data recovery",
+            "isCorrect": false
+          },
+          {
+            "label": "Integrity verification",
+            "isCorrect": true
+          },
+          {
+            "label": "Data encryption",
+            "isCorrect": false
+          },
+          {
+            "label": "Data compression",
+            "isCorrect": false
+          }
+        ]
+      },
+      {
+        "QuestionName": "Which password hashing algorithm is resistant to hardware attacks?",
+        "Options": [
+          {
+            "label": "SHA-3",
+            "isCorrect": false
+          },
+          {
+            "label": "bcrypt",
+            "isCorrect": true
+          },
+          {
+            "label": "scrypt",
+            "isCorrect": false
+          },
+          {
+            "label": "PBKDF2",
+            "isCorrect": false
+          }
+        ]
+      },
+      {
+        "QuestionName": "What is the property of a hashing algorithm where each output bit depends on multiple input bits?",
+        "Options": [
+          {
+            "label": "Avalanche effect",
+            "isCorrect": false
+          },
+          {
+            "label": "Confusion",
+            "isCorrect": true
+          },
+          {
+            "label": "Diffusion",
+            "isCorrect": false
+          },
+          {
+            "label": "Permutation",
+            "isCorrect": false
+          }
+        ]
+      },
+      {
+        "QuestionName": "In which of the following scenarios is the 'compare-and-swap' mechanism most likely to be used in conjunction with hashing?",
+        "Options": [
+          {
+            "label": "Password verification",
+            "isCorrect": true
+          },
+          {
+            "label": "Data compression",
+            "isCorrect": false
+          },
+          {
+            "label": "Encryption",
+            "isCorrect": false
+          },
+          {
+            "label": "Key derivation",
+            "isCorrect": false
+          }
+        ]
+      },
+      {
+        "QuestionName": "Which of the following is the most critical security property for a hash function used in digital signatures?",
+        "Options": [
+          {
+            "label": "Quantum resistance",
+            "isCorrect": false
+          },
+          {
+            "label": "Collision resistance",
+            "isCorrect": false
+          },
+          {
+            "label": "Preimage resistance",
+            "isCorrect": true
+          },
+          {
+            "label": "Second-preimage resistance",
+            "isCorrect": false
+          }
+        ]
+      }
+    ]
   };
-  
+
+
   export default quizData;
   

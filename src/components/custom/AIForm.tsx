@@ -23,14 +23,32 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
-import { UploadCloud, Trash2 } from "lucide-react";
+import { UploadCloud, Trash2, Info } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { inserQuiz } from "@/app/db/queries/insert";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 
 const quizSchema = z.object({
   prompt: z.string().min(5, "Prompt must be at least 5 characters"),
   numQuestions: z.number().min(1).max(50),
   difficulty: z.enum(["Easy", "Medium", "Hard"]),
-  file: z.instanceof(File).nullable().optional(),
+  file: z
+    .instanceof(File)
+    .nullable()
+    .optional()
+    .refine((file) => {
+      if (!file) return true; // Optional field
+      return file.type === "application/pdf";
+    }, "Only PDF files are allowed")
+    .refine((file) => {
+      if (!file) return true; // Optional field
+      return file.size <= 5 * 1024 * 1024; // 5MB limit
+    }, "File size must be less than 5MB"),
 });
 
 type QuizFormType = z.infer<typeof quizSchema>;
@@ -50,8 +68,34 @@ const AIQuizForm = () => {
     },
   });
 
-  const onSubmit = (data: QuizFormType) => {
+  const onSubmit = async (data: QuizFormType) => {
     console.log("Form Data:", data);
+    try {
+      const formData = new FormData();
+
+      // Append all fields to FormData
+      formData.append("prompt", data.prompt);
+      formData.append("numQuestions", data.numQuestions.toString());
+      formData.append("difficulty", data.difficulty);
+      if (data.file) {
+        formData.append("file", data.file); // Append the file if it exists
+      }
+
+      const response = await fetch("/api/quiz/generate", {
+        method: "POST",
+        body: formData,
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const result = await response.json();
+      console.log("Success", result);
+      const insertResponse = await inserQuiz(result);
+      console.log(insertResponse.message);
+    } catch (e) {
+      console.error("Error submitting form:", e);
+    }
   };
 
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
@@ -59,16 +103,34 @@ const AIQuizForm = () => {
     setDragActive(false);
     const file = event.dataTransfer.files?.[0];
     if (file) {
+      if (file.type !== "application/pdf") {
+        form.setError("file", { message: "Only PDF files are allowed" });
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        form.setError("file", { message: "File size must be less than 5MB" });
+        return;
+      }
       form.setValue("file", file);
       setFileName(file.name);
+      form.clearErrors("file");
     }
   };
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      if (file.type !== "application/pdf") {
+        form.setError("file", { message: "Only PDF files are allowed" });
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        form.setError("file", { message: "File size must be less than 5MB" });
+        return;
+      }
       form.setValue("file", file);
       setFileName(file.name);
+      form.clearErrors("file");
     }
   };
 
@@ -165,6 +227,26 @@ const AIQuizForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Upload File (optional)</FormLabel>
+                <TooltipProvider >
+                  <Tooltip>
+                    <TooltipTrigger type="button" className="cursor-help " >
+                      <Info className="h-4 w-4 text-gray-500 translate-y-1 translate-x-2" />
+                    </TooltipTrigger>
+                    <TooltipContent
+                      className="max-w-[260px] p-4 bg-white border border-gray-200 shadow-lg rounded-[24px]"
+                      side="right"
+                    >
+                      <span className="text-sm text-gray-700">
+                        For best results:
+                        <ul className="list-disc pl-4 mt-2 space-y-1">
+                          <li>Use text-heavy PDFs</li>
+                          <li>Under 10 pages</li>
+                          <li>Avoid image-based content</li>
+                        </ul>
+                      </span>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
                 <FormControl>
                   <div
                     className={`border-2 border-dashed p-6 rounded-lg text-center cursor-pointer ${
@@ -184,7 +266,7 @@ const AIQuizForm = () => {
                       ref={fileInputRef}
                       type="file"
                       className="hidden"
-                      accept=".txt,.pdf,.doc,.docx"
+                      accept="application/pdf"
                       onChange={handleFileSelect}
                     />
                     <UploadCloud className="mx-auto text-gray-500" />

@@ -1,4 +1,4 @@
-"use server"
+"use server";
 
 import { QuizData } from "@/lib/types";
 import { db } from "..";
@@ -10,6 +10,7 @@ import {
   OptionTable,
 } from "../schema";
 import { eq } from "drizzle-orm";
+import { getSession } from "@auth0/nextjs-auth0";
 
 // insert user
 export async function insertUser(username: InsertUser) {
@@ -17,19 +18,25 @@ export async function insertUser(username: InsertUser) {
 }
 
 // insert quiz data
-export async function inserQuiz(nickname: InsertUser, quizData: QuizData) {
+export async function inserQuiz(quizData: QuizData) {
   try {
+    const session = await getSession();
+
+    if (!session) {
+      throw new Error(`Requires authentication`);
+    }
+    const { user } = session;
     // fetch the userID
-    const [user] = await db
+    const [User] = await db
       .select()
       .from(UserTable)
-      .where(eq(UserTable.username, nickname))
+      .where(eq(UserTable.username, user.nickname))
       .limit(1);
     // if the user is not found
-    if (!user) {
+    if (!User) {
       return { success: false, message: "User not found" };
     }
-    const userId = user.id;
+    const userId = User.id;
     // inserting quiz data and getting the quizId
     const [quiz] = await db
       .insert(QuizTable)

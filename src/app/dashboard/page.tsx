@@ -30,22 +30,22 @@ const page = () => {
     QuizDetails[] | undefined
   >(FetchQuizDetails);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       if (!FetchQuizDetail){
-  //         const data = await getAllDetailsOfUser();
-  //         if (data.success) {
-  //           setFetchQuizDetail(data.quizzes); // Store fetched quizzes in the atom
-  //         } else {
-  //           console.error("Error fetching quizzes");
-  //         }
-  //       }
-  //     } catch (error) {
-  //       console.log("Failed to fetch the data", error);
-  //     }
-  //   })();
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      try {
+        if (!FetchQuizDetail){
+          const data = await getAllDetailsOfUser();
+          if (data.success) {
+            setFetchQuizDetail(data.quizzes); // Store fetched quizzes in the atom
+          } else {
+            console.error("Error fetching quizzes");
+          }
+        }
+      } catch (error) {
+        console.log("Failed to fetch the data", error);
+      }
+    })();
+  }, []);
 
   console.log("FetchQuizDetail", FetchQuizDetail);
 

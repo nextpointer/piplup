@@ -3,14 +3,14 @@ import { db } from "..";
 import { getSession } from "@auth0/nextjs-auth0";
 
 export async function getAllDetailsOfUser() {
-  const session = await getSession();
-
-  if (!session) {
-    throw new Error(`Requires authentication`);
-  }
-  const { user } = session;
-
+  
   try {
+    const session = await getSession();
+  
+    if (!session) {
+      throw new Error(`Requires authentication`);
+    }
+    const { user } = session;
     // Step 1: Get userId from username
     const User = await db.query.UserTable.findFirst({
       where: (User, { eq }) => eq(User.username, user.nickname),
