@@ -50,12 +50,12 @@ export async function inserQuiz(quizData: QuizData) {
       .returning({
         id: QuizTable.id,
       });
+      //if the quiz is not found
     if (!quiz) {
       throw new Error("Failed to insert quiz");
     }
-    //if the quiz is not found
-    const quizId = quiz.id;
     // update quizId
+    const quizId = quiz.id;
 
     // inserting questions and getting questionId
     const questionValues = quizData.Questions.map((q) => ({
@@ -83,7 +83,7 @@ export async function inserQuiz(quizData: QuizData) {
       await db.insert(OptionTable).values(optionValues);
     }
 
-    return { success: true, message: "Quiz inserted successfully!" };
+    return { success: true, message: "Quiz inserted successfully!",id : quizId };
   } catch (e) {
     console.error("Error inserting quiz:", e);
     return { success: false, message: "Failed to insert quiz" };

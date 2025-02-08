@@ -6,7 +6,7 @@ import { z } from "zod";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { X, Trash2, CirclePlus } from "lucide-react";
 import {
   Form,
@@ -19,6 +19,7 @@ import {
 import { Card } from "@/components/ui/card";
 import { inserQuiz } from "@/app/db/queries/insert";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import { useParams } from 'next/navigation'
 
 const formSchema = z.object({
   Title: z
@@ -120,6 +121,20 @@ const QuestionItem = ({ control, index, remove }: { control: any; index: number;
 };
 
 const Page = () => {
+  const params = useParams<{id:string}>()
+  useEffect(()=>{
+    setLoading(true);
+    try{
+      
+    }catch(error){
+      console.log(error);
+      
+    }finally{
+      setLoading(false);
+    }
+
+  },[])
+  const [loading,setLoading] = useState<boolean>(false)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {

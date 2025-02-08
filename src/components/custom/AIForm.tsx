@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useState, useRef } from "react";
-
+import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -95,6 +95,8 @@ const AIQuizForm = () => {
       console.log("Success", result);
       const insertResponse = await inserQuiz(result);
       console.log(insertResponse.message);
+      // redirecting the quiz edit section
+      redirect(`/quiz/${insertResponse.id}`)
     } catch (e) {
       console.error("Error submitting form:", e);
     } finally {
