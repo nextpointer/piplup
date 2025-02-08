@@ -30,6 +30,8 @@ const formSchema = z.object({
 });
 
 export async function POST(req: NextRequest) {
+  console.log("here0");
+    
   try {
     const formData = await req.formData();
 
@@ -37,25 +39,33 @@ export async function POST(req: NextRequest) {
     const prompt = formData.get("prompt") as string;
     const numQuestions = formData.get("numQuestions") as string;
     const difficulty = formData.get("difficulty") as string;
+    console.log("here1");
+    
     const file = formData.get("file") as File | null;
+    console.log("here2");
 
-    if (!file || file.type !== "application/pdf") {
-      return NextResponse.json(
-        { error: "Invalid file format" },
-        { status: 400 }
+    // if (!file || file.type !== "application/pdf") {
+    //   return NextResponse.json(
+    //     { error: "Invalid file format" },
+    //     { status: 400 }
+    //   );
+    // }
+    let actualText: string[] = [];
+    console.log("here3");
+    if (file) {
+      // parse the PDF
+      const loader = new PDFLoader(file as Blob, {
+        parsedItemSeparator: " ",
+      });
+
+      const docs = await loader.load();
+      const selectedDocument = docs.filter(
+        (doc) => doc.pageContent !== undefined
       );
+      actualText = selectedDocument.map((doc) => doc.pageContent);
     }
-
-    // parse the PDF
-    const loader = new PDFLoader(file as Blob, {
-      parsedItemSeparator: " ",
-    });
-
-    const docs = await loader.load();
-    const selectedDocument = docs.filter(
-      (doc) => doc.pageContent !== undefined
-    );
-    const actualText = selectedDocument.map((doc) => doc.pageContent);
+    console.log("here4");
+    
     const MAX_TEXT_LENGTH = 10000;
 
     if (actualText.length > MAX_TEXT_LENGTH) {
@@ -72,12 +82,14 @@ export async function POST(req: NextRequest) {
     }
 
     // Handle empty PDF content
-    if (actualText.length === 0) {
+    if (file && actualText.length === 0) {
       return NextResponse.json(
         { error: "PDF contains no readable text" },
         { status: 400 }
       );
     }
+
+    console.log("here5");
 
     const QUIZ_GENERATION_PROMPT = `
   Generate a quiz in strict
@@ -155,20 +167,21 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(response);
   } catch (error) {
-    console.log("Error",error);
-    
-      // Handle different error types
-      const isClientError = error instanceof z.ZodError || 
-      error instanceof Error && error.message.includes("PDF");
+    console.log("Error", error);
+
+    // Handle different error types
+    const isClientError =
+      error instanceof z.ZodError ||
+      (error instanceof Error && error.message.includes("PDF"));
     return NextResponse.json(
-        {
-          error: "Failed to generate quiz",
-          details: error instanceof Error ? error.message : "Unknown error"
-        },
-        {
-          status: isClientError ? 400 : 500,
-          headers: { 'Content-Type': 'application/json' }
-        }
-      );
+      {
+        error: "Failed to generate quiz",
+        details: error instanceof Error ? error.message : "Unknown error",
+      },
+      {
+        status: isClientError ? 400 : 500,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   }
 }

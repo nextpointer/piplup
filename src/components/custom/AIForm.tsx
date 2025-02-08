@@ -56,6 +56,7 @@ type QuizFormType = z.infer<typeof quizSchema>;
 const AIQuizForm = () => {
   const [fileName, setFileName] = useState<string | null>(null);
   const [dragActive, setDragActive] = useState(false);
+  const [isloading, setLoading] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<QuizFormType>({
@@ -69,6 +70,7 @@ const AIQuizForm = () => {
   });
 
   const onSubmit = async (data: QuizFormType) => {
+    setLoading(true);
     console.log("Form Data:", data);
     try {
       const formData = new FormData();
@@ -95,6 +97,8 @@ const AIQuizForm = () => {
       console.log(insertResponse.message);
     } catch (e) {
       console.error("Error submitting form:", e);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -227,9 +231,9 @@ const AIQuizForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Upload File (optional)</FormLabel>
-                <TooltipProvider >
+                <TooltipProvider>
                   <Tooltip>
-                    <TooltipTrigger type="button" className="cursor-help " >
+                    <TooltipTrigger type="button" className="cursor-help ">
                       <Info className="h-4 w-4 text-gray-500 translate-y-1 translate-x-2" />
                     </TooltipTrigger>
                     <TooltipContent
@@ -298,7 +302,7 @@ const AIQuizForm = () => {
               type="submit"
               className="bg-gradient-to-r from-primary to-accent text-white w-full"
             >
-              Generate Quiz
+              {isloading?(<div className="loader"></div> ):"Generate Quiz"}
             </Button>
           </DialogFooter>
         </form>
