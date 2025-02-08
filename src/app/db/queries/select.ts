@@ -1,12 +1,13 @@
 "use server";
 import { db } from "..";
 import { getSession } from "@auth0/nextjs-auth0";
+import { QuestionTable, QuizTable } from "../schema";
+import { eq } from "drizzle-orm";
 
 export async function getAllDetailsOfUser() {
-  
   try {
     const session = await getSession();
-  
+
     if (!session) {
       throw new Error(`Requires authentication`);
     }
@@ -37,5 +38,35 @@ export async function getAllDetailsOfUser() {
   } catch (error) {
     console.log("Error fetching the data", error);
     return { success: false, message: "Failed to fetch quizzes" };
+  }
+}
+
+// fetching the Quiz Question and Options
+export async function getQuestionAndOption(quizId: string) {
+  
+  try {
+    const quizDetails = await db.query.QuizTable.findFirst({
+      where: (quizy,{eq})=>eq(quizy.id,quizId),
+      with: {
+        QuestionTable: {
+          with: {
+            OptionTable: true,
+          },
+        },
+      },
+    });
+
+    // if quiz is not found
+    if(!quizDetails){
+      return {
+        success:false,message :"Quiz not found",quiz:null
+      }
+    }
+    return {
+      success:true,quiz:quizDetails
+    }
+  } catch (error) {
+    console.error("Error fetching quiz questions:", error);
+    return { success: false, message: "Failed to fetch questions" };
   }
 }

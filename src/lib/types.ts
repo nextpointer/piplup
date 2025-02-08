@@ -12,6 +12,8 @@ export interface ParticipationBar {
   noOfGiveAnswer: number;
 }
 
+// Inserted Quiz and Option with Quiz --------------------------------------------------------------------
+
 export type QuizData = {
   Title: string;
   About: string;
@@ -29,9 +31,39 @@ type OptionData = {
   isCorrect: boolean;
 };
 
+// Incoming (fetched) Quiz and Option with Quiz --------------------------------------------------------------------
+
+export type IncomingQuizData = {
+  title: string;
+  id: string;
+  about: string;
+  created_At: Date;
+  updatedAt: Date;
+  userId: string;
+  visibility: string;
+  shareLink: string;
+  QuestionTable: QuestionTableType[];
+};
+type QuestionTableType = {
+  id: string;
+  quizId: string;
+  title: string;
+  created_At: Date;
+  updatedAt: Date;
+  OptionTable: OptionTableType[];
+};
+type OptionTableType = {
+  id: string;
+  questionId: string;
+  label: string;
+  isCorrect: boolean;
+  created_At: Date;
+  updatedAt: Date;
+};
+
 // ------------------------------------------------------------------------------------------------------>>
 
-// Fetched QuizDetails
+// Fetched QuizDetails for dashboad
 export type QuizDetails = {
   id: string;
   userId: string;
@@ -39,6 +71,6 @@ export type QuizDetails = {
   about: string;
   visibility: string;
   shareLink: string;
-  created_At: Date; 
-  updatedAt: Date; 
+  created_At: Date;
+  updatedAt: Date;
 };

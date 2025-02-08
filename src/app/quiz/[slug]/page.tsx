@@ -20,6 +20,10 @@ import { Card } from "@/components/ui/card";
 import { inserQuiz } from "@/app/db/queries/insert";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useParams } from 'next/navigation'
+import { getQuestionAndOption } from "@/app/db/queries/select";
+import { useAtom } from "jotai";
+import { QuizWithQuestionOption } from "@/app/store/atom";
+import { IncomingQuizData, QuizData, QuizDetails } from "@/lib/types";
 
 const formSchema = z.object({
   Title: z
@@ -121,20 +125,32 @@ const QuestionItem = ({ control, index, remove }: { control: any; index: number;
 };
 
 const Page = () => {
-  const params = useParams<{id:string}>()
-  useEffect(()=>{
-    setLoading(true);
-    try{
-      
-    }catch(error){
-      console.log(error);
-      
-    }finally{
-      setLoading(false);
-    }
-
-  },[])
   const [loading,setLoading] = useState<boolean>(false)
+  const [DefaultQuizDetails,setDefaultQuizDetails] = useAtom<IncomingQuizData | null | undefined>(QuizWithQuestionOption);
+    const params = useParams<{slug:string}>()
+  
+  useEffect(() => {
+    if (!params.slug) return;
+    const fetchQuiz = async () => {
+      setLoading(true);
+      try {
+        console.log("ENter");
+        
+        const quiz = await getQuestionAndOption(params.slug);
+        console.log(quiz.quiz);
+        
+        setDefaultQuizDetails(quiz.quiz as IncomingQuizData);
+        
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchQuiz();
+  }, [params.slug,setDefaultQuizDetails]);
+  
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -149,6 +165,24 @@ const Page = () => {
       ],
     },
   });
+  useEffect(() => {
+    if (DefaultQuizDetails) {
+      // Map the backend data to match the form structure
+      const formattedData:QuizData = {
+        Title: DefaultQuizDetails.title,
+        About: DefaultQuizDetails.about,
+        publicQuiz: DefaultQuizDetails.visibility === "public",
+        Questions: DefaultQuizDetails.QuestionTable.map(question => ({
+          QuestionName: question.title,
+          Options: question.OptionTable.map(option => ({
+            label: option.label,
+            isCorrect: option.isCorrect
+          }))
+        }))
+      };
+      form.reset(formattedData);
+    }
+  }, [DefaultQuizDetails, form]); // Add form as dependency
 
   const {
     fields: questionFields,
@@ -165,13 +199,6 @@ const Page = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log(values);
-    if (nickname) {
-      await inserQuiz(values);
-      alert("Quiz created successfully");
-    } else {
-      console.error("Nickname is undefined");
-      alert("Failed to create quiz");
-    }
   };
 
   return (
@@ -253,7 +280,7 @@ const Page = () => {
               Add Question
             </Button>
             <Button type="submit" className="mt-8 mr-4 absolute right-0 ">
-              Submit
+              Save Changes
             </Button>
           </form>
         </Form>

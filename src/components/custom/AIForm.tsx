@@ -32,6 +32,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
+import { useRouter } from "next/navigation";
 
 const quizSchema = z.object({
   prompt: z.string().min(5, "Prompt must be at least 5 characters"),
@@ -69,6 +70,8 @@ const AIQuizForm = () => {
     },
   });
 
+  const router = useRouter()
+
   const onSubmit = async (data: QuizFormType) => {
     setLoading(true);
     console.log("Form Data:", data);
@@ -95,8 +98,10 @@ const AIQuizForm = () => {
       console.log("Success", result);
       const insertResponse = await inserQuiz(result);
       console.log(insertResponse.message);
+      console.log("isertid",insertResponse.id);
+      
       // redirecting the quiz edit section
-      redirect(`/quiz/${insertResponse.id}`)
+      router.push(`/quiz/${insertResponse.id}`);
     } catch (e) {
       console.error("Error submitting form:", e);
     } finally {
