@@ -3,7 +3,6 @@ import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { HumanMessage } from "@langchain/core/messages";
 import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 import { z } from "zod";
-import { error } from "console";
 
 const formSchema = z.object({
   Title: z
@@ -12,25 +11,25 @@ const formSchema = z.object({
     .max(15, { message: "Title maximum length is 15 characters" }),
   About: z.string().max(30, { message: "About maximum length 40 characters." }),
   publicQuiz: z.boolean(),
-  Questions: z
-    .array(
-      z.object({
-        QuestionName: z
-          .string()
-          .min(1, { message: "Question Name is required." }),
-        Options: z.array(
-          z.object({
-            label: z.string().min(1, { message: "Option label is required." }),
-            isCorrect: z.boolean(),
-          })
-        ),
-      })
-    )
-    .min(1, { message: "At least one question is required." }),
+  difficulty: z.enum(["Easy", "Medium", "Hard"], {
+    required_error: "Difficulty is required.",
+  }),
+  Questions: z.array(
+    z.object({
+      QuestionName: z
+        .string()
+        .min(1, { message: "Question Name is required." }),
+      Options: z.array(
+        z.object({
+          label: z.string().min(1, { message: "Option label is required." }),
+          isCorrect: z.boolean(),
+        })
+      ),
+    })
+  ).min(1, { message: "At least one question is required." }),
 });
 
 export async function POST(req: NextRequest) {
-  console.log("here0");
     
   try {
     const formData = await req.formData();
@@ -39,10 +38,8 @@ export async function POST(req: NextRequest) {
     const prompt = formData.get("prompt") as string;
     const numQuestions = formData.get("numQuestions") as string;
     const difficulty = formData.get("difficulty") as string;
-    console.log("here1");
     
     const file = formData.get("file") as File | null;
-    console.log("here2");
 
     // if (!file || file.type !== "application/pdf") {
     //   return NextResponse.json(
@@ -51,7 +48,6 @@ export async function POST(req: NextRequest) {
     //   );
     // }
     let actualText: string[] = [];
-    console.log("here3");
     if (file) {
       // parse the PDF
       const loader = new PDFLoader(file as Blob, {
@@ -64,7 +60,6 @@ export async function POST(req: NextRequest) {
       );
       actualText = selectedDocument.map((doc) => doc.pageContent);
     }
-    console.log("here4");
     
     const MAX_TEXT_LENGTH = 10000;
 
@@ -89,7 +84,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    console.log("here5");
 
     const QUIZ_GENERATION_PROMPT = `
   Generate a quiz in strict

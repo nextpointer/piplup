@@ -16,6 +16,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Card } from "@/components/ui/card";
 import { inserQuiz } from "@/app/db/queries/insert";
 import { useUser } from "@auth0/nextjs-auth0/client";
@@ -27,6 +34,9 @@ const formSchema = z.object({
     .max(15, { message: "Title maximum length is 15 characters" }),
   About: z.string().max(30, { message: "About maximum length 40 characters." }),
   publicQuiz: z.boolean(),
+  difficulty: z.enum(["Easy", "Medium", "Hard"], {
+    required_error: "Difficulty is required.",
+  }),
   Questions: z.array(
     z.object({
       QuestionName: z
@@ -126,6 +136,7 @@ const Page = () => {
       Title: "",
       About: "",
       publicQuiz: false,
+      difficulty:"Easy",
       Questions: [
         {
           QuestionName: "",
@@ -195,6 +206,28 @@ const Page = () => {
                   </FormItem>
                 )}
               />
+              <FormField
+          control={form.control}
+          name="difficulty"
+          render={({ field }) => (
+            <FormItem className="mt-2">
+              <FormLabel>Difficulty Level</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value} >
+                <FormControl>
+                  <SelectTrigger className="rounded-[24px]">
+                    <SelectValue placeholder="Select one level" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent className="rounded-[24px]">
+                  <SelectItem value="Easy" className="rounded-[24px]">Easy</SelectItem>
+                  <SelectItem value="Medium" className="rounded-[24px]">Medium</SelectItem>
+                  <SelectItem value="Hard" className="rounded-[24px]">Hard</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
             </Card>
 
             <h2 className="text-2xl font-bold ">Questions</h2>

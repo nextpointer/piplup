@@ -17,6 +17,7 @@ export interface ParticipationBar {
 export type QuizData = {
   Title: string;
   About: string;
+  difficulty:"Easy" | "Medium" | "Hard";
   publicQuiz: boolean;
   Questions: QuestionData[];
 };
@@ -40,8 +41,8 @@ export type IncomingQuizData = {
   created_At: Date;
   updatedAt: Date;
   userId: string;
+  difficulty: string;
   visibility: string;
-  shareLink: string;
   QuestionTable: QuestionTableType[];
 };
 type QuestionTableType = {
@@ -70,7 +71,7 @@ export type QuizDetails = {
   title: string;
   about: string;
   visibility: string;
-  shareLink: string;
+  difficulty: string;
   created_At: Date;
   updatedAt: Date;
 };

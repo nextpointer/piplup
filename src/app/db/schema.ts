@@ -23,7 +23,7 @@ export const QuizTable = pgTable('quizes',{
     title : text('title').notNull(),
     about : text('description').notNull(),
     visibility: text('visibility').notNull(),
-    shareLink: text('shareLink').notNull(),
+    difficulty:text('difficulty').notNull().default("Medium"),
     created_At:timestamp('created_At').notNull().defaultNow(),
     updatedAt: timestamp('updated_at')
     .notNull()

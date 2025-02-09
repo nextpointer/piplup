@@ -45,7 +45,7 @@ export async function inserQuiz(quizData: QuizData) {
         title: quizData.Title,
         about: quizData.About,
         visibility: quizData.publicQuiz ? "public" : "private",
-        shareLink: "",
+        difficulty: quizData.difficulty,
       })
       .returning({
         id: QuizTable.id,

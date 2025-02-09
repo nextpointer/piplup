@@ -1,8 +1,8 @@
 "use server";
 import { db } from "..";
 import { getSession } from "@auth0/nextjs-auth0";
-import { QuestionTable, QuizTable } from "../schema";
-import { eq } from "drizzle-orm";
+// import { QuestionTable, QuizTable } from "../schema";
+// import { eq } from "drizzle-orm";
 
 export async function getAllDetailsOfUser() {
   try {

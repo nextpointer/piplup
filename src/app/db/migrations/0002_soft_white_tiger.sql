@@ -1,0 +1,1 @@
+ALTER TABLE "quizes" RENAME COLUMN "shareLink" TO "difficulty";

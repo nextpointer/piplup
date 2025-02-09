@@ -16,14 +16,20 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Card } from "@/components/ui/card";
-import { inserQuiz } from "@/app/db/queries/insert";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useParams } from 'next/navigation'
 import { getQuestionAndOption } from "@/app/db/queries/select";
 import { useAtom } from "jotai";
 import { QuizWithQuestionOption } from "@/app/store/atom";
-import { IncomingQuizData, QuizData, QuizDetails } from "@/lib/types";
+import { IncomingQuizData, QuizData, } from "@/lib/types";
 
 const formSchema = z.object({
   Title: z
@@ -32,6 +38,9 @@ const formSchema = z.object({
     .max(15, { message: "Title maximum length is 15 characters" }),
   About: z.string().max(30, { message: "About maximum length 40 characters." }),
   publicQuiz: z.boolean(),
+  difficulty: z.enum(["Easy", "Medium", "Hard"], {
+    required_error: "Difficulty is required.",
+  }),
   Questions: z.array(
     z.object({
       QuestionName: z
@@ -128,14 +137,11 @@ const Page = () => {
   const [loading,setLoading] = useState<boolean>(false)
   const [DefaultQuizDetails,setDefaultQuizDetails] = useAtom<IncomingQuizData | null | undefined>(QuizWithQuestionOption);
     const params = useParams<{slug:string}>()
-  
   useEffect(() => {
     if (!params.slug) return;
     const fetchQuiz = async () => {
       setLoading(true);
       try {
-        console.log("ENter");
-        
         const quiz = await getQuestionAndOption(params.slug);
         console.log(quiz.quiz);
         
@@ -157,6 +163,7 @@ const Page = () => {
       Title: "",
       About: "",
       publicQuiz: false,
+      difficulty:"Easy",
       Questions: [
         {
           QuestionName: "",
@@ -172,6 +179,7 @@ const Page = () => {
         Title: DefaultQuizDetails.title,
         About: DefaultQuizDetails.about,
         publicQuiz: DefaultQuizDetails.visibility === "public",
+        difficulty: DefaultQuizDetails.difficulty as "Easy" | "Medium" | "Hard",
         Questions: DefaultQuizDetails.QuestionTable.map(question => ({
           QuestionName: question.title,
           Options: question.OptionTable.map(option => ({
@@ -179,10 +187,14 @@ const Page = () => {
             isCorrect: option.isCorrect
           }))
         }))
-      };
+      }
       form.reset(formattedData);
     }
+
+
   }, [DefaultQuizDetails, form]); // Add form as dependency
+
+  
 
   const {
     fields: questionFields,
@@ -237,6 +249,28 @@ const Page = () => {
                   </FormItem>
                 )}
               />
+              <FormField
+          control={form.control}
+          name="difficulty"
+          render={({ field }) => (
+            <FormItem className="mt-2">
+              <FormLabel>Difficulty Level</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value} key={field.value} >
+                <FormControl>
+                  <SelectTrigger className="rounded-[24px]">
+                    <SelectValue placeholder="Select one level" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent className="rounded-[24px]">
+                  <SelectItem value="Easy" className="rounded-[24px]">Easy</SelectItem>
+                  <SelectItem value="Medium" className="rounded-[24px]">Medium</SelectItem>
+                  <SelectItem value="Hard" className="rounded-[24px]">Hard</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
             </Card>
 
             <h2 className="text-2xl font-bold ">Questions</h2>
