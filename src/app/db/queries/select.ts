@@ -1,6 +1,7 @@
 "use server";
 import { db } from "..";
 import { getSession } from "@auth0/nextjs-auth0";
+import { QuizTable, UserTable } from "../schema";
 // import { QuestionTable, QuizTable } from "../schema";
 // import { eq } from "drizzle-orm";
 
@@ -68,5 +69,31 @@ export async function getQuestionAndOption(quizId: string) {
   } catch (error) {
     console.error("Error fetching quiz questions:", error);
     return { success: false, message: "Failed to fetch questions" };
+  }
+}
+
+
+// fetching public quizes
+export async function getPublicQuizzes() {
+  try {
+    const quizzesData = await db.query.QuizTable.findMany({
+      where: (quizzy,{eq})=>eq(quizzy.visibility,"public"), 
+      with: {
+        UserTable: {
+          columns: {
+            username: true,
+          },
+        },
+      },
+    });
+
+    if (!quizzesData.length) {
+      return { success: true, data: [], message: "No public quizzes found." };
+    }
+
+    return { success: true, data: quizzesData };
+  } catch (error) {
+    console.error("Error fetching public quizzes:", error);
+    return { success: false, error: "Failed to fetch public quizzes. Please try again later." };
   }
 }

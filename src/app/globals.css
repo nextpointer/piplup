@@ -20,7 +20,6 @@ main {
   align-items: center;
 }
 
-/* HTML: <div class="loader"></div> */
 .loader {
   width: 25px;
   padding: 1px;

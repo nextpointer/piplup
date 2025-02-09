@@ -1,53 +1,63 @@
 "use client";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { atom, useAtom } from "jotai";
 import { Card } from "../ui/card";
 import { Progress } from "../ui/progress";
 import React from "react";
-import { PlayQuizData } from "@/lib/content";
 import { Button } from "../ui/button";
 import { result } from "@/app/store/atom";
+import { IncomingQuizData, OptionData, QuestionData, QuizData} from "@/lib/types"; // Import types
 
-interface Option {
-  label: string;
-  isCorrect: boolean;
-}
-const No = atom(0);
+// Atoms for state management
+const questionNoAtom = atom(0);
 const selectedOptionAtom = atom<string | null>(null);
 const isCorrectAtom = atom<boolean | null>(null);
-const disable  = atom<boolean>(false);
+const disableAtom = atom<boolean>(false);
 
-const PlayQuiz = () => {
-  const [questionNo, setQuestionNo] = useAtom(No);
+interface PlayQuizProps {
+  quiz: IncomingQuizData |undefined |null
+}
+
+const PlayQuiz: React.FC<PlayQuizProps> = ({ quiz }) => {
+  const [questionNo, setQuestionNo] = useAtom(questionNoAtom);
   const [selectedOption, setSelectedOption] = useAtom(selectedOptionAtom);
   const [_, setIsCorrect] = useAtom(isCorrectAtom);
-  const [buttonDisable,setButtonDisable] = useAtom(disable);
-  const [userResult,setUserResult] = useAtom(result)
+  const [buttonDisable, setButtonDisable] = useAtom(disableAtom);
+  const [userResult, setUserResult] = useAtom(result);
+  const router = useRouter();
 
-  //   implement the function option correction
-  const isOptionCorrect = (option: Option) => {
+  if (!quiz || !quiz.QuestionTable.length) {
+    return <p className="text-center text-lg mt-4">No quiz data available.</p>;
+  }
+
+  const currentQuestion = quiz.QuestionTable[questionNo];
+
+  // Function to check if the selected option is correct
+  const isOptionCorrect = (option: { label: string; isCorrect: boolean }) => {
     setButtonDisable(true);
     setSelectedOption(option.label);
     setIsCorrect(option.isCorrect);
-    setUserResult((prevResult)=>[...prevResult,option.isCorrect]);
+    setUserResult((prevResult) => [...prevResult, option.isCorrect]);
 
     setTimeout(() => {
-      questionNo+1 === PlayQuizData.Questions.length
-        ? redirect("/quiz/result/1")
-        : setQuestionNo(questionNo + 1);
-        setButtonDisable(false);
+      if (questionNo + 1 === quiz.QuestionTable.length) {
+        router.push(`/quiz/result/${quiz.id}`);
+      } else {
+        setQuestionNo(questionNo + 1);
+      }
+      setButtonDisable(false);
     }, 1200);
   };
-  console.log(userResult);
+
   return (
     <>
-      <Progress value={questionNo * 10} className="absolute top-16 h-1" />
+      <Progress value={(questionNo / quiz.QuestionTable.length) * 100} className="absolute top-16 h-1" />
       <Card className="flex flex-col gap-4 p-8">
-        <h1>{PlayQuizData.Questions[questionNo].QuestionName}</h1>
-        {PlayQuizData.Questions[questionNo].Options.map((option, key) => (
+        <h1>{currentQuestion.title}</h1>
+        {currentQuestion.OptionTable.map((option:OptionData, key:number) => (
           <Button
-            disabled={buttonDisable}
             key={key}
+            disabled={buttonDisable}
             onClick={() => isOptionCorrect(option)}
             className={`${
               selectedOption === option.label
@@ -55,7 +65,7 @@ const PlayQuiz = () => {
                   ? "bg-green-500 hover:bg-green-500 disabled:opacity-100"
                   : "bg-red-500 hover:bg-red-500 disabled:opacity-100"
                 : ""
-            } disabled`}
+            }`}
           >
             {option.label}
           </Button>

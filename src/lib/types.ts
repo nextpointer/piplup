@@ -22,12 +22,12 @@ export type QuizData = {
   Questions: QuestionData[];
 };
 
-type QuestionData = {
+export type QuestionData = {
   QuestionName: string;
   Options: OptionData[];
 };
 
-type OptionData = {
+export type OptionData = {
   label: string;
   isCorrect: boolean;
 };
@@ -73,5 +73,7 @@ export type QuizDetails = {
   visibility: string;
   difficulty: string;
   created_At: Date;
-  updatedAt: Date;
+  updatedAt?: Date;
+  UserTable?: { username: string }; 
 };
+
