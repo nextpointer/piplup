@@ -4,6 +4,7 @@ import "./globals.css";
 import Nav from "@/components/custom/Nav";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { Provider } from "jotai";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,6 +39,7 @@ export default function RootLayout({
       >
         <Nav/>
         {children}
+        <Toaster/>
       </body>
       </Provider>
       </UserProvider>
