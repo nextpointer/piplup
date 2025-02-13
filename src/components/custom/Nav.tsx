@@ -1,6 +1,6 @@
 "use client";
 import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { NavElement } from "@/lib/content";
@@ -13,11 +13,26 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@radix-ui/react-popover";
+import { toast } from "sonner";
 
 function Nav() {
   const { user } = useUser();
-  console.log(user);
+  console.log("users",user);
   const [activeTab, setActiveTab] = useState(0);
+  // const [prevUser, setPrevUser] = useState(user);
+  const [logout, setlogout] = useState(false);
+
+  useEffect(() => {
+      toast.success("Login successfully");
+  }, [user]);
+
+  const handleLogout = () => {
+    setlogout(true);
+  };
+
+  useEffect(() => {
+    toast.success("Logout successfully");
+  }, [logout]);
 
   return (
     <>
@@ -57,7 +72,7 @@ function Nav() {
                   />
                   <Moon size={18} />
                 </div>
-                <Link href={"/api/auth/logout"}>
+                <Link href={"/api/auth/logout"} onClick={handleLogout}>
                   <Button className="rounded-[24px]">Logout</Button>
                 </Link>
               </PopoverContent>

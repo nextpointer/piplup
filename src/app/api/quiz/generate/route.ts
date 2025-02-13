@@ -9,7 +9,7 @@ const formSchema = z.object({
     .string()
     .min(2, { message: "Title must be at least 2 characters." })
     .max(15, { message: "Title maximum length is 15 characters" }),
-  About: z.string().max(30, { message: "About maximum length 40 characters." }),
+  About: z.string().max(100, { message: "About maximum length 100 characters." }),
   publicQuiz: z.boolean(),
   difficulty: z.enum(["Easy", "Medium", "Hard"], {
     required_error: "Difficulty is required.",
@@ -118,12 +118,12 @@ export async function POST(req: NextRequest) {
   - 4 options per question
   - Only one correct answer
   - Title length: 15 characters max
-  - About section: 30 characters max
+  - About section: 50 characters minimum and 100 characters max
   
   Example Structure:
   {
     "Title": "ML Basics",
-    "About": "Intro to machine learning",
+    "About": "Intro to machine learning about how machine learning works",
     "publicQuiz": true,
     "Questions": [
       {

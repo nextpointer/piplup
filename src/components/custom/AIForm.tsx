@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useState, useRef } from "react";
-import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -33,6 +32,7 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const quizSchema = z.object({
   prompt: z.string().min(5, "Prompt must be at least 5 characters"),
@@ -70,7 +70,7 @@ const AIQuizForm = () => {
     },
   });
 
-  const router = useRouter()
+  const router = useRouter();
 
   const onSubmit = async (data: QuizFormType) => {
     setLoading(true);
@@ -91,19 +91,22 @@ const AIQuizForm = () => {
         body: formData,
       });
       if (!response.ok) {
+        toast.warning("Network response was not ok");
         throw new Error("Network response was not ok");
       }
 
       const result = await response.json();
-      console.log("Success", result);
-      const insertResponse = await inserQuiz(result);
-      console.log(insertResponse.message);
-      console.log("isertid",insertResponse.id);
-      
-      // redirecting the quiz edit section
-      router.push(`/quiz/${insertResponse.id}`);
+      if (result.error) {
+        toast.warning(result.error);
+      } else {
+        const insertResponse = await inserQuiz(result);
+        toast.success(insertResponse.message);
+        // redirecting the quiz edit section
+        router.push(`/quiz/${insertResponse.id}`);
+      }
     } catch (e) {
       console.error("Error submitting form:", e);
+      toast.error("Failed to create quiz");
     } finally {
       setLoading(false);
     }
@@ -309,7 +312,7 @@ const AIQuizForm = () => {
               type="submit"
               className="bg-gradient-to-r from-primary to-accent text-white w-full"
             >
-              {isloading?(<div className="loader"></div> ):"Generate Quiz"}
+              {isloading ? <div className="loader"></div> : "Generate Quiz"}
             </Button>
           </DialogFooter>
         </form>

@@ -26,6 +26,7 @@ import {
 import { Card } from "@/components/ui/card";
 import { inserQuiz } from "@/app/db/queries/insert";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import { toast } from "sonner";
 
 
 const formSchema = z.object({
@@ -33,7 +34,7 @@ const formSchema = z.object({
     .string()
     .min(2, { message: "Title must be at least 2 characters." })
     .max(15, { message: "Title maximum length is 15 characters" }),
-  About: z.string().max(30, { message: "About maximum length 40 characters." }),
+  About: z.string().max(100, { message: "About maximum length 100 characters." }),
   publicQuiz: z.boolean(),
   difficulty: z.enum(["Easy", "Medium", "Hard"], {
     required_error: "Difficulty is required.",
@@ -164,10 +165,10 @@ const Page = () => {
     console.log(values);
     if (nickname) {
       await inserQuiz(values);
-      alert("Quiz created successfully");
+      toast.success("Quiz Created Successful")
     } else {
-      console.error("Nickname is undefined");
-      alert("Failed to create quiz");
+      toast.error("Failed to create quiz")
+      toast.error("Nickname is undefined")
     }
   };
 
