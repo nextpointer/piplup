@@ -12,9 +12,9 @@ import QuizCard from "@/components/custom/QuizCard";
 
 const Page = () => {
   const router = useRouter();
-  const [publicQuizDetails, setPublicQuizDetails] = useAtom<QuizDetails[] | undefined>(
-    FetchedPublicQuizDetails
-  );
+  const [publicQuizDetails, setPublicQuizDetails] = useAtom<
+    QuizDetails[] | undefined
+  >(FetchedPublicQuizDetails);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -48,7 +48,8 @@ const Page = () => {
   // Categorizing quizzes by difficulty
   const categorizedQuizzes = {
     Easy: publicQuizDetails?.filter((quiz) => quiz.difficulty === "Easy") || [],
-    Medium: publicQuizDetails?.filter((quiz) => quiz.difficulty === "Medium") || [],
+    Medium:
+      publicQuizDetails?.filter((quiz) => quiz.difficulty === "Medium") || [],
     Hard: publicQuizDetails?.filter((quiz) => quiz.difficulty === "Hard") || [],
   };
 
@@ -56,15 +57,14 @@ const Page = () => {
     <main className="flex flex-col justify-start mt-16 px-4">
       <h1 className="text-3xl font-bold md:text-4xl">Explore Quizzes</h1>
       <p className="text-2xl mt-2">
-        Explore quizzes. Embrace the opportunity to grow, learn, and test your knowledge.
+        Explore quizzes. Embrace the opportunity to grow, learn, and test your
+        knowledge.
       </p>
 
       {loading ? (
-        <p className="text-center text-lg mt-4">Loading quizzes...</p>
-      ) : error ? (
-        <p className="text-center text-lg text-red-500 mt-4">{error}</p>
-      ) : publicQuizDetails?.length === 0 ? (
-        <p className="text-center text-lg mt-4">No public quizzes available.</p>
+        <main className="flex-center">
+          <span className="loader-main"></span>
+        </main>
       ) : (
         Object.entries(categorizedQuizzes).map(([difficulty, quizzes]) =>
           quizzes.length > 0 ? (
@@ -77,7 +77,11 @@ const Page = () => {
               </h2>
               <div className="w-full overflow-x-auto flex flex-row space-x-4">
                 {quizzes.map((quiz) => (
-                  <div key={quiz.id} onClick={() => handleQuizClick(quiz.id)} className="cursor-pointer">
+                  <div
+                    key={quiz.id}
+                    onClick={() => handleQuizClick(quiz.id)}
+                    className="cursor-pointer"
+                  >
                     <QuizCard quiz={quiz} />
                   </div>
                 ))}

@@ -214,6 +214,13 @@ const Page = () => {
   };
 
   return (
+    <>
+    {loading ? (
+        <main className="flex-center">
+           <span className="loader-main"></span>
+        </main>
+      ) :
+    (
     <main className="pt-12">
       <Card className="p-4 w-full xl:w-[50%] overflow-y-scroll max-h-[85vh] relative no-scrollbar">
         <h2 className="text-2xl font-bold ">About Quiz Topic</h2>
@@ -320,6 +327,7 @@ const Page = () => {
         </Form>
       </Card>
     </main>
+    )}</>
   );
 };
 
