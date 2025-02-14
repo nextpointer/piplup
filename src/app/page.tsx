@@ -8,19 +8,18 @@ import { toast } from "sonner";
 
 export default function Home() {
   const router = useRouter();
-  const user = useUser()
-  useEffect(()=>{
-    if(user){
-      router.push("/dashboard");
-    }
-  },[user])
-  
+  // const user = useUser()
+  // useEffect(()=>{
+  //   if(user){
+  //     router.push("/dashboard");
+  //   }
+  // },[user])
 
   return (
     <>
-      <main>
-        <div className="xl:p-36 flex-center flex-col">
-          <h1 className="text-3xl xl:text-7xl sm:text-5xl  text-center font-bold tracking-tighter m-2 ">
+      <main className="before:bg-transparent sm:before:bg-accent">
+        <div className="xl:p-36 flex-center flex-col backdrop-blur-3xl h-full">
+          <h1 className="text-3xl xl:text-7xl sm:text-5xl  text-center font-bold tracking-tighter m-2">
             {heroline}
           </h1>
           <p className="text-base xl:ml-44 xl:mr-44 xl:text-2xl md:text-2xl text-center m-2">
@@ -28,7 +27,7 @@ export default function Home() {
           </p>
           <div>
             <Button
-              className="m-2"
+              className="m-2 relative "
               onClick={() => {
                 router.push("/api/auth/signup");
                 toast.info("Redirecting to the signup page");
@@ -36,7 +35,9 @@ export default function Home() {
             >
               Get Started
             </Button>
-            <Button className="bg-transparent hover:bg-gray-100 text-black">Know More</Button>
+            <Button className="bg-background text-primary-foregroun hover:bg-popover">
+              Know More
+            </Button>
           </div>
         </div>
       </main>

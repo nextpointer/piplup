@@ -14,39 +14,44 @@ import {
   PopoverContent,
 } from "@radix-ui/react-popover";
 import { toast } from "sonner";
+import { usePathname } from "next/navigation";
 
 function Nav() {
   const { user } = useUser();
-  console.log("users",user);
-  const [activeTab, setActiveTab] = useState(0);
-  // const [prevUser, setPrevUser] = useState(user);
-  const [logout, setlogout] = useState(false);
+  const pathname = usePathname();
+  console.log(pathname);
+  
+  const [logout, setLogout] = useState(false);
 
   useEffect(() => {
+    if (user) {
       toast.success("Login successfully");
+    }
   }, [user]);
 
   const handleLogout = () => {
-    setlogout(true);
+    setLogout(true);
   };
 
   useEffect(() => {
-    toast.success("Logout successfully");
+    if (logout) {
+      toast.success("Logout successfully");
+    }
   }, [logout]);
 
   return (
     <>
-      <div className="h-12 w-full flex justify-between items-center  pl-6 pr-6 md:pl-12 md:pr-12 pt-4 pb-2 absolute top-0 left-0 z-50">
+      <div className="h-12 w-full flex justify-between items-center pl-6 pr-6 md:pl-12 md:pr-12 pt-4 pb-4 absolute top-0 left-0 z-50">
         <Link href={"/"} className="flex-center gap-2">
           <Image src={"/logo.png"} width={25} height={25} alt="Piplup Logo" />
           <h2 className="text-xl font-[600] tracking-wider">PiPluP</h2>
         </Link>
-        <Menubar className=" border-none outline-none flex-center">
+        <Menubar className="border-none outline-none flex-center rounded-[24px] ">
           {NavElement.map((element, key) => (
             <MenubarMenu key={key}>
               <MenubarTrigger
                 className={`font-[Inter] hidden font-normal tracking-wide xl:block ${
-                  activeTab === key
+                  pathname === element.href
                     ? "bg-gradient-to-r from-primary to-accent text-white "
                     : ""
                 }`}

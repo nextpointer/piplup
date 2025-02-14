@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 body {
   /* font-family: Arial, Helvetica, sans-serif; */
 }
@@ -12,13 +11,7 @@ body {
   box-sizing: border-box;
 }
 
-main {
-  padding: 1rem 2rem 1rem 2rem;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 
 .loader {
   width: 25px;
@@ -114,6 +107,8 @@ main {
 }
 
 
+
+
 @layer utilities {
   .flex-center {
     @apply flex items-center justify-center;
@@ -187,4 +182,26 @@ main {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+main {
+  padding: 1rem 2rem 1rem 2rem;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background: 
+     url("data:image/svg+xml, %3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='10' numOctaves='10' stitchTiles='stitch' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.3' /%3E%3C/svg%3E") no-repeat center center;
+  background-size: cover;
+}
+
+main::before{
+  content: "";
+  height: 100px;
+  width: 100px;
+  position: absolute;
+  top: 25%;
+  left: 20%;
+  transform: translate(-50%,50%);
 }
