@@ -1,14 +1,20 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { heroline, subHeroLine } from "@/lib/content";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { toast } from "sonner";
 
 export default function Home() {
   const router = useRouter();
-  // if(!user){
-  //   redirect("/dashboard");
-  // }
+  const user = useUser()
+  useEffect(()=>{
+    if(user){
+      router.push("/dashboard");
+    }
+  },[user])
+  
 
   return (
     <>
