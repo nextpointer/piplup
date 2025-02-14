@@ -19,12 +19,12 @@ import Image from "next/image";
 
 export default function Home() {
   const router = useRouter();
-  // const user = useUser()
-  // useEffect(()=>{
-  //   if(user){
-  //     router.push("/dashboard");
-  //   }
-  // },[user])
+  const user = useUser()
+  useEffect(()=>{
+    if(user){
+      router.push("/dashboard");
+    }
+  },[user])
 
   return (
     <>

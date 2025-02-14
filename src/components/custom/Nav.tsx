@@ -69,7 +69,7 @@ function Nav() {
                 {element.name === "About" ? (
                   <Drawer>
                     <DrawerTrigger asChild>
-                    <Link href={"#"}>{element.name}</Link>
+                    <Link href={"#"} className="p-2">{element.name}</Link>
                     </DrawerTrigger>
                     <DrawerContent className="flex-center">
                       <DrawerHeader className="flex-center flex-col">
@@ -97,7 +97,7 @@ function Nav() {
                     </DrawerContent>
                   </Drawer>
                 ) : (
-                  <Link href={element.href}>{element.name}</Link>
+                  <Link href={element.href} className="p-2">{element.name}</Link>
                 )}
               </MenubarTrigger>
             </MenubarMenu>
