@@ -15,12 +15,22 @@ import {
 } from "@radix-ui/react-popover";
 import { toast } from "sonner";
 import { usePathname } from "next/navigation";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 
 function Nav() {
   const { user } = useUser();
   const pathname = usePathname();
   console.log(pathname);
-  
+
   const [logout, setLogout] = useState(false);
 
   useEffect(() => {
@@ -56,7 +66,39 @@ function Nav() {
                     : ""
                 }`}
               >
-                <Link href={element.href}>{element.name}</Link>
+                {element.name === "About" ? (
+                  <Drawer>
+                    <DrawerTrigger asChild>
+                    <Link href={"#"}>{element.name}</Link>
+                    </DrawerTrigger>
+                    <DrawerContent className="flex-center">
+                      <DrawerHeader className="flex-center flex-col">
+                        <DrawerTitle className="text-2xl md:text-3xl ">
+                          About
+                        </DrawerTitle>
+                        <DrawerDescription>
+                          The purpose of making that platform to gain your
+                          knowledge and create quiz for others playing well
+                        </DrawerDescription>
+                      </DrawerHeader>
+                      <div className="flex-center">
+                        <Image
+                          alt="diagram"
+                          height={1000}
+                          width={1000}
+                          src={"/piplup_diagram.png"}
+                        />
+                      </div>
+                      <DrawerFooter>
+                        <h2 className="text-base font-bold md:text-2xl">
+                          Made by @nextpointer❤️
+                        </h2>
+                      </DrawerFooter>
+                    </DrawerContent>
+                  </Drawer>
+                ) : (
+                  <Link href={element.href}>{element.name}</Link>
+                )}
               </MenubarTrigger>
             </MenubarMenu>
           ))}

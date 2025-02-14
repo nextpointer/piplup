@@ -8,7 +8,7 @@ interface QuizCardProps {
 
 const QuizCard: React.FC<QuizCardProps> = ({ quiz }) => {
   return (
-    <Card className="h-56 w-[350px] m-2 min-w-[320px] p-4 flex flex-col gap-2">
+    <Card className="h-56 w-[350px] m-2 min-w-[320px] p-4 flex flex-col gap-2 bg-transparent backdrop-blur-md">
       <h1 className="text-[1.5rem] font-semibold">{quiz.title}</h1>
       <h4 className="p-1 bg-secondary rounded-[24px] w-16 text-center">
         {quiz.difficulty}

@@ -3,8 +3,8 @@ export const subHeroLine = "Join a community of quiz lovers and challenge yourse
 export const NavElement = [
   { name: "Dashboard", href: "/dashboard" },
   { name: "Play Quiz", href: "/quiz/play" },
-  { name: "About", href: "/about" },
-  { name: "Create Your Quiz", href: "/quiz/create" }
+  { name: "Create Your Quiz", href: "/quiz/create" },
+  { name: "About", href: "/about" }
 ];
 
 export const quizData = [

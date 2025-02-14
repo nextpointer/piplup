@@ -5,6 +5,17 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import Image from "next/image";
 
 export default function Home() {
   const router = useRouter();
@@ -35,9 +46,33 @@ export default function Home() {
             >
               Get Started
             </Button>
-            <Button className="bg-background text-primary-foregroun hover:bg-popover">
-              Know More
-            </Button>
+            <Drawer>
+              <DrawerTrigger asChild>
+                <Button className="bg-background text-primary-foregroun hover:bg-popover">
+                  Know More
+                </Button>
+              </DrawerTrigger>
+              <DrawerContent className="flex-center">
+                <DrawerHeader className="flex-center flex-col">
+                  <DrawerTitle className="text-2xl md:text-3xl ">About</DrawerTitle>
+                  <DrawerDescription>
+                    The purpose of making that platform to gain your knowledge
+                    and create quiz for others playing well
+                  </DrawerDescription>
+                </DrawerHeader>
+                <div className="flex-center">
+                  <Image
+                    alt="diagram"
+                    height={1000}
+                    width={1000}
+                    src={"/piplup_diagram.png"}
+                  />
+                </div>
+                <DrawerFooter>
+                  <h2 className="text-base font-bold md:text-2xl">Made by @nextpointer❤️</h2>
+                </DrawerFooter>
+              </DrawerContent>
+            </Drawer>
           </div>
         </div>
       </main>

@@ -115,7 +115,7 @@ const page = () => {
                   <AIForm />
                 </Dialog>
   
-                <Link href="/quiz/create" className="flex-1">
+                <Link href="/quiz/play" className="flex-1">
                   <Card className="p-2 xl:p-4 bg-secondary flex-center">
                     <div className="flex gap-2 items-center">
                       <Gamepad2 size={48} />
