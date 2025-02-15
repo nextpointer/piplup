@@ -22,14 +22,14 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 import { Card } from "@/components/ui/card";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { useParams } from 'next/navigation'
+import { useParams } from "next/navigation";
 import { getQuestionAndOption } from "@/app/db/queries/select";
 import { useAtom } from "jotai";
 import { QuizWithQuestionOption } from "@/app/store/atom";
-import { IncomingQuizData, QuizData, } from "@/lib/types";
+import { IncomingQuizData, QuizData } from "@/lib/types";
 
 const formSchema = z.object({
   Title: z
@@ -41,23 +41,37 @@ const formSchema = z.object({
   difficulty: z.enum(["Easy", "Medium", "Hard"], {
     required_error: "Difficulty is required.",
   }),
-  Questions: z.array(
-    z.object({
-      QuestionName: z
-        .string()
-        .min(1, { message: "Question Name is required." }),
-      Options: z.array(
-        z.object({
-          label: z.string().min(1, { message: "Option label is required." }),
-          isCorrect: z.boolean(),
-        })
-      ),
-    })
-  ).min(1, { message: "At least one question is required." }),
+  Questions: z
+    .array(
+      z.object({
+        QuestionName: z
+          .string()
+          .min(1, { message: "Question Name is required." }),
+        Options: z.array(
+          z.object({
+            label: z.string().min(1, { message: "Option label is required." }),
+            isCorrect: z.boolean(),
+          })
+        ),
+      })
+    )
+    .min(1, { message: "At least one question is required." }),
 });
 
-const QuestionItem = ({ control, index, remove }: { control: any; index: number; remove: () => void }) => {
-  const { fields: optionFields, append: appendOption, remove: removeOption } = useFieldArray({
+const QuestionItem = ({
+  control,
+  index,
+  remove,
+}: {
+  control: any;
+  index: number;
+  remove: () => void;
+}) => {
+  const {
+    fields: optionFields,
+    append: appendOption,
+    remove: removeOption,
+  } = useFieldArray({
     control,
     name: `Questions.${index}.Options`,
   });
@@ -71,10 +85,7 @@ const QuestionItem = ({ control, index, remove }: { control: any; index: number;
           <FormItem>
             <FormLabel>Question No {index + 1}</FormLabel>
             <FormControl>
-              <Input
-                placeholder="Enter question Name"
-                {...field}
-              />
+              <Input placeholder="Enter question Name" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -82,10 +93,7 @@ const QuestionItem = ({ control, index, remove }: { control: any; index: number;
       />
       <h3 className="font-bold mt-4">Options</h3>
       {optionFields.map((option, optionIndex) => (
-        <div
-          key={option.id}
-          className="flex items-center gap-4 mt-2 ml-4"
-        >
+        <div key={option.id} className="flex items-center gap-4 mt-2 ml-4">
           <FormControl>
             <Input
               {...control.register(
@@ -106,6 +114,7 @@ const QuestionItem = ({ control, index, remove }: { control: any; index: number;
             </label>
           </FormControl>
           <Button
+            className="border hover:bg-destructive/90"
             type="button"
             variant="destructive"
             onClick={() => removeOption(optionIndex)}
@@ -134,9 +143,11 @@ const QuestionItem = ({ control, index, remove }: { control: any; index: number;
 };
 
 const Page = () => {
-  const [loading,setLoading] = useState<boolean>(false)
-  const [DefaultQuizDetails,setDefaultQuizDetails] = useAtom<IncomingQuizData | null | undefined>(QuizWithQuestionOption);
-    const params = useParams<{slug:string}>()
+  const [loading, setLoading] = useState<boolean>(false);
+  const [DefaultQuizDetails, setDefaultQuizDetails] = useAtom<
+    IncomingQuizData | null | undefined
+  >(QuizWithQuestionOption);
+  const params = useParams<{ slug: string }>();
   useEffect(() => {
     if (!params.slug) return;
     const fetchQuiz = async () => {
@@ -144,9 +155,8 @@ const Page = () => {
       try {
         const quiz = await getQuestionAndOption(params.slug);
         console.log(quiz.quiz);
-        
+
         setDefaultQuizDetails(quiz.quiz as IncomingQuizData);
-        
       } catch (error) {
         console.error(error);
       } finally {
@@ -154,8 +164,7 @@ const Page = () => {
       }
     };
     fetchQuiz();
-  }, [params.slug,setDefaultQuizDetails]);
-  
+  }, [params.slug, setDefaultQuizDetails]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -163,7 +172,7 @@ const Page = () => {
       Title: "",
       About: "",
       publicQuiz: false,
-      difficulty:"Easy",
+      difficulty: "Easy",
       Questions: [
         {
           QuestionName: "",
@@ -175,26 +184,22 @@ const Page = () => {
   useEffect(() => {
     if (DefaultQuizDetails) {
       // Map the backend data to match the form structure
-      const formattedData:QuizData = {
+      const formattedData: QuizData = {
         Title: DefaultQuizDetails.title,
         About: DefaultQuizDetails.about,
         publicQuiz: DefaultQuizDetails.visibility === "public",
         difficulty: DefaultQuizDetails.difficulty as "Easy" | "Medium" | "Hard",
-        Questions: DefaultQuizDetails.QuestionTable.map(question => ({
+        Questions: DefaultQuizDetails.QuestionTable.map((question) => ({
           QuestionName: question.title,
-          Options: question.OptionTable.map(option => ({
+          Options: question.OptionTable.map((option) => ({
             label: option.label,
-            isCorrect: option.isCorrect
-          }))
-        }))
-      }
+            isCorrect: option.isCorrect,
+          })),
+        })),
+      };
       form.reset(formattedData);
     }
-
-
   }, [DefaultQuizDetails, form]); // Add form as dependency
-
-  
 
   const {
     fields: questionFields,
@@ -215,119 +220,135 @@ const Page = () => {
 
   return (
     <>
-    {loading ? (
+      {loading ? (
         <main className="flex-center">
-           <span className="loader-main"></span>
+          <span className="loader-main"></span>
         </main>
-      ) :
-    (
-    <main className="pt-12">
-      <Card className="p-4 w-full xl:w-[50%] overflow-y-scroll max-h-[85vh] relative no-scrollbar">
-        <h2 className="text-2xl font-bold ">About Quiz Topic</h2>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <Card className="p-4 mt-4">
-              <FormField
-                control={form.control}
-                name="Title"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Title</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Current Affairs" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="About"
-                render={({ field }) => (
-                  <FormItem className="mt-2">
-                    <FormLabel>About</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="This is all about current affairs"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-          control={form.control}
-          name="difficulty"
-          render={({ field }) => (
-            <FormItem className="mt-2">
-              <FormLabel>Difficulty Level</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value} key={field.value} >
-                <FormControl>
-                  <SelectTrigger className="rounded-[24px]">
-                    <SelectValue placeholder="Select one level" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent className="rounded-[24px]">
-                  <SelectItem value="Easy" className="rounded-[24px]">Easy</SelectItem>
-                  <SelectItem value="Medium" className="rounded-[24px]">Medium</SelectItem>
-                  <SelectItem value="Hard" className="rounded-[24px]">Hard</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-            </Card>
+      ) : (
+        <main className="pt-12">
+          <Card className="p-4 w-full xl:w-[50%] overflow-y-scroll max-h-[85vh] relative no-scrollbar">
+            <h2 className="text-2xl font-bold ">About Quiz Topic</h2>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-8"
+              >
+                <Card className="p-4 mt-4">
+                  <FormField
+                    control={form.control}
+                    name="Title"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Title</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Current Affairs" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="About"
+                    render={({ field }) => (
+                      <FormItem className="mt-2">
+                        <FormLabel>About</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="This is all about current affairs"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="difficulty"
+                    render={({ field }) => (
+                      <FormItem className="mt-2">
+                        <FormLabel>Difficulty Level</FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                          key={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger className="rounded-[24px]">
+                              <SelectValue placeholder="Select one level" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent className="rounded-[24px]">
+                            <SelectItem value="Easy" className="rounded-[24px]">
+                              Easy
+                            </SelectItem>
+                            <SelectItem
+                              value="Medium"
+                              className="rounded-[24px]"
+                            >
+                              Medium
+                            </SelectItem>
+                            <SelectItem value="Hard" className="rounded-[24px]">
+                              Hard
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </Card>
 
-            <h2 className="text-2xl font-bold ">Questions</h2>
-            {questionFields.map((question, questionIndex) => (
-              <QuestionItem
-                key={question.id}
-                control={form.control}
-                index={questionIndex}
-                remove={() => removeQuestion(questionIndex)}
-              />
-            ))}
-            
-            <FormField
-              control={form.control}
-              name="publicQuiz"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-[24px] border p-4 shadow">
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                  <div className="space-y-1 leading-none">
-                    <FormLabel>Add it as a public quiz</FormLabel>
-                  </div>
-                </FormItem>
-              )}
-            />
+                <h2 className="text-2xl font-bold ">Questions</h2>
+                {questionFields.map((question, questionIndex) => (
+                  <QuestionItem
+                    key={question.id}
+                    control={form.control}
+                    index={questionIndex}
+                    remove={() => removeQuestion(questionIndex)}
+                  />
+                ))}
 
-            <Button
-              type="button"
-              className="mt-4 bg-secondary text-black"
-              onClick={() =>
-                appendQuestion({
-                  QuestionName: "",
-                  Options: [{ label: "", isCorrect: false }],
-                })
-              }
-            >
-              Add Question
-            </Button>
-            <Button type="submit" className="mt-8 mr-4 absolute right-0 ">
-              Save Changes
-            </Button>
-          </form>
-        </Form>
-      </Card>
-    </main>
-    )}</>
+                <FormField
+                  control={form.control}
+                  name="publicQuiz"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-[24px] border p-4 shadow">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>Add it as a public quiz</FormLabel>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+
+                <Button
+                  type="button"
+                  className="mt-4 bg-secondary text-black"
+                  onClick={() =>
+                    appendQuestion({
+                      QuestionName: "",
+                      Options: [{ label: "", isCorrect: false }],
+                    })
+                  }
+                >
+                  Add Question
+                </Button>
+                <Button type="submit" className="mt-8 mr-4 absolute right-0 ">
+                  Save Changes
+                </Button>
+              </form>
+            </Form>
+          </Card>
+        </main>
+      )}
+    </>
   );
 };
 

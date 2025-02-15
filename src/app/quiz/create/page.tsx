@@ -105,8 +105,9 @@ const QuestionItem = ({ control, index, remove }: { control: any; index: number;
             </label>
           </FormControl>
           <Button
+            className="border hover:bg-destructive/90"
             type="button"
-            variant="destructive"
+            variant="ghost"
             onClick={() => removeOption(optionIndex)}
           >
             <X />
