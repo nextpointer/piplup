@@ -8,7 +8,7 @@ import { useAtom } from "jotai";
 import { QuizDetails } from "@/lib/types";
 import { FetchedPublicQuizDetails } from "@/app/store/atom";
 import { getPublicQuizzes } from "@/app/db/queries/select";
-import QuizCard from "@/components/custom/QuizCard";
+import QuizCard, { colorSelect } from "@/components/custom/QuizCard";
 
 const Page = () => {
   const router = useRouter();
@@ -43,6 +43,12 @@ const Page = () => {
     router.push(`/quiz/play/${quizId}`);
   };
 
+  const quizHeaderMap:{[key in QuizDetails['difficulty']]:string} = {
+    Easy: "For Beginners",
+    Medium: "Not for Beginners",
+    Hard: "For Experts",
+  }
+
   // Categorizing quizzes by difficulty
   const categorizedQuizzes = {
     Easy: publicQuizDetails?.filter((quiz) => quiz.difficulty === "Easy") || [],
@@ -63,20 +69,20 @@ const Page = () => {
       ) : (
         <main className="flex flex-col justify-start px-4 h-auto">
           <h1 className="text-3xl font-bold md:text-4xl mt-16">Explore Quizzes</h1>
-          <p className="text-2xl mt-2">
+          <p className="text-base xl:text-2xl mb-8 xl:mt-2 text-center">
             Explore quizzes. Embrace the opportunity to grow, learn, and test your knowledge.
           </p>
 
           {Object.entries(categorizedQuizzes).map(([difficulty, quizzes]) => 
             quizzes.length > 0 ? (
-              <div key={difficulty} className="w-full h-[45vh] p-4">
-                <h2 className="text-3xl font-bold flex flex-row items-center justify-between">
-                  {difficulty} Quizzes
+              <div key={difficulty} className="w-full h-auto p-4">
+                <h2 className="text-[24px] xl:text-3xl font-bold flex flex-row items-center justify-between">
+                  {quizHeaderMap[difficulty]}
                   <Link href={"/quizzes"}>
-                    <Button>Explore more</Button>
+                    <Button className={`bg-${colorSelect[difficulty]} ${difficulty=="Easy"?"text-black":"text-white"}`}>Explore more</Button>
                   </Link>
                 </h2>
-                <div className="w-full overflow-x-auto flex flex-row space-x-4">
+                <div className="w-full overflow-x-auto flex flex-row space-x-4 no-scrollbar">
                   {quizzes.map((quiz) => (
                     <div
                       key={quiz.id}

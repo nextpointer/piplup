@@ -161,7 +161,7 @@ body {
     --popover-foreground: 240 100% 98%;
     --primary: 210 57% 60%; /* #5691cd */
     --primary-foreground: 240 100% 98%;
-    --secondary: 195 85% 30%; /* Darker secondary for dark mode */
+    --secondary: 195 85% 55%; /* Darker secondary for dark mode */
     --secondary-foreground: 240 100% 98%;
     --muted: 240 5% 10%; /* Muted tone for dark mode */
     --muted-foreground: 240 30% 85%; /* Muted light for contrast */
