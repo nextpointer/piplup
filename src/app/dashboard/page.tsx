@@ -140,6 +140,7 @@ const page = () => {
               {FetchQuizDetail?.map((data, key) => (
                 <HistoryCard
                   key={key}
+                  id={data.id}
                   date={data.created_At.toLocaleDateString()}
                   about={data.about}
                   title={data.title}

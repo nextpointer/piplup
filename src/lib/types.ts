@@ -1,4 +1,5 @@
 export interface HistoryBar {
+  id:string;
   date: string;
   title: string;
   about: string;
