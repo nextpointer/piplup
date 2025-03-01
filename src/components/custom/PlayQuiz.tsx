@@ -6,7 +6,7 @@ import { Progress } from "../ui/progress";
 import React from "react";
 import { Button } from "../ui/button";
 import { result } from "@/app/store/atom";
-import { IncomingQuizData, OptionData, QuestionData, QuizData} from "@/lib/types"; // Import types
+import { IncomingQuizData, OptionData} from "@/lib/types"; // Import types
 
 // Atoms for state management
 const questionNoAtom = atom(0);
@@ -23,7 +23,7 @@ const PlayQuiz: React.FC<PlayQuizProps> = ({ quiz }) => {
   const [selectedOption, setSelectedOption] = useAtom(selectedOptionAtom);
   const [_, setIsCorrect] = useAtom(isCorrectAtom);
   const [buttonDisable, setButtonDisable] = useAtom(disableAtom);
-  const [userResult, setUserResult] = useAtom(result);
+  const [__, setUserResult] = useAtom(result);
   const router = useRouter();
 
   if (!quiz || !quiz.QuestionTable.length) {

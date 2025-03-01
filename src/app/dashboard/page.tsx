@@ -2,7 +2,7 @@
 
 import { HistoryCard } from "@/components/custom/HistoryCard";
 import React, { useEffect, useState } from "react";
-import { participationData, quizData } from "@/lib/content";
+import { participationData} from "@/lib/content";
 import { Progress } from "@/components/ui/progress";
 import { ParticipationCard } from "@/components/custom/ParticipationCard";
 import { Card } from "@/components/ui/card";
