@@ -30,13 +30,17 @@ import { getQuestionAndOption } from "@/app/db/queries/select";
 import { useAtom } from "jotai";
 import { QuizWithQuestionOption } from "@/app/store/atom";
 import { IncomingQuizData, QuizData } from "@/lib/types";
+import { updateQuiz } from "@/app/db/queries/update";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   Title: z
     .string()
     .min(2, { message: "Title must be at least 2 characters." })
     .max(15, { message: "Title maximum length is 15 characters" }),
-  About: z.string().max(30, { message: "About maximum length 40 characters." }),
+  About: z
+    .string()
+    .max(130, { message: "About maximum length 40 characters." }),
   publicQuiz: z.boolean(),
   difficulty: z.enum(["Easy", "Medium", "Hard"], {
     required_error: "Difficulty is required.",
@@ -147,6 +151,8 @@ const Page = () => {
   const [DefaultQuizDetails, setDefaultQuizDetails] = useAtom<
     IncomingQuizData | null | undefined
   >(QuizWithQuestionOption);
+  const [isChanged, setIsChanged] = useState(false);
+
   const params = useParams<{ slug: string }>();
   useEffect(() => {
     if (!params.slug) return;
@@ -181,6 +187,13 @@ const Page = () => {
       ],
     },
   });
+  // Track form changes
+  useEffect(() => {
+    console.log("changing");
+    
+    const subscription = form.watch(() => setIsChanged(true));
+    return () => subscription.unsubscribe();
+  }, [form]);
   useEffect(() => {
     if (DefaultQuizDetails) {
       // Map the backend data to match the form structure
@@ -216,6 +229,13 @@ const Page = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log(values);
+    if (nickname) {
+      await updateQuiz(params.slug,values);
+      toast.success("Quiz Updated Successfully")
+    } else {
+      toast.error("Failed to update quiz")
+      toast.error("Nickname is undefined")
+    }
   };
 
   return (
@@ -340,7 +360,7 @@ const Page = () => {
                 >
                   Add Question
                 </Button>
-                <Button type="submit" className="mt-8 mr-4 absolute right-0 ">
+                <Button type="submit" className={`mt-8 mr-4 absolute right-0 ${isChanged?"opacity-100":"opacity-40"}`} disabled={!isChanged}>
                   Save Changes
                 </Button>
               </form>

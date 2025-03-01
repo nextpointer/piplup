@@ -24,11 +24,13 @@ export type QuizData = {
 };
 
 export type QuestionData = {
+  id?:string;
   QuestionName: string;
   Options: OptionData[];
 };
 
 export type OptionData = {
+  id?: string;
   label: string;
   isCorrect: boolean;
 };

@@ -21,7 +21,7 @@ export const QuizTable = pgTable("quizes", {
   id: uuid().primaryKey().defaultRandom(),
   userId: uuid()
     .notNull()
-    .references(() => UserTable.id, { onDelete: "cascade" }),
+    .references(() => UserTable.id, { onDelete: "cascade",onUpdate:'cascade' }),
   title: text("title").notNull(),
   about: text("description").notNull(),
   visibility: text("visibility").notNull(),
@@ -50,7 +50,7 @@ export const QuestionTable = pgTable("questions", {
   id: uuid().primaryKey().defaultRandom(),
   quizId: uuid()
     .notNull()
-    .references(() => QuizTable.id, { onDelete: "cascade" }),
+    .references(() => QuizTable.id, { onDelete: "cascade",onUpdate:'cascade' }),
   title: text("title").notNull(),
   created_At: timestamp("created_At").notNull().defaultNow(),
   updatedAt: timestamp("updated_at")
@@ -79,7 +79,7 @@ export const OptionTable = pgTable("options", {
   id: uuid().primaryKey().defaultRandom(),
   questionId: uuid()
     .notNull()
-    .references(() => QuestionTable.id, { onDelete: "cascade" }),
+    .references(() => QuestionTable.id, { onDelete: "cascade",onUpdate:'cascade' }),
   label: text("title").notNull(),
   isCorrect: boolean("isCorrect").notNull(),
   created_At: timestamp("created_At").notNull().defaultNow(),
@@ -106,10 +106,10 @@ export const PartcipationTable = pgTable("participations", {
   id: uuid().primaryKey().defaultRandom(),
   userId: uuid()
     .notNull()
-    .references(() => UserTable.id, { onDelete: "cascade" }),
+    .references(() => UserTable.id, { onDelete: "cascade",onUpdate:'cascade' }),
   quizId: uuid()
     .notNull()
-    .references(() => QuizTable.id, { onDelete: "cascade" }),
+    .references(() => QuizTable.id, { onDelete: "cascade",onUpdate:'cascade' }),
   score: text("score").notNull(),
   noOfQuestion: text("noOfQuestion").notNull(),
   created_At: timestamp("created_At").notNull().defaultNow(),
