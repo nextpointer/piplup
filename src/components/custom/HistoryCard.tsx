@@ -20,6 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { deleteQuiz } from "@/app/db/queries/delete";
 
 export const HistoryCard = (params: HistoryBar) => {
   const router = useRouter();
@@ -30,6 +31,17 @@ export const HistoryCard = (params: HistoryBar) => {
     );
     toast.success("Link copied to clipboard");
   };
+
+  const deleteTheQuiz = () =>{
+    deleteQuiz(params.id).then((res)=>{
+      if(res.success){
+        router.refresh()
+        toast.success("Quiz Deleted Successfully")
+      }else{
+        toast.error("Failed to delete the quiz")
+      }
+    })
+  }
   return (
     <>
       <Card className="flex flex-col m-4 p-4 rounded-[24px] snap-center bg-transparent backdrop-blur-md">
@@ -108,8 +120,7 @@ export const HistoryCard = (params: HistoryBar) => {
                       </Button>
                       <Button
                         variant="destructive"
-                        onClick={() =>
-                          toast.success("Quiz deleted successfully")
+                        onClick={deleteTheQuiz
                         }
                       >
                         Delete
