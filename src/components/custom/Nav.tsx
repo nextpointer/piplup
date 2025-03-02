@@ -40,8 +40,6 @@ function Nav() {
   }, [user]);
 
   const handleLogout = () => {
-    const auth0LogoutUrl = `${process.env.NEXT_PUBLIC_AUTH0_ISSUER_BASE_URL}/v2/logout?client_id=${process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID}&returnTo=${window.location.origin}`;
-    window.location.href = auth0LogoutUrl;
     setLogout(true);
   };
 
@@ -121,7 +119,7 @@ function Nav() {
                   />
                   <Moon size={18} />
                 </div>
-                <Link href="#" onClick={handleLogout}>
+                <Link href={"/api/auth/logout"} onClick={handleLogout}>
                   <Button className="rounded-[24px]">Logout</Button>
                 </Link>
               </PopoverContent>
