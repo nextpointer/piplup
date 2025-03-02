@@ -119,7 +119,7 @@ function Nav() {
                   />
                   <Moon size={18} />
                 </div>
-                <Link href={"/api/auth/logout"} onClick={handleLogout}>
+                <Link href={`/api/auth/logout?returnTo=${window.location.origin}`} onClick={handleLogout}>
                   <Button className="rounded-[24px]">Logout</Button>
                 </Link>
               </PopoverContent>
