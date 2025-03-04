@@ -23,6 +23,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import AIForm from "@/components/custom/AIForm";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 const page = () => {
   const [FetchQuizDetail, setFetchQuizDetail] = useAtom<
@@ -30,6 +31,7 @@ const page = () => {
   >(FetchQuizDetails);
 
   const [loading,setloading] = useState<boolean>(false);
+  const { user } = useUser();
 
   useEffect(() => {
     (async () => {
@@ -68,7 +70,7 @@ const page = () => {
         <main>
           <div className="grid h-screen w-full grid-cols-3 grid-rows-4 sm:grid-rows-3 pt-20 pb-4">
             <div className=" col-span-3 xl:col-span-2 row-span-2 md:md:grid-rows-1 sm:row-span-1">
-              <h3 className="text-3xl font-bold">Hello Surajit👋🏻</h3>
+              <h3 className="text-3xl font-bold">Hello {user?.nickname}👋🏻</h3>
               <div className="flex flex-row gap-4 flex-wrap p-4 items-center justify-center sm:h-full">
                 <Link href="/quiz/create" className="flex-1">
                   <Card className="p-2 xl:p-4 bg-secondary flex-center ">

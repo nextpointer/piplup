@@ -136,7 +136,7 @@ const QuestionItem = ({
       </Button>
       <Button
         type="button"
-        variant="destructive"
+        variant="ghost"
         className="mt-4 ml-1 absolute right-0 mr-4"
         onClick={remove}
       >
@@ -359,6 +359,9 @@ const Page = () => {
                   }
                 >
                   Add Question
+                </Button>
+                <Button onClick={()=>window.history.back()} className="mt-8 mr-4 absolute left-0">
+                  Cancel
                 </Button>
                 <Button type="submit" className={`mt-8 mr-4 absolute right-0 ${isChanged?"opacity-100":"opacity-40"}`} disabled={!isChanged}>
                   Save Changes
