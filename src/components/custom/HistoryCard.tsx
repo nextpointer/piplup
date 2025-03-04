@@ -27,7 +27,7 @@ export const HistoryCard = (params: HistoryBar) => {
   // implement the copy functionality
   const copyToClipboard = () => {
     navigator.clipboard.writeText(
-      `http://localhost:3000/quiz/play/${params.id}`
+      `https://piplup-quiz.vercel.app/quiz/play/${params.id}`
     );
     toast.success("Link copied to clipboard");
   };
@@ -69,7 +69,7 @@ export const HistoryCard = (params: HistoryBar) => {
                     </Label>
                     <Input
                       id="link"
-                      defaultValue={`http://localhost:3000/quiz/play/${params.id}`}
+                      defaultValue={`https://piplup-quiz.vercel.app/quiz/play/${params.id}`}
                       readOnly
                     />
                   </div>

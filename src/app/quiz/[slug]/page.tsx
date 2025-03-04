@@ -120,7 +120,7 @@ const QuestionItem = ({
           <Button
             className="border hover:bg-destructive/90"
             type="button"
-            variant="destructive"
+            variant="ghost"
             onClick={() => removeOption(optionIndex)}
           >
             <X />
@@ -136,7 +136,7 @@ const QuestionItem = ({
       </Button>
       <Button
         type="button"
-        variant="ghost"
+        variant="destructive"
         className="mt-4 ml-1 absolute right-0 mr-4"
         onClick={remove}
       >
@@ -190,7 +190,7 @@ const Page = () => {
   // Track form changes
   useEffect(() => {
     console.log("changing");
-    
+
     const subscription = form.watch(() => setIsChanged(true));
     return () => subscription.unsubscribe();
   }, [form]);
@@ -230,11 +230,11 @@ const Page = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log(values);
     if (nickname) {
-      await updateQuiz(params.slug,values);
-      toast.success("Quiz Updated Successfully")
+      await updateQuiz(params.slug, values);
+      toast.success("Quiz Updated Successfully");
     } else {
-      toast.error("Failed to update quiz")
-      toast.error("Nickname is undefined")
+      toast.error("Failed to update quiz");
+      toast.error("Nickname is undefined");
     }
   };
 
@@ -246,6 +246,7 @@ const Page = () => {
         </main>
       ) : (
         <main className="pt-12">
+          <Button onClick={() => window.history.back()}>Cancel</Button>
           <Card className="p-4 w-full xl:w-[50%] overflow-y-scroll max-h-[85vh] relative no-scrollbar">
             <h2 className="text-2xl font-bold ">About Quiz Topic</h2>
             <Form {...form}>
@@ -360,10 +361,14 @@ const Page = () => {
                 >
                   Add Question
                 </Button>
-                <Button onClick={()=>window.history.back()} className="mt-8 mr-4 absolute left-0">
-                  Cancel
-                </Button>
-                <Button type="submit" className={`mt-8 mr-4 absolute right-0 ${isChanged?"opacity-100":"opacity-40"}`} disabled={!isChanged}>
+
+                <Button
+                  type="submit"
+                  className={`mt-8 mr-4 absolute right-0 ${
+                    isChanged ? "opacity-100" : "opacity-40"
+                  }`}
+                  disabled={!isChanged}
+                >
                   Save Changes
                 </Button>
               </form>
