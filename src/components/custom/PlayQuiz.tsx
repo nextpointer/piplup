@@ -9,6 +9,7 @@ import { result } from "@/app/store/atom";
 import { IncomingQuizData, OptionData } from "@/lib/types";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, XCircle, Loader2 } from "lucide-react";
+import Image from "next/image"; 
 
 // Atoms for state management
 const questionNoAtom = atom(0);
@@ -134,11 +135,26 @@ const PlayQuiz: React.FC<PlayQuizProps> = ({ quiz }) => {
 
             {buttonDisable && (
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ 
+                  opacity: 1, 
+                  scale: 1,
+                  rotate: 360 // Full rotation
+                }}
+                transition={{ 
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
                 className="flex-center pt-4"
               >
-                <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+                <Image
+                  src="/logo.png" // Your Piplup image path
+                  width={48}
+                  height={48}
+                  alt="Loading..."
+                  className="animate-bounce" // Add bouncing animation
+                />
               </motion.div>
             )}
           </Card>
