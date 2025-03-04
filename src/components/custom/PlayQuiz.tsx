@@ -6,7 +6,9 @@ import { Progress } from "../ui/progress";
 import React from "react";
 import { Button } from "../ui/button";
 import { result } from "@/app/store/atom";
-import { IncomingQuizData, OptionData} from "@/lib/types"; // Import types
+import { IncomingQuizData, OptionData } from "@/lib/types";
+import { motion, AnimatePresence } from "framer-motion";
+import { CheckCircle2, XCircle, Loader2 } from "lucide-react";
 
 // Atoms for state management
 const questionNoAtom = atom(0);
@@ -14,64 +16,135 @@ const selectedOptionAtom = atom<string | null>(null);
 const isCorrectAtom = atom<boolean | null>(null);
 const disableAtom = atom<boolean>(false);
 
+const MotionButton = motion(Button);
+
 interface PlayQuizProps {
-  quiz: IncomingQuizData |undefined |null
+  quiz: IncomingQuizData | undefined | null;
 }
 
 const PlayQuiz: React.FC<PlayQuizProps> = ({ quiz }) => {
   const [questionNo, setQuestionNo] = useAtom(questionNoAtom);
   const [selectedOption, setSelectedOption] = useAtom(selectedOptionAtom);
-  const [_, setIsCorrect] = useAtom(isCorrectAtom);
+  const [isCorrect, setIsCorrect] = useAtom(isCorrectAtom);
   const [buttonDisable, setButtonDisable] = useAtom(disableAtom);
-  const [__, setUserResult] = useAtom(result);
+  const [_, setUserResult] = useAtom(result);
   const router = useRouter();
 
   if (!quiz || !quiz.QuestionTable.length) {
-    return <p className="text-center text-lg mt-4">No quiz data available.</p>;
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="flex-center h-[50vh]"
+      >
+        <p className="text-muted-foreground/80 text-lg font-medium">
+          No questions available for this quiz
+        </p>
+      </motion.div>
+    );
   }
 
   const currentQuestion = quiz.QuestionTable[questionNo];
+  const progressValue = (questionNo / quiz.QuestionTable.length) * 100;
 
-  // Function to check if the selected option is correct
-  const isOptionCorrect = (option: { label: string; isCorrect: boolean }) => {
+  const handleOptionSelect = (option: OptionData) => {
     setButtonDisable(true);
     setSelectedOption(option.label);
     setIsCorrect(option.isCorrect);
-    setUserResult((prevResult) => [...prevResult, option.isCorrect]);
+    setUserResult((prev) => [...prev, option.isCorrect]);
 
     setTimeout(() => {
       if (questionNo + 1 === quiz.QuestionTable.length) {
         router.push(`/quiz/result/${quiz.id}`);
       } else {
         setQuestionNo(questionNo + 1);
+        setSelectedOption(null);
       }
       setButtonDisable(false);
-    }, 1200);
+    }, 1500);
   };
 
   return (
-    <>
-      <Progress value={(questionNo / quiz.QuestionTable.length) * 100} className="absolute top-16 h-1" />
-      <Card className="flex flex-col gap-4 p-8">
-        <h1>{currentQuestion.title}</h1>
-        {currentQuestion.OptionTable.map((option:OptionData, key:number) => (
-          <Button
-            key={key}
-            disabled={buttonDisable}
-            onClick={() => isOptionCorrect(option)}
-            className={`${
-              selectedOption === option.label
-                ? option.isCorrect
-                  ? "bg-green-500 hover:bg-green-500 disabled:opacity-100"
-                  : "bg-red-500 hover:bg-red-500 disabled:opacity-100"
-                : ""
-            }`}
-          >
-            {option.label}
-          </Button>
-        ))}
-      </Card>
-    </>
+    <div className="w-full max-w-2xl mx-auto px-4 md:px-8">
+      <div className="relative mb-8">
+        <motion.div
+          initial={{ width: 0 }}
+          animate={{ width: `${progressValue}%` }}
+          transition={{ duration: 0.5 }}
+          className="h-2 bg-primary rounded-full"
+        />
+        <div className="absolute top-4 right-0 text-sm text-muted-foreground">
+          {questionNo + 1}/{quiz.QuestionTable.length}
+        </div>
+      </div>
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={questionNo}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3 }}
+        >
+          <Card className="p-6 md:p-8 space-y-6 shadow-lg rounded-2xl">
+            <motion.h1 
+              className="text-2xl md:text-3xl font-bold text-center mb-8"
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+            >
+              {currentQuestion.title}
+            </motion.h1>
+
+            <div className="grid gap-4">
+              {currentQuestion.OptionTable.map((option, index) => (
+                <MotionButton
+                  key={option.label}
+                  disabled={buttonDisable}
+                  onClick={() => handleOptionSelect(option)}
+                  variant="outline"
+                  className={`h-auto min-h-[60px] py-4 text-lg 
+                    justify-start text-left whitespace-normal
+                    ${selectedOption === option.label ? 
+                      (option.isCorrect 
+                        ? "border-green-500 bg-green-50" 
+                        : "border-red-500 bg-red-50") : ""}
+                  `}
+                  initial={{ scale: 1 }}
+                  whileHover={{ scale: selectedOption ? 1 : 1.02 }}
+                  whileTap={{ scale: selectedOption ? 1 : 0.98 }}
+                >
+                  <div className="flex items-center w-full gap-4">
+                    <div className={`w-6 h-6 rounded-full flex-center 
+                      ${selectedOption === option.label ? 
+                        (option.isCorrect ? "bg-green-500" : "bg-red-500") : 
+                        "bg-muted"}`}>
+                      {selectedOption === option.label && (
+                        option.isCorrect ? (
+                          <CheckCircle2 className="h-4 w-4 text-white" />
+                        ) : (
+                          <XCircle className="h-4 w-4 text-white" />
+                        )
+                      )}
+                    </div>
+                    <span className="flex-1">{option.label}</span>
+                  </div>
+                </MotionButton>
+              ))}
+            </div>
+
+            {buttonDisable && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex-center pt-4"
+              >
+                <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+              </motion.div>
+            )}
+          </Card>
+        </motion.div>
+      </AnimatePresence>
+    </div>
   );
 };
 
