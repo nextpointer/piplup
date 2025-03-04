@@ -98,6 +98,7 @@ function Nav() {
                           height={1000}
                           width={1000}
                           src={"/piplup_diagram.png"}
+                          className="w-full h-auto p-4"
                         />
                       </div>
                       <DrawerFooter>
@@ -118,78 +119,82 @@ function Nav() {
         </Menubar>
 
         {/* Mobile Hamburger Menu */}
-        <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger className="xl:hidden p-2 ml-4">
-            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </SheetTrigger>
-          <SheetContent side="left" className="w-[300px]">
-            <SheetHeader>
-              <SheetTitle className="text-left">PiPluP Menu</SheetTitle>
-            </SheetHeader>
+        <div className="flex items-center gap-4">
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger className="xl:hidden p-2">
+              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px]">
+              <SheetHeader>
+                <SheetTitle className="text-left">PiPluP Menu</SheetTitle>
+              </SheetHeader>
 
-            <div className="flex flex-col gap-4 mt-6">
-              {NavElement.map((element, key) => (
-                <div key={key} onClick={() => setIsOpen(false)}>
-                  {element.name === "About" ? (
-                    <Drawer>
-                      <DrawerTrigger asChild>
-                        <Link href={"#"} className="p-2">
+              <div className="flex flex-col gap-2 mt-6">
+                {NavElement.map((element, key) => (
+                  <div key={key} onClick={() => setIsOpen(false)}>
+                    {element.name === "About" ? (
+                      <Drawer onOpenChange={(open) => !open && setIsOpen(false)}>
+                        <DrawerTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            className="w-full justify-start"
+                          >
+                            {element.name}
+                          </Button>
+                        </DrawerTrigger>
+                        <DrawerContent className="flex-center">
+                          <DrawerHeader className="flex-center flex-col">
+                            <DrawerTitle className="text-2xl md:text-3xl">
+                              About
+                            </DrawerTitle>
+                            <DrawerDescription className="text-center">
+                              The purpose of making that platform to gain your
+                              knowledge and create quiz for others playing well
+                            </DrawerDescription>
+                          </DrawerHeader>
+                          <div className="flex-center p-4">
+                            <Image
+                              alt="diagram"
+                              height={600}
+                              width={600}
+                              src={"/piplup_diagram.png"}
+                              className="w-full h-auto"
+                            />
+                          </div>
+                          <DrawerFooter>
+                            <h2 className="text-base font-bold md:text-xl text-center">
+                              Made by @nextpointer❤️
+                            </h2>
+                          </DrawerFooter>
+                        </DrawerContent>
+                      </Drawer>
+                    ) : (
+                      <Link href={element.href}>
+                        <Button
+                          variant="ghost"
+                          className={`w-full justify-start ${
+                            pathname === element.href
+                              ? "bg-accent/20 text-accent"
+                              : ""
+                          }`}
+                        >
                           {element.name}
-                        </Link>
-                      </DrawerTrigger>
-                      <DrawerContent className="flex-center">
-                        <DrawerHeader className="flex-center flex-col">
-                          <DrawerTitle className="text-2xl md:text-3xl ">
-                            About
-                          </DrawerTitle>
-                          <DrawerDescription>
-                            The purpose of making that platform to gain your
-                            knowledge and create quiz for others playing well
-                          </DrawerDescription>
-                        </DrawerHeader>
-                        <div className="flex-center">
-                          <Image
-                            alt="diagram"
-                            height={1000}
-                            width={1000}
-                            src={"/piplup_diagram.png"}
-                          />
-                        </div>
-                        <DrawerFooter>
-                          <h2 className="text-base font-bold md:text-2xl">
-                            Made by @nextpointer❤️
-                          </h2>
-                        </DrawerFooter>
-                      </DrawerContent>
-                    </Drawer>
-                  ) : (
-                    <Link href={element.href}>
-                      <Button
-                        variant="ghost"
-                        className={`w-full justify-start ${
-                          pathname === element.href
-                            ? "bg-accent/20 text-accent"
-                            : ""
-                        }`}
-                      >
-                        {element.name}
-                      </Button>
-                    </Link>
-                  )}
-                </div>
-              ))}
-            </div>
-          </SheetContent>
-        </Sheet>
+                        </Button>
+                      </Link>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </SheetContent>
+          </Sheet>
 
-        {/* User Auth Section */}
-        {user ? (
-          <div className="flex flex-row gap-2 flex-center">
+          {/* User Auth Section */}
+          {user ? (
             <Popover>
               <PopoverTrigger className="h-8 w-8 rounded-full flex-center border-2 border-accent">
                 <p className="">{user.name?.at(0)?.toUpperCase()}</p>
               </PopoverTrigger>
-              <PopoverContent className="shadow-lg p-4 rounded-[24px] flex flex-center gap-2 flex-col border mt-1 z-50">
+              <PopoverContent className="shadow-lg p-4 rounded-[24px] flex flex-center gap-2 flex-col border mt-1 z-50 mr-4">
                 <div className="flex flex-row gap-1 flex-center rounded-[24px] border shadow p-1 ">
                   <Sun size={18} />
                   <Switch
@@ -204,14 +209,12 @@ function Nav() {
                 </Link>
               </PopoverContent>
             </Popover>
-          </div>
-        ) : (
-          <div className="flex flex-row gap-4 flex-center">
+          ) : (
             <Link href={"/api/auth/login"}>
               <Button className="rounded-[24px]">Login</Button>
             </Link>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </>
   );
