@@ -138,11 +138,12 @@ function Nav() {
                           <Button
                             variant="ghost"
                             className="w-full justify-start"
+                            onClick={() => setIsOpen(false)}
                           >
                             {element.name}
                           </Button>
                         </DrawerTrigger>
-                        <DrawerContent className="flex-center">
+                        <DrawerContent className="flex-center max-h-[90vh] overflow-y-auto">
                           <DrawerHeader className="flex-center flex-col">
                             <DrawerTitle className="text-2xl md:text-3xl">
                               About
