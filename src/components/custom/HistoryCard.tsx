@@ -24,6 +24,14 @@ import { deleteQuiz } from "@/app/db/queries/delete";
 
 export const HistoryCard = (params: HistoryBar) => {
   const router = useRouter();
+  // If there are no quizzes, show a fallback message
+  if (!params || Object.keys(params).length === 0) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <p className="text-xl text-gray-500">There is no quiz created 😪</p>
+      </div>
+    );
+  }
   // implement the copy functionality
   const copyToClipboard = () => {
     navigator.clipboard.writeText(
