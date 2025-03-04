@@ -20,7 +20,7 @@ export const shadowSelect: { [key in QuizDetails['difficulty']]: string } = {
 
 const QuizCard: React.FC<QuizCardProps> = ({ quiz }) => {
   return (
-    <Card className={`h-56 w-[250px] md:w-[330px] m-4 min-w-[320px] p-4 flex flex-col gap-2 bg-transparent backdrop-blur-md ${shadowSelect[quiz.difficulty]} cursor-pointer`}>
+    <Card className={`h-56 w-[260px] md:w-[330px] m-4 min-w-[250px] p-4 flex flex-col gap-2 bg-transparent backdrop-blur-md ${shadowSelect[quiz.difficulty]} cursor-pointer`}>
       <h1 className="text-[1.5rem] font-semibold">{quiz.title}</h1>
       <h4 className={`p-1 bg-${colorSelect[quiz.difficulty]} rounded-[24px] w-20 flex-center text-center ${quiz.difficulty === "Easy" ? "text-black" : "text-white"}`}>
         {quiz.difficulty}
