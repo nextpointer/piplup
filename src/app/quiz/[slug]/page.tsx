@@ -246,8 +246,9 @@ const Page = () => {
         </main>
       ) : (
         <main className="pt-12">
-          <Button onClick={() => window.history.back()}>Cancel</Button>
+
           <Card className="p-4 w-full xl:w-[50%] overflow-y-scroll max-h-[85vh] relative no-scrollbar">
+          <Button onClick={() => window.history.back()}>Cancel</Button>
             <h2 className="text-2xl font-bold ">About Quiz Topic</h2>
             <Form {...form}>
               <form
