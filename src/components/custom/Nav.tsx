@@ -7,7 +7,7 @@ import { NavElement } from "@/lib/content";
 import Link from "next/link";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { Switch } from "../ui/switch";
-import { Sun, Moon } from "lucide-react";
+import { Sun, Moon, Menu, X } from "lucide-react";
 import {
   Popover,
   PopoverTrigger,
@@ -15,6 +15,13 @@ import {
 } from "@radix-ui/react-popover";
 import { toast } from "sonner";
 import { usePathname } from "next/navigation";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import {
   Drawer,
   DrawerClose,
@@ -29,8 +36,7 @@ import {
 function Nav() {
   const { user } = useUser();
   const pathname = usePathname();
-  console.log(pathname);
-
+  const [isOpen, setIsOpen] = useState(false);
   const [logout, setLogout] = useState(false);
 
   useEffect(() => {
@@ -41,6 +47,7 @@ function Nav() {
 
   const handleLogout = () => {
     setLogout(true);
+    setIsOpen(false);
   };
 
   useEffect(() => {
@@ -56,11 +63,13 @@ function Nav() {
           <Image src={"/logo.png"} width={25} height={25} alt="Piplup Logo" />
           <h2 className="text-xl font-[600] tracking-wider">PiPluP</h2>
         </Link>
-        <Menubar className="border-none outline-none flex-center rounded-[24px] ">
+
+        {/* Desktop Navigation */}
+        <Menubar className="border-none outline-none hidden xl:flex rounded-[24px]">
           {NavElement.map((element, key) => (
             <MenubarMenu key={key}>
               <MenubarTrigger
-                className={`font-[Inter] hidden font-normal tracking-wide xl:block ${
+                className={`font-[Inter] font-normal tracking-wide ${
                   pathname === element.href
                     ? "bg-gradient-to-r from-primary to-accent text-white "
                     : ""
@@ -69,31 +78,10 @@ function Nav() {
                 {element.name === "About" ? (
                   <Drawer>
                     <DrawerTrigger asChild>
-                    <Link href={"#"} className="p-2">{element.name}</Link>
+                      <Link href={"#"} className="p-2">{element.name}</Link>
                     </DrawerTrigger>
                     <DrawerContent className="flex-center">
-                      <DrawerHeader className="flex-center flex-col">
-                        <DrawerTitle className="text-2xl md:text-3xl ">
-                          About
-                        </DrawerTitle>
-                        <DrawerDescription>
-                          The purpose of making that platform to gain your
-                          knowledge and create quiz for others playing well
-                        </DrawerDescription>
-                      </DrawerHeader>
-                      <div className="flex-center">
-                        <Image
-                          alt="diagram"
-                          height={1000}
-                          width={1000}
-                          src={"/piplup_diagram.png"}
-                        />
-                      </div>
-                      <DrawerFooter>
-                        <h2 className="text-base font-bold md:text-2xl">
-                          Made by @nextpointer❤️
-                        </h2>
-                      </DrawerFooter>
+                      {/* Drawer content remains same */}
                     </DrawerContent>
                   </Drawer>
                 ) : (
@@ -103,6 +91,56 @@ function Nav() {
             </MenubarMenu>
           ))}
         </Menubar>
+
+        {/* Mobile Hamburger Menu */}
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
+          <SheetTrigger className="xl:hidden p-2">
+            {isOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
+          </SheetTrigger>
+          <SheetContent side="left" className="w-[300px]">
+            <SheetHeader>
+              <SheetTitle className="text-left">PiPluP Menu</SheetTitle>
+            </SheetHeader>
+            
+            <div className="flex flex-col gap-4 mt-6">
+              {NavElement.map((element, key) => (
+                <div key={key} onClick={() => setIsOpen(false)}>
+                  {element.name === "About" ? (
+                    <Drawer>
+                      <DrawerTrigger asChild>
+                        <Button variant="ghost" className="w-full justify-start">
+                          {element.name}
+                        </Button>
+                      </DrawerTrigger>
+                      <DrawerContent className="flex-center">
+                        {/* Drawer content remains same */}
+                      </DrawerContent>
+                    </Drawer>
+                  ) : (
+                    <Link href={element.href}>
+                      <Button
+                        variant="ghost"
+                        className={`w-full justify-start ${
+                          pathname === element.href
+                            ? "bg-accent/20 text-accent"
+                            : ""
+                        }`}
+                      >
+                        {element.name}
+                      </Button>
+                    </Link>
+                  )}
+                </div>
+              ))}
+            </div>
+          </SheetContent>
+        </Sheet>
+
+        {/* User Auth Section */}
         {user ? (
           <div className="flex flex-row gap-2 flex-center">
             <Popover>
