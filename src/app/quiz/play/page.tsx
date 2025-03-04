@@ -78,10 +78,8 @@ const Page = () => {
               <div key={difficulty} className="w-full h-auto p-4">
                 <h2 className="text-[24px] xl:text-3xl font-bold flex flex-row items-center justify-between">
                   {quizHeaderMap[difficulty]}
-                  <Link href={"/quizzes"}>
-                    <Button onClick={()=>{
-                      router.push(`/quiz/play/difficulty/${difficulty}`)
-                    }} className={`bg-${colorSelect[difficulty]} ${difficulty=="Easy"?"text-black":"text-white"}`}>Explore more</Button>
+                  <Link href={`/quiz/play/difficulty/${difficulty}`}>
+                    <Button className={`bg-${colorSelect[difficulty]} ${difficulty=="Easy"?"text-black":"text-white"}`}>Explore more</Button>
                   </Link>
                 </h2>
                 <div className="w-full overflow-x-auto flex flex-row space-x-4 no-scrollbar">
