@@ -78,14 +78,39 @@ function Nav() {
                 {element.name === "About" ? (
                   <Drawer>
                     <DrawerTrigger asChild>
-                      <Link href={"#"} className="p-2">{element.name}</Link>
+                      <Link href={"#"} className="p-2">
+                        {element.name}
+                      </Link>
                     </DrawerTrigger>
                     <DrawerContent className="flex-center">
-                      {/* Drawer content remains same */}
+                      <DrawerHeader className="flex-center flex-col">
+                        <DrawerTitle className="text-2xl md:text-3xl ">
+                          About
+                        </DrawerTitle>
+                        <DrawerDescription>
+                          The purpose of making that platform to gain your
+                          knowledge and create quiz for others playing well
+                        </DrawerDescription>
+                      </DrawerHeader>
+                      <div className="flex-center">
+                        <Image
+                          alt="diagram"
+                          height={1000}
+                          width={1000}
+                          src={"/piplup_diagram.png"}
+                        />
+                      </div>
+                      <DrawerFooter>
+                        <h2 className="text-base font-bold md:text-2xl">
+                          Made by @nextpointer❤️
+                        </h2>
+                      </DrawerFooter>
                     </DrawerContent>
                   </Drawer>
                 ) : (
-                  <Link href={element.href} className="p-2">{element.name}</Link>
+                  <Link href={element.href} className="p-2">
+                    {element.name}
+                  </Link>
                 )}
               </MenubarTrigger>
             </MenubarMenu>
@@ -94,30 +119,47 @@ function Nav() {
 
         {/* Mobile Hamburger Menu */}
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger className="xl:hidden p-2">
-            {isOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
+          <SheetTrigger className="xl:hidden p-2 ml-4">
+            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </SheetTrigger>
           <SheetContent side="left" className="w-[300px]">
             <SheetHeader>
               <SheetTitle className="text-left">PiPluP Menu</SheetTitle>
             </SheetHeader>
-            
+
             <div className="flex flex-col gap-4 mt-6">
               {NavElement.map((element, key) => (
                 <div key={key} onClick={() => setIsOpen(false)}>
                   {element.name === "About" ? (
                     <Drawer>
                       <DrawerTrigger asChild>
-                        <Button variant="ghost" className="w-full justify-start">
+                        <Link href={"#"} className="p-2">
                           {element.name}
-                        </Button>
+                        </Link>
                       </DrawerTrigger>
                       <DrawerContent className="flex-center">
-                        {/* Drawer content remains same */}
+                        <DrawerHeader className="flex-center flex-col">
+                          <DrawerTitle className="text-2xl md:text-3xl ">
+                            About
+                          </DrawerTitle>
+                          <DrawerDescription>
+                            The purpose of making that platform to gain your
+                            knowledge and create quiz for others playing well
+                          </DrawerDescription>
+                        </DrawerHeader>
+                        <div className="flex-center">
+                          <Image
+                            alt="diagram"
+                            height={1000}
+                            width={1000}
+                            src={"/piplup_diagram.png"}
+                          />
+                        </div>
+                        <DrawerFooter>
+                          <h2 className="text-base font-bold md:text-2xl">
+                            Made by @nextpointer❤️
+                          </h2>
+                        </DrawerFooter>
                       </DrawerContent>
                     </Drawer>
                   ) : (
