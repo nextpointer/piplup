@@ -132,31 +132,6 @@ const PlayQuiz: React.FC<PlayQuizProps> = ({ quiz }) => {
                 </MotionButton>
               ))}
             </div>
-
-            {buttonDisable && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ 
-                  opacity: 1, 
-                  scale: 1,
-                  rotate: 360 // Full rotation
-                }}
-                transition={{ 
-                  duration: 1.5,
-                  repeat: Infinity,
-                  ease: "linear"
-                }}
-                className="flex-center pt-4"
-              >
-                <Image
-                  src="/logo.png" // Your Piplup image path
-                  width={48}
-                  height={48}
-                  alt="Loading..."
-                  className="animate-bounce" // Add bouncing animation
-                />
-              </motion.div>
-            )}
           </Card>
         </motion.div>
       </AnimatePresence>

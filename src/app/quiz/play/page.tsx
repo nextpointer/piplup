@@ -79,7 +79,9 @@ const Page = () => {
                 <h2 className="text-[24px] xl:text-3xl font-bold flex flex-row items-center justify-between">
                   {quizHeaderMap[difficulty]}
                   <Link href={"/quizzes"}>
-                    <Button className={`bg-${colorSelect[difficulty]} ${difficulty=="Easy"?"text-black":"text-white"}`}>Explore more</Button>
+                    <Button onClick={()=>{
+                      router.push(`/quiz/play/difficulty/${difficulty}`)
+                    }} className={`bg-${colorSelect[difficulty]} ${difficulty=="Easy"?"text-black":"text-white"}`}>Explore more</Button>
                   </Link>
                 </h2>
                 <div className="w-full overflow-x-auto flex flex-row space-x-4 no-scrollbar">
