@@ -25,13 +25,13 @@ const DifficultyQuizzesPage = () => {
   };
 
   return (
-    <main className="flex flex-col justify-start px-4 h-auto">
+    <main className="flex flex-col justify-center px-4 h-auto">
       <h1 className="text-3xl font-bold md:text-4xl mt-16 capitalize">{params.slug} Quizzes</h1>
       <p className="text-base xl:text-2xl mb-8 xl:mt-2 text-center">
         Browse through quizzes categorized under {params.slug} difficulty.
       </p>
       {filteredQuizzes.length > 0 ? (
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
           {filteredQuizzes.map((quiz) => (
             <div key={quiz.id} onClick={() => handleQuizClick(quiz.id)} className="cursor-pointer">
               <QuizCard quiz={quiz} />
