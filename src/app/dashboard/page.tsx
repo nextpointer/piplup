@@ -58,7 +58,6 @@ const page = () => {
     })();
   }, []);
 
-  console.log("FetchQuizDetail", FetchQuizDetail);
 
   return (
     <>

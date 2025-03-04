@@ -59,6 +59,8 @@ const AIQuizForm = () => {
   const [dragActive, setDragActive] = useState(false);
   const [isloading, setLoading] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [showPopup, setShowPopup] = useState<boolean>(false);
+  const [quizId, setQuizId] = useState<string | undefined | null>(null);
 
   const form = useForm<QuizFormType>({
     resolver: zodResolver(quizSchema),
@@ -100,9 +102,11 @@ const AIQuizForm = () => {
         toast.warning(result.error);
       } else {
         const insertResponse = await inserQuiz(result);
-        toast.success(insertResponse.message);
+        toast.success("Quiz Created Successfully");
         // redirecting the quiz edit section
-        router.push(`/quiz/${insertResponse.id}`);
+        // router.push(`/quiz/${insertResponse.id}`);
+        setQuizId(insertResponse?.id);
+        setShowPopup(true);
       }
     } catch (e) {
       console.error("Error submitting form:", e);
@@ -155,6 +159,18 @@ const AIQuizForm = () => {
       fileInputRef.current.value = "";
     }
   };
+
+  const handleEditQuiz = () => {
+    if (quizId) {
+      router.push(`/quiz/${quizId}`);
+    }
+  };
+
+  const handleGoToDashboard = () => {
+    router.push("/dashboard");
+    window.location.reload();
+  };
+
 
   return (
     <DialogContent className="sm:max-w-[525px]">
@@ -317,6 +333,30 @@ const AIQuizForm = () => {
           </DialogFooter>
         </form>
       </Form>
+      {showPopup && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-[24px] shadow-lg">
+            <h2 className="text-lg font-semibold mb-4">Quiz Created Successfully!</h2>
+            <p className="mb-4">Do you want to edit the quiz now?</p>
+            <div className="flex justify-end gap-4">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleGoToDashboard}
+              >
+                No
+              </Button>
+              <Button
+                type="button"
+                className="bg-gradient-to-r from-primary to-accent text-white"
+                onClick={handleEditQuiz}
+              >
+                Yes,Go
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </DialogContent>
   );
 };
