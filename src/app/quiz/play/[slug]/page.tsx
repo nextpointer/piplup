@@ -12,7 +12,7 @@ import { IncomingQuizData, QuizData } from "@/lib/types"; // Define QuizData typ
 import { PlayWithQuestionOption } from "@/app/store/atom";
 
 // Atom to manage quiz start state
-const quizStartAtom = atom(false);
+export const quizStartAtom = atom(false);
 // Atom to store quiz details (questions and options)
 
 const Page = () => {

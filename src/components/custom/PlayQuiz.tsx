@@ -9,7 +9,9 @@ import { result } from "@/app/store/atom";
 import { IncomingQuizData, OptionData } from "@/lib/types";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, XCircle, Loader2 } from "lucide-react";
-import Image from "next/image"; 
+import Image from "next/image";
+import { quizStartAtom } from "@/app/quiz/play/[slug]/page"; 
+
 
 // Atoms for state management
 const questionNoAtom = atom(0);
@@ -29,6 +31,7 @@ const PlayQuiz: React.FC<PlayQuizProps> = ({ quiz }) => {
   const [isCorrect, setIsCorrect] = useAtom(isCorrectAtom);
   const [buttonDisable, setButtonDisable] = useAtom(disableAtom);
   const [_, setUserResult] = useAtom(result);
+  const [startQuiz, setStartQuiz] = useAtom(quizStartAtom);
   const router = useRouter();
 
   if (!quiz || !quiz.QuestionTable.length) {
@@ -57,6 +60,9 @@ const PlayQuiz: React.FC<PlayQuizProps> = ({ quiz }) => {
     setTimeout(() => {
       if (questionNo + 1 === quiz.QuestionTable.length) {
         router.push(`/quiz/result/${quiz.id}`);
+        setQuestionNo(0);
+        setSelectedOption(null);
+        setStartQuiz(false);
       } else {
         setQuestionNo(questionNo + 1);
         setSelectedOption(null);
