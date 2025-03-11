@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { atom, useAtom } from "jotai";
 import { Card } from "../ui/card";
 import { Progress } from "../ui/progress";
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "../ui/button";
 import { result } from "@/app/store/atom";
 import { IncomingQuizData, OptionData } from "@/lib/types";
@@ -33,6 +33,16 @@ const PlayQuiz: React.FC<PlayQuizProps> = ({ quiz }) => {
   const [_, setUserResult] = useAtom(result);
   const [startQuiz, setStartQuiz] = useAtom(quizStartAtom);
   const router = useRouter();
+
+  useEffect(()=>{
+    return ()=>{
+      setQuestionNo(0);
+      setSelectedOption(null);
+      setIsCorrect(null);
+      setButtonDisable(false);
+      setStartQuiz(false);
+    }
+  })
 
   if (!quiz || !quiz.QuestionTable.length) {
     return (
