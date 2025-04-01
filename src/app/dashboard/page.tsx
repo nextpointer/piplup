@@ -138,7 +138,7 @@ const page = () => {
             </div>
             <div className=" row-span-3 col-span-3 xl:col-span-2 p-2 overflow-y-scroll no-scrollbar snap-y relative mt-2">
               <h2 className="text-2xl font-bold sticky block">History</h2>
-              {FetchQuizDetail?.map((data, key) => (
+              {FetchQuizDetail?.slice(0).reverse().map((data, key) => (
                 <HistoryCard
                   key={key}
                   id={data.id}
