@@ -52,7 +52,7 @@ export const HistoryCard = (params: HistoryBar) => {
   }
   return (
     <>
-      <Card className="flex flex-col m-4 p-4 rounded-[24px] snap-center bg-transparent backdrop-blur-md">
+      <Card className="flex flex-col m-2 p-4 rounded-[24px] snap-center bg-transparent backdrop-blur-md">
         <span className="text-base">{params.date}</span>
         <div className="flex flex-col xl:flex-row gap-2 justify-between">
           <h2 className="text-3xl">{params.title}</h2>
