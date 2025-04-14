@@ -338,7 +338,7 @@ const AIQuizForm = () => {
               type="submit"
               className="bg-gradient-to-r from-primary to-accent text-white w-full"
             >
-              {!isloading ?<><div className="loader mr-2"></div> Generating....</> : "Generate Quiz"}
+              {isloading ?<><div className="loader mr-2"></div> Generating....</> : "Generate Quiz"}
             </Button>
           </DialogFooter>
         </form>
