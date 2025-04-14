@@ -150,6 +150,14 @@ body {
     --input: 210 20% 85%; /* Match border color */
     --ring: 210 57% 60%; /* Match primary */
     --radius: 0.5rem;
+    --color-quiz-1: #FF6384;
+    --color-quiz-2: #36A2EB;
+    --color-quiz-3: #FFCE56;
+    --color-quiz-4: #4BC0C0;
+    --color-quiz-5: #9966FF;
+    --color-quiz-6: #FF9F40;
+    --color-accuracy: #4CAF50;
+    --chart-accuracy: 120, 61%, 50%;
   }
   .dark {
     --background: 240 5% 2%; /* #050316 */

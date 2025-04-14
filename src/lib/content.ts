@@ -53,49 +53,17 @@ export const quizData = [
   ];
   
 
-  export const participationData = [
-    {
-      date: "2023-10-01",
-      title: "Introduction to TypeScript",
-      noOfQuestion: 10,
-      noOfGiveAnswer: 8,
-    },
-    {
-      date: "2023-10-05",
-      title: "Advanced JavaScript Concepts",
-      noOfQuestion: 15,
-      noOfGiveAnswer: 10,
-    },
-    {
-      date: "2023-10-10",
-      title: "React Fundamentals",
-      noOfQuestion: 12,
-      noOfGiveAnswer: 12,
-    },
-    {
-      date: "2023-10-15",
-      title: "CSS Grid and Flexbox",
-      noOfQuestion: 8,
-      noOfGiveAnswer: 6,
-    },
-    {
-      date: "2023-10-20",
-      title: "Node.js Basics",
-      noOfQuestion: 14,
-      noOfGiveAnswer: 10,
-    },
-    {
-      date: "2023-10-25",
-      title: "Database Management Systems",
-      noOfQuestion: 20,
-      noOfGiveAnswer: 15,
-    },
-    {
-      date: "2023-10-30",
-      title: "Web Development Best Practices",
-      noOfQuestion: 18,
-      noOfGiveAnswer: 16,
-    },
+  export const yourQuizDataArray = [
+    { date: "Jun 1", accuracy: 65 },
+    { date: "Jun 3", accuracy: 72 },
+    { date: "Jun 5", accuracy: 80 },
+    { date: "Jun 7", accuracy: 68 },
+    { date: "Jun 8", accuracy: 85 },
+    { date: "Jun 10", accuracy: 90 },
+    { date: "Jun 12", accuracy: 78 },
+    { date: "Jun 14", accuracy: 82 },
+    { date: "Jun 16", accuracy: 75 },
+    { date: "Jun 18", accuracy: 88 },
   ];
   
   export const PlayQuizData = {

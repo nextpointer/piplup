@@ -19,6 +19,8 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import AIForm from "@/components/custom/AIForm";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import InfiniteScroll from "@/components/custom/InfiniteScroll";
+import QuizAccuracyChart from "@/components/custom/QuizAccuracyChart";
+import { yourQuizDataArray } from "@/lib/content";
 
 const page = () => {
   const [FetchQuizDetail, setFetchQuizDetail] = useAtom<
@@ -59,7 +61,7 @@ const page = () => {
         </main>
       ) : (
         <main>
-          <div className="grid h-screen w-full grid-cols-1 xl:grid-cols-2 grid-rows-6 xl:grid-rows-[auto_auto_1fr] pt-20 pb-4 gap-2">
+          <div className="grid h-auto xl:h-screen w-full grid-cols-1 xl:grid-cols-2 grid-rows-6 xl:grid-rows-[auto_auto_1fr] pt-20 pb-4 gap-2">
             <div className=" col-span-2 xl:col-span-1 row-span-2 md:grid-rows-1 sm:row-span-1">
               <h3 className="text-3xl font-bold">Hello {user?.nickname}👋🏻</h3>
               <div className="flex flex-row gap-4 flex-wrap p-4 items-center justify-center sm:h-full">
@@ -139,16 +141,11 @@ const page = () => {
                 <InfiniteScroll type="right" />
               </div>
             </div>
-            <div className="row-span-3 col-span-2 xl:col-span-1 p-2 mt-2 h-full w-full relative">
-              <div className="absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_at_center,white,transparent_70%)] bg-[radial-gradient(circle_at_bottom_left,var(--primary)_0%,transparent_30%),radial-gradient(circle_at_bottom_right,var(--secondary)_0%,transparent_30%),radial-gradient(circle_at_top_left,var(--accent)_0%,transparent_50%)] opacity-20"></div>
-
-              <div className="relative bg-background/80 backdrop-blur-sm border rounded-xl p-6 h-full">
-                <h2 className="text-2xl font-bold sticky block">
-                  States of last participation
-                </h2>
-
-                {/* Your stats content here */}
-              </div>
+            <div className="row-span-2 col-span-2 xl:col-span-1 p-2 mt-2 h-full w-full relative overflow-hidden">
+              <h2 className="text-2xl font-bold sticky block">
+                Stat of last participation
+              </h2>
+              <QuizAccuracyChart quizData={yourQuizDataArray} />
             </div>
             <div className=" row-start-1 row-span-6 col-start-2 flex-col hidden xl:flex overflow-y-scroll no-scrollbar snap-y relative mt-2">
               <h2 className="text-2xl font-bold sticky block">History</h2>
