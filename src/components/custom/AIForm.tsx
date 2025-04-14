@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -33,6 +33,8 @@ import {
 } from "../ui/tooltip";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useAtom } from "jotai";
+import { TrendingTopicState } from "@/app/store/atom";
 
 const quizSchema = z.object({
   prompt: z.string().min(5, "Prompt must be at least 5 characters"),
@@ -48,7 +50,8 @@ const quizSchema = z.object({
     }, "Only PDF files are allowed")
     .refine((file) => {
       if (!file) return true; // Optional field
-      return file.size <= 5 * 1024 * 1024; // 5MB limit
+      return file.size <= 5 * 1024 * 
+      1024; // 5MB limit
     }, "File size must be less than 5MB"),
 });
 
@@ -61,6 +64,7 @@ const AIQuizForm = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [quizId, setQuizId] = useState<string | undefined | null>(null);
+  const [trendingTopic, setTrendingTopic] = useAtom<string>(TrendingTopicState);
 
   const form = useForm<QuizFormType>({
     resolver: zodResolver(quizSchema),
@@ -68,9 +72,16 @@ const AIQuizForm = () => {
       numQuestions: 10,
       difficulty: "Medium",
       file: null,
-      prompt: "",
+      prompt: trendingTopic,
     },
   });
+
+  // Add this effect to update when trendingTopic changes
+  useEffect(() => {
+    if (trendingTopic) {
+      form.setValue("prompt", trendingTopic);
+    }
+  }, [trendingTopic, form]);
 
   const router = useRouter();
 
@@ -170,7 +181,6 @@ const AIQuizForm = () => {
     router.push("/dashboard");
     window.location.reload();
   };
-
 
   return (
     <DialogContent className="sm:max-w-[525px]">
@@ -336,7 +346,9 @@ const AIQuizForm = () => {
       {showPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-6 rounded-[24px] shadow-lg">
-            <h2 className="text-lg font-semibold mb-4">Quiz Created Successfully!</h2>
+            <h2 className="text-lg font-semibold mb-4">
+              Quiz Created Successfully!
+            </h2>
             <p className="mb-4">Do you want to edit the quiz now?</p>
             <div className="flex justify-end gap-4">
               <Button
