@@ -10,7 +10,7 @@ import { IncomingQuizData, OptionData } from "@/lib/types";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, XCircle, Loader2 } from "lucide-react";
 import Image from "next/image";
-import { quizStartAtom } from "@/app/quiz/play/[slug]/page"; 
+import { quizStartAtom } from "@/app/store/atom";
 
 
 // Atoms for state management

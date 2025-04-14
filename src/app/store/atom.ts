@@ -21,3 +21,6 @@ export const PlayWithQuestionOption = atom<IncomingQuizData | null | undefined>(
 
 // state for trending topic quiz making
 export const TrendingTopicState = atom<string>("");
+
+// Atom to manage quiz start state
+export const quizStartAtom = atom(false);

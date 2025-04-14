@@ -4,19 +4,18 @@ import { Card } from "@/components/ui/card";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { atom, useAtom } from "jotai";
+import { useAtom } from "jotai";
 import { useParams } from "next/navigation";
 import PlayQuiz from "@/components/custom/PlayQuiz";
 import { getQuestionAndOption } from "@/app/db/queries/select"; // Function to fetch quiz details
-import { IncomingQuizData, QuizData } from "@/lib/types"; // Define QuizData type
-import { PlayWithQuestionOption } from "@/app/store/atom";
+import { IncomingQuizData} from "@/lib/types"; // Define QuizData type
+import { PlayWithQuestionOption, quizStartAtom } from "@/app/store/atom";
 
-// Atom to manage quiz start state
-export const quizStartAtom = atom(false);
+
 // Atom to store quiz details (questions and options)
 
 const Page = () => {
-  const [startQuiz, setStartQuiz] = useAtom(quizStartAtom);
+  const [startQuiz, setStartQuiz] = useAtom<boolean>(quizStartAtom);
   const [quizDetails, setQuizDetails] = useAtom<IncomingQuizData | undefined | null>(PlayWithQuestionOption);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
