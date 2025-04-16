@@ -1,23 +1,15 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { atom, useAtom } from "jotai";
+import { useAtom } from "jotai";
 import { Card } from "../ui/card";
-import { Progress } from "../ui/progress";
-import React, { useEffect } from "react";
+import React from "react";
 import { Button } from "../ui/button";
-import { result } from "@/app/store/atom";
+import { disableAtom, isCorrectAtom, questionNoAtom, result, selectedOptionAtom } from "@/app/store/atom";
 import { IncomingQuizData, OptionData } from "@/lib/types";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle2, XCircle, Loader2 } from "lucide-react";
-import Image from "next/image";
-import { quizStartAtom } from "@/app/store/atom";
-
+import { CheckCircle2, XCircle } from "lucide-react";
 
 // Atoms for state management
-const questionNoAtom = atom(0);
-const selectedOptionAtom = atom<string | null>(null);
-const isCorrectAtom = atom<boolean | null>(null);
-const disableAtom = atom<boolean>(false);
 
 const MotionButton = motion(Button);
 
@@ -28,21 +20,10 @@ interface PlayQuizProps {
 const PlayQuiz: React.FC<PlayQuizProps> = ({ quiz }) => {
   const [questionNo, setQuestionNo] = useAtom(questionNoAtom);
   const [selectedOption, setSelectedOption] = useAtom(selectedOptionAtom);
-  const [isCorrect, setIsCorrect] = useAtom(isCorrectAtom);
+  const [, setIsCorrect] = useAtom(isCorrectAtom);
   const [buttonDisable, setButtonDisable] = useAtom(disableAtom);
   const [_, setUserResult] = useAtom(result);
-  const [startQuiz, setStartQuiz] = useAtom(quizStartAtom);
   const router = useRouter();
-
-  useEffect(()=>{
-    return ()=>{
-      setQuestionNo(0);
-      setSelectedOption(null);
-      setIsCorrect(null);
-      setButtonDisable(false);
-      setStartQuiz(false);
-    }
-  })
 
   if (!quiz || !quiz.QuestionTable.length) {
     return (
@@ -70,9 +51,6 @@ const PlayQuiz: React.FC<PlayQuizProps> = ({ quiz }) => {
     setTimeout(() => {
       if (questionNo + 1 === quiz.QuestionTable.length) {
         router.push(`/quiz/result/${quiz.id}`);
-        setQuestionNo(0);
-        setSelectedOption(null);
-        setStartQuiz(false);
       } else {
         setQuestionNo(questionNo + 1);
         setSelectedOption(null);

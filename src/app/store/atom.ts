@@ -22,5 +22,12 @@ export const PlayWithQuestionOption = atom<IncomingQuizData | null | undefined>(
 // state for trending topic quiz making
 export const TrendingTopicState = atom<string>("");
 
-// Atom to manage quiz start state
-export const quizStartAtom = atom(false);
+// for quiz question index
+export const questionNoAtom = atom(0);
+// state for quiz playing selected item
+export const selectedOptionAtom = atom<string | null>(null);
+// state for quiz playing correct option
+export const isCorrectAtom = atom<boolean | null>(null);
+// state for quiz disable button
+export const disableAtom = atom<boolean>(false);
+
