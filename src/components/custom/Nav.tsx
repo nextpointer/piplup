@@ -32,12 +32,24 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { useAtom } from "jotai";
+import { darkMode } from "@/app/store/atom";
 
 function Nav() {
   const { user } = useUser();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [logout, setLogout] = useState(false);
+  const [isdarkMode, setDarkMode] = useAtom(darkMode);
+  const handleDarkMode = () => {
+    setDarkMode(!isdarkMode);
+  };
+
+  useEffect(() => {
+    isdarkMode
+      ? document.body.classList.add("dark")
+      : document.body.classList.remove("dark");
+  }, [isdarkMode]);
 
   useEffect(() => {
     if (user) {
@@ -122,7 +134,11 @@ function Nav() {
         <div className="flex items-center gap-4">
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger className="xl:hidden p-2">
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px]">
               <SheetHeader>
@@ -133,7 +149,9 @@ function Nav() {
                 {NavElement.map((element, key) => (
                   <div key={key} onClick={() => setIsOpen(false)}>
                     {element.name === "About" ? (
-                      <Drawer onOpenChange={(open) => !open && setIsOpen(false)}>
+                      <Drawer
+                        onOpenChange={(open) => !open && setIsOpen(false)}
+                      >
                         <DrawerTrigger asChild>
                           <Button
                             variant="ghost"
@@ -199,9 +217,8 @@ function Nav() {
                 <div className="flex flex-row gap-1 flex-center rounded-[24px] border shadow p-1 ">
                   <Sun size={18} />
                   <Switch
-                    onClick={() => {
-                      document.body.classList.toggle("dark");
-                    }}
+                    onCheckedChange={handleDarkMode}
+                    checked={isdarkMode}
                   />
                   <Moon size={18} />
                 </div>

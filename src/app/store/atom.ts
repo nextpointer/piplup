@@ -30,4 +30,6 @@ export const selectedOptionAtom = atom<string | null>(null);
 export const isCorrectAtom = atom<boolean | null>(null);
 // state for quiz disable button
 export const disableAtom = atom<boolean>(false);
+// state for light-dark mode
+export const darkMode = atom<boolean>(false);
 
