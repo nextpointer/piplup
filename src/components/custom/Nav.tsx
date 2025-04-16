@@ -46,9 +46,11 @@ function Nav() {
   };
 
   useEffect(() => {
-    isdarkMode
-      ? document.body.classList.add("dark")
-      : document.body.classList.remove("dark");
+    if (isdarkMode) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
   }, [isdarkMode]);
 
   useEffect(() => {
