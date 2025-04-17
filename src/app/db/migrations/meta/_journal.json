@@ -36,6 +36,13 @@
       "when": 1740827877356,
       "tag": "0004_wonderful_marten_broadcloak",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1744881038328,
+      "tag": "0005_curly_princess_powerful",
+      "breakpoints": true
     }
   ]
 }

@@ -107,11 +107,11 @@ export const PartcipationTable = pgTable("participations", {
   userId: uuid()
     .notNull()
     .references(() => UserTable.id, { onDelete: "cascade",onUpdate:'cascade' }),
-  quizId: uuid()
-    .notNull()
-    .references(() => QuizTable.id, { onDelete: "cascade",onUpdate:'cascade' }),
-  score: text("score").notNull(),
-  noOfQuestion: text("noOfQuestion").notNull(),
+  // quizId: uuid()
+  //   .notNull()
+  //   .references(() => QuizTable.id, { onDelete: "cascade",onUpdate:'cascade' }),
+  accuracy: text("accuracy").notNull(),
+  // noOfQuestion: text("noOfQuestion").notNull(),
   created_At: timestamp("created_At").notNull().defaultNow(),
   updatedAt: timestamp("updated_at")
     .notNull()
