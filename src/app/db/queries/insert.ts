@@ -8,6 +8,7 @@ import {
   QuizTable,
   QuestionTable,
   OptionTable,
+  PartcipationTable,
 } from "../schema";
 import { eq } from "drizzle-orm";
 import { getSession } from "@auth0/nextjs-auth0";
@@ -50,7 +51,7 @@ export async function inserQuiz(quizData: QuizData) {
       .returning({
         id: QuizTable.id,
       });
-      //if the quiz is not found
+    //if the quiz is not found
     if (!quiz) {
       throw new Error("Failed to insert quiz");
     }
@@ -83,9 +84,62 @@ export async function inserQuiz(quizData: QuizData) {
       await db.insert(OptionTable).values(optionValues);
     }
 
-    return { success: true, message: "Quiz inserted successfully!",id : quizId };
+    return {
+      success: true,
+      message: "Quiz inserted successfully!",
+      id: quizId,
+    };
   } catch (e) {
     console.error("Error inserting quiz:", e);
     return { success: false, message: "Failed to insert quiz" };
+  }
+}
+
+// Insert Partcipation Data in Participation Table
+export async function insertParticipationData(accuracy: string) {
+  try {
+    // check the user exist or not
+    const session = await getSession();
+
+    if (!session) {
+      throw new Error(`Requires authentication`);
+    }
+    const { user } = session;
+    // fetch the userID
+    const [User] = await db
+      .select()
+      .from(UserTable)
+      .where(eq(UserTable.username, user.nickname))
+      .limit(1);
+    // if the user is not found
+    if (!User) {
+      return { success: false, message: "User not found" };
+    }
+
+    const userId = User.id;
+    // inserting the partcipation data
+    const [participationId] = await db
+      .insert(PartcipationTable)
+      .values({
+        userId,
+        accuracy: accuracy,
+      })
+      .returning({
+        if: PartcipationTable.id,
+      });
+
+      if(!participationId){
+        throw new Error("Failed to insert participation data");
+      }
+
+      return{
+        success:true,
+        message :"User partication data inserted successfully",
+        id:participationId
+      }
+  } catch (error) {
+    console.log(error);
+    return { success: false, message: "Failed to insert participation data" };
+    
   }
 }

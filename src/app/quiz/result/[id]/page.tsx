@@ -1,11 +1,13 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useAtom } from "jotai";
 import { result } from "@/app/store/atom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import { insertParticipationData } from "@/app/db/queries/insert";
 
 // import the images
 const winHappy = "/mostHappy.png";
@@ -25,6 +27,27 @@ const ResultPage = () => {
       ? Math.round((correctAnswers / totalQuestions) * 100)
       : 0;
   const router = useRouter();
+  const user = useUser();
+  const hasInserted = useRef(false);
+  useEffect(() => {
+    (async () => {
+      try {
+        if (hasInserted.current) return;
+        if (user && userResult.length > 0) {
+          hasInserted.current = true;
+          const result = await insertParticipationData(
+            scorePercentage.toString()
+          );
+
+          console.log(result);
+          
+        }
+      } catch (error) {
+        console.log("Error",error);
+        
+      }
+    })();
+  }, [userResult, user, scorePercentage]);
 
   const getPiplupImage = (percentage: number) => {
     if (percentage === 100) {
