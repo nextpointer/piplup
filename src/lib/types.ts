@@ -80,3 +80,12 @@ export type QuizDetails = {
   UserTable?: { username: string }; 
 };
 
+// Fetched Particpation data for dashboard
+export type PartcipationDetails = {
+  id:string;
+  userId:string;
+  accuracy:string;
+  created_At: Date;
+  updatedAt?: Date;
+}
+

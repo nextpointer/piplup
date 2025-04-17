@@ -1,4 +1,4 @@
-import { QuizData, QuizDetails, IncomingQuizData } from "@/lib/types";
+import { QuizData, QuizDetails, IncomingQuizData, PartcipationDetails } from "@/lib/types";
 import { atom } from "jotai";
 export const result = atom<boolean[]>([]);
 // Create an atom to store user details (default: empty array)
@@ -32,4 +32,6 @@ export const isCorrectAtom = atom<boolean | null>(null);
 export const disableAtom = atom<boolean>(false);
 // state for light-dark mode
 export const darkMode = atom<boolean>(false);
+// atom for storing participation data 
+export const ParticipationData = atom<PartcipationDetails[] | undefined>([]);
 

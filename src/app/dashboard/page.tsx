@@ -36,6 +36,8 @@ const page = () => {
         setloading(true);
         if (!FetchQuizDetail) {
           const data = await getAllDetailsOfUser();
+          console.log("Data", data);
+
           if (data.success) {
             setFetchQuizDetail(data.quizzes); // Store fetched quizzes in the atom
             setloading(false);
@@ -145,7 +147,9 @@ const page = () => {
               <h2 className="text-2xl font-bold sticky block">
                 Stat of last participation
               </h2>
-              <QuizAccuracyChart quizData={yourQuizDataArray} />
+              <div className="h-[calc(100%-40px)] w-full">
+                <QuizAccuracyChart />
+              </div>
             </div>
             <div className=" row-start-1 row-span-6 col-start-2 flex-col hidden xl:flex overflow-y-scroll no-scrollbar snap-y relative mt-2">
               <h2 className="text-2xl font-bold sticky block">History</h2>
