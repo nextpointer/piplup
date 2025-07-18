@@ -4,7 +4,15 @@ import { HistoryBar } from "@/lib/types";
 import React from "react";
 import { Card } from "../ui/card";
 import { Button } from "../ui/button";
-import { Earth, EarthLock, Pencil, Share2, Trash2 } from "lucide-react";
+import {
+  Earth,
+  EarthLock,
+  Pencil,
+  Share2,
+  Trash2,
+  Calendar,
+  AlignLeft,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Copy } from "lucide-react";
 import {
@@ -40,22 +48,25 @@ export const HistoryCard = (params: HistoryBar) => {
     toast.success("Link copied to clipboard");
   };
 
-  const deleteTheQuiz = () =>{
-    deleteQuiz(params.id).then((res)=>{
-      if(res.success){
-        router.refresh()
-        toast.success("Quiz Deleted Successfully")
-      }else{
-        toast.error("Failed to delete the quiz")
+  const deleteTheQuiz = () => {
+    deleteQuiz(params.id).then((res) => {
+      if (res.success) {
+        router.refresh();
+        toast.success("Quiz Deleted Successfully");
+      } else {
+        toast.error("Failed to delete the quiz");
       }
-    })
-  }
+    });
+  };
   return (
     <>
-      <Card className="flex flex-col m-2 p-4 rounded-[24px] snap-center bg-transparent backdrop-blur-md">
-        <span className="text-base">{params.date}</span>
+      <Card className="flex flex-col m-2 p-4 rounded-[24px] snap-center hover:border hover:border-zinc-500 group">
+        <div className="flex flex-row gap-2 justify-start items-center text-zinc-500">
+          <Calendar className="h-4 w-4" />
+          <span className="text-base">{params.date}</span>
+        </div>
         <div className="flex flex-col xl:flex-row gap-2 justify-between">
-          <h2 className="text-3xl">{params.title}</h2>
+          <h2 className="text-3xl font-light">{params.title}</h2>
           <div className="flex gap-2">
             <Dialog>
               <DialogTrigger asChild>
@@ -126,11 +137,7 @@ export const HistoryCard = (params: HistoryBar) => {
                       <Button type="button" variant="outline">
                         Close
                       </Button>
-                      <Button
-                        variant="destructive"
-                        onClick={deleteTheQuiz
-                        }
-                      >
+                      <Button variant="destructive" onClick={deleteTheQuiz}>
                         Delete
                       </Button>
                     </div>
@@ -140,10 +147,13 @@ export const HistoryCard = (params: HistoryBar) => {
             </Dialog>
           </div>
         </div>
-        <div className="flex flex-row justify-between mt-2">
-          {params.about}
+        <div className="flex flex-row justify-between mt-2 ">
+          <div className="flex flex-row justify-start items-center gap-2 text-zinc-400">
+            <AlignLeft className="h-4 w-4" />
+            {params.about}
+          </div>
           <span className="p-3 rounded-[24px] text-base">
-            {params.visibility === "public" ? <Earth /> : <EarthLock />}
+            {params.visibility === "public" ? <Earth className="group-hover:text-accent opacity-20 group-hover:opacity-100 group-hover:scale-125 transition-transform duration-300 "/> : <EarthLock className="group-hover:text-accent opacity-0 group-hover:opacity-30 group-hover:scale-125 transition-transform duration-300" />}
           </span>
         </div>
       </Card>
