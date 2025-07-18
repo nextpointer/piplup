@@ -69,7 +69,7 @@ const InfiniteScroll = (prop: Ctype) => {
           ].map((topic, index) => (
             <div key={`${topic}-${index}`} className="inline-flex mx-1">
               <button
-                className="h-10 px-6 bg-foreground text-background text-sm font-medium rounded-full transition-all duration-300 shadow-sm hover:shadow-md transform hover:-translate-y-0.5"
+                className="h-10 px-6 bg-muted text-foreground text-sm font-medium rounded-full transition-all duration-300 shadow-sm hover:shadow-md transform hover:-translate-y-0.5"
                 onClick={() => clickToOpenAI(topic)}
               >
                 {topic}
