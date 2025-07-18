@@ -165,7 +165,11 @@ const page = () => {
               </h2>
             </div>
             <div className="h-[calc(100%-40px)] w-full">
-              <QuizAccuracyChart />
+              {loading ? (
+                <Skeleton className="h-full w-full rounded-[24px] m-4" />
+              ) : (
+                <QuizAccuracyChart />
+              )}
             </div>
           </div>
           <div className=" row-start-1 row-span-6 col-start-2 flex-col hidden xl:flex overflow-y-scroll no-scrollbar snap-y relative mt-2">
