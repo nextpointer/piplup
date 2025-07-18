@@ -3,7 +3,16 @@
 import { HistoryCard } from "@/components/custom/HistoryCard";
 import React, { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
-import { Box, Sparkles, Gamepad2, Info, Swords } from "lucide-react";
+import {
+  Box,
+  Sparkles,
+  Gamepad2,
+  Info,
+  Swords,
+  History,
+  ChartLine,
+  TrendingUp,
+} from "lucide-react";
 import Link from "next/link";
 import {
   Tooltip,
@@ -65,17 +74,23 @@ const page = () => {
         <main>
           <div className="grid h-screen xl:h-screen w-full grid-cols-1 xl:grid-cols-2 grid-rows-4 xl:grid-rows-3 pt-20 pb-4 gap-2">
             <div className="col-span-1 row-start-1 row-span-2 xl:row-span-1 md:row-span-1 sm:row-span-1">
-              <h3 className="text-3xl font-bold">Hello {user?.nickname}👋🏻</h3>
+              <h3 className="text-3xl ">Hello {user?.nickname}👋🏻</h3>
               <div className="flex flex-row gap-4 flex-wrap p-4 items-center justify-center sm:h-full">
-                <Link href="/quiz/create" className="w-full sm:w-auto sm:flex-1">
+                <Link
+                  href="/quiz/create"
+                  className="w-full sm:w-auto sm:flex-1"
+                >
                   <Card className="p-4 xl:p-8 flex-center relative overflow-hidden group hover:border hover:border-zinc-500">
                     <div className="flex gap-2 items-center">
-                      <Box size={72} className="absolute -right-4 -bottom-4 opacity-10 group-hover:opacity-50 group-hover:scale-125 transition-transform duration-300 group-hover:text-primary"/>
+                      <Box
+                        size={72}
+                        className="absolute -right-4 -bottom-4 opacity-10 group-hover:opacity-50 group-hover:scale-125 transition-transform duration-300 group-hover:text-primary"
+                      />
                       <span className="text-2xl">Create a Quiz</span>
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger>
-                            <Info className="relative z-50 text-zinc-500"/>
+                            <Info className="relative z-50 text-zinc-500" />
                           </TooltipTrigger>
                           <TooltipContent className="bg-black text-white rounded-[24px]">
                             <p>Design your own quiz with custom questions</p>
@@ -91,14 +106,15 @@ const page = () => {
                     <Link href="#" className="w-full sm:w-auto sm:flex-1">
                       <Card className="p-4 xl:p-8  flex-center relative overflow-hidden group hover:border hover:border-zinc-500">
                         <div className="flex gap-2 items-center">
-                          <Sparkles size={72} className="absolute -right-4 -bottom-4 opacity-10 group-hover:opacity-50 group-hover:scale-125 transition-transform duration-300 group-hover:text-accent" />
-                          <span className="text-2xl">
-                            Quiz with AI
-                          </span>
+                          <Sparkles
+                            size={72}
+                            className="absolute -right-4 -bottom-4 opacity-10 group-hover:opacity-50 group-hover:scale-125 transition-transform duration-300 group-hover:text-accent"
+                          />
+                          <span className="text-2xl">Quiz with AI</span>
                           <TooltipProvider>
                             <Tooltip>
                               <TooltipTrigger>
-                                <Info className="relative z-50  text-zinc-500"/>
+                                <Info className="relative z-50  text-zinc-500" />
                               </TooltipTrigger>
                               <TooltipContent className="bg-black text-white rounded-[24px]">
                                 <p>
@@ -117,12 +133,15 @@ const page = () => {
                 <Link href="/quiz/play" className="w-full sm:w-auto sm:flex-1">
                   <Card className="p-4 xl:p-8 flex-center relative overflow-hidden group hover:border hover:border-zinc-500">
                     <div className="flex gap-2 items-center">
-                      <Swords size={72} className="absolute -right-4 -bottom-4 opacity-10 group-hover:opacity-50 group-hover:scale-125 transition-transform duration-300 group-hover:text-secondary" />
+                      <Swords
+                        size={72}
+                        className="absolute -right-4 -bottom-4 opacity-10 group-hover:opacity-50 group-hover:scale-125 transition-transform duration-300 group-hover:text-secondary"
+                      />
                       <span className="text-2xl">It&apos;s quiz time</span>
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger>
-                            <Info className="relative z-50  text-zinc-500"/>
+                            <Info className="relative z-50  text-zinc-500" />
                           </TooltipTrigger>
                           <TooltipContent className="bg-black text-white rounded-[24px]">
                             <p>Design your own quiz with custom questions</p>
@@ -135,24 +154,34 @@ const page = () => {
               </div>
             </div>
             <div className="col-span-1 row-start-3 xl:row-start-2 row-span-1 xl:col-span-1 p-2 mt-2 h-full w-full place-self-center">
-              <h2 className="text-2xl font-bold sticky block">
-                Trending topics
-              </h2>
+              <div className="flex flex-row gap-2 justify-start items-center">
+                <TrendingUp />
+                <h2 className="text-2xl font-bold sticky block">
+                  Trending topics
+                </h2>
+              </div>
+
               <div className="m-2 mt-8 w-full flex items-start justify-center flex-col">
                 <InfiniteScroll type="left" />
                 <InfiniteScroll type="right" />
               </div>
             </div>
             <div className="row-start-4 xl:row-start-3 row-span-1 col-span-2 xl:col-span-1 p-2 mt-2 h-full w-full relative overflow-hidden">
-              <h2 className="text-2xl font-bold sticky block">
-                Stat of last participation
-              </h2>
+              <div className="flex flex-row gap-2 justify-start items-center">
+                <ChartLine />
+                <h2 className="text-2xl font-bold sticky block">
+                  Stat of last participation
+                </h2>
+              </div>
               <div className="h-[calc(100%-40px)] w-full">
                 <QuizAccuracyChart />
               </div>
             </div>
             <div className=" row-start-1 row-span-6 col-start-2 flex-col hidden xl:flex overflow-y-scroll no-scrollbar snap-y relative mt-2">
-              <h2 className="text-2xl font-bold sticky block">History</h2>
+              <div className="flex flex-row gap-2 justify-start items-center mb-4">
+                <History />
+                <h2 className="text-2xl font-bold sticky block">History</h2>
+              </div>
               {FetchQuizDetail?.slice(0)
                 .reverse()
                 .map((data, key) => (
