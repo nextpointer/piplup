@@ -70,8 +70,8 @@ export const HistoryCard = (params: HistoryBar) => {
           <div className="flex gap-2">
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant="outline">
-                  <Share2 />
+                <Button variant="outline" className="outline-none hover:border-transparent">
+                  <Share2 className="text-zinc-500 group-hover:text-foreground"/>
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-md">
@@ -114,14 +114,14 @@ export const HistoryCard = (params: HistoryBar) => {
             <Button
               onClick={() => router.push(`/quiz/${params.id}`)}
               variant="outline"
-              className="hover:bg-primary"
+              className="hover:bg-primary outline-none hover:border-transparent group"
             >
-              <Pencil />
+              <Pencil className="text-zinc-500 group-hover:text-foreground"/>
             </Button>
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant="outline" className="hover:bg-destructive">
-                  <Trash2 />
+                <Button variant="outline" className="hover:bg-destructive outline-none hover:border-transparent">
+                  <Trash2 className="text-zinc-500 group-hover:text-foreground" />
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-md">
@@ -148,8 +148,8 @@ export const HistoryCard = (params: HistoryBar) => {
           </div>
         </div>
         <div className="flex flex-row justify-between mt-2 ">
-          <div className="flex flex-row justify-start items-center gap-2 text-zinc-400">
-            <AlignLeft className="h-4 w-4" />
+          <div className="flex flex-row justify-start items-start gap-2 text-zinc-400">
+            <AlignLeft className="h-4 w-4 mt-1" />
             {params.about}
           </div>
           <span className="p-3 rounded-[24px] text-base">
