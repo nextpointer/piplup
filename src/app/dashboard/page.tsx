@@ -68,14 +68,14 @@ const page = () => {
               <h3 className="text-3xl font-bold">Hello {user?.nickname}👋🏻</h3>
               <div className="flex flex-row gap-4 flex-wrap p-4 items-center justify-center sm:h-full">
                 <Link href="/quiz/create" className="w-full sm:w-auto sm:flex-1">
-                  <Card className="p-4 xl:p-8 flex-center relative overflow-hidden group">
+                  <Card className="p-4 xl:p-8 flex-center relative overflow-hidden group hover:border hover:border-zinc-500">
                     <div className="flex gap-2 items-center">
-                      <Box size={72} className="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-15 group-hover:scale-125 transition-transform duration-300 group-hover:text-primary"/>
+                      <Box size={72} className="absolute -right-4 -bottom-4 opacity-10 group-hover:opacity-50 group-hover:scale-125 transition-transform duration-300 group-hover:text-primary"/>
                       <span className="text-2xl">Create a Quiz</span>
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger>
-                            <Info className="relative z-50"/>
+                            <Info className="relative z-50 text-zinc-500"/>
                           </TooltipTrigger>
                           <TooltipContent className="bg-black text-white rounded-[24px]">
                             <p>Design your own quiz with custom questions</p>
@@ -89,16 +89,16 @@ const page = () => {
                 <Dialog>
                   <DialogTrigger asChild>
                     <Link href="#" className="w-full sm:w-auto sm:flex-1">
-                      <Card className="p-4 xl:p-8  flex-center relative overflow-hidden group">
+                      <Card className="p-4 xl:p-8  flex-center relative overflow-hidden group hover:border hover:border-zinc-500">
                         <div className="flex gap-2 items-center">
-                          <Sparkles size={72} className="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-15 group-hover:scale-125 transition-transform duration-300 group-hover:text-accent" />
+                          <Sparkles size={72} className="absolute -right-4 -bottom-4 opacity-10 group-hover:opacity-50 group-hover:scale-125 transition-transform duration-300 group-hover:text-accent" />
                           <span className="text-2xl">
                             Quiz with AI
                           </span>
                           <TooltipProvider>
                             <Tooltip>
                               <TooltipTrigger>
-                                <Info className="relative z-50"/>
+                                <Info className="relative z-50  text-zinc-500"/>
                               </TooltipTrigger>
                               <TooltipContent className="bg-black text-white rounded-[24px]">
                                 <p>
@@ -115,14 +115,14 @@ const page = () => {
                 </Dialog>
 
                 <Link href="/quiz/play" className="w-full sm:w-auto sm:flex-1">
-                  <Card className="p-4 xl:p-8 flex-center relative overflow-hidden group ">
+                  <Card className="p-4 xl:p-8 flex-center relative overflow-hidden group hover:border hover:border-zinc-500">
                     <div className="flex gap-2 items-center">
-                      <Swords size={72} className="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-15 group-hover:scale-125 transition-transform duration-300 group-hover:text-secondary" />
+                      <Swords size={72} className="absolute -right-4 -bottom-4 opacity-10 group-hover:opacity-50 group-hover:scale-125 transition-transform duration-300 group-hover:text-secondary" />
                       <span className="text-2xl">It&apos;s quiz time</span>
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger>
-                            <Info className="relative z-50"/>
+                            <Info className="relative z-50  text-zinc-500"/>
                           </TooltipTrigger>
                           <TooltipContent className="bg-black text-white rounded-[24px]">
                             <p>Design your own quiz with custom questions</p>
