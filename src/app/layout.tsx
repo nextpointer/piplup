@@ -6,19 +6,12 @@ import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { Provider } from "jotai";
 import { Toaster } from "@/components/ui/sonner";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+
 const InterFont = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Piplup",
@@ -35,7 +28,7 @@ export default function RootLayout({
       <UserProvider>
         <Provider>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${InterFont.variable}  antialiased `}
+        className={`${InterFont.className}  antialiased `}
       >
         <Nav/>
         {children}
