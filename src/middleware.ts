@@ -3,5 +3,5 @@ import { withMiddlewareAuthRequired } from "@auth0/nextjs-auth0/edge";
 export default withMiddlewareAuthRequired();
 
 export const config = {
-    matcher: ["/dashboard", "/quiz/create", "/quiz/create/:slug"],
-  };
+  matcher: ["/dashboard", "/quiz/create", "/quiz/create/:slug"],
+};
