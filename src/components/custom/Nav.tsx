@@ -7,12 +7,12 @@ import { NavElement } from "@/lib/content";
 import Link from "next/link";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { Switch } from "../ui/switch";
-import { Sun, Moon, Menu, X } from "lucide-react";
+import { Sun, Moon, Menu, X, Github } from "lucide-react";
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from "@radix-ui/react-popover";
+} from "@/components/ui/popover";
 import { toast } from "sonner";
 import { usePathname } from "next/navigation";
 import {
@@ -55,18 +55,24 @@ function Nav() {
 
   useEffect(() => {
     if (user) {
-      toast.success("Login successfully");
+      const alreadyShown = sessionStorage.getItem("loginToastShown");
+      if (!alreadyShown) {
+        toast.success("Login successfully");
+        sessionStorage.setItem("loginToastShown", "true");
+      }
     }
   }, [user]);
 
   const handleLogout = () => {
     setLogout(true);
+    sessionStorage.removeItem("loginToastShown");
     setIsOpen(false);
   };
 
   useEffect(() => {
     if (logout) {
       toast.success("Logout successfully");
+      setLogout(false);
     }
   }, [logout]);
 
@@ -134,19 +140,28 @@ function Nav() {
 
         {/* Mobile Hamburger Menu */}
         <div className="flex items-center gap-4">
+          <Link
+            href="https://github.com/nextpointer/piplup"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button variant="outline" size="icon" className="rounded-full">
+              <Github className="h-5 w-5" />
+            </Button>
+          </Link>
+
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger className="xl:hidden p-2 transition-transform duration-300">
+            <SheetTrigger className="xl:hidden p-2 ">
               {isOpen ? (
-                <X className="h-7 w-7 transition-transform duration-300 rotate-90" />
+                <X className="h-7 w-7 " />
               ) : (
-                <Menu className="h-7 w-7 transition-transform duration-300" />
+                <Menu className="h-7 w-7 " />
               )}
             </SheetTrigger>
 
             <SheetContent
               side="right"
-              className="w-[80%] max-w-sm bg-background/95 backdrop-blur-md border-l border-border
-                         transition-transform duration-500 ease-in-out"
+              className="w-[80%] max-w-sm bg-background/95 backdrop-blur-md border-l border-border rounded-xl"
             >
               <SheetHeader>
                 <SheetTitle className="text-left text-2xl font-semibold tracking-tight">
@@ -223,7 +238,7 @@ function Nav() {
               <PopoverTrigger className="h-8 w-8 rounded-full flex-center border-2 border-accent transition-transform hover:scale-105">
                 <p className="">{user.name?.at(0)?.toUpperCase()}</p>
               </PopoverTrigger>
-              <PopoverContent className="shadow-lg p-4 rounded-[24px] flex flex-center gap-2 flex-col border mt-1 z-50 mr-4">
+              <PopoverContent className="w-32 shadow-lg p-4 rounded-[24px] flex flex-center gap-2 flex-col border mt-1 mr-4">
                 <div className="flex flex-row gap-1 flex-center rounded-[24px] border shadow p-1">
                   <Sun size={18} />
                   <Switch
@@ -239,7 +254,9 @@ function Nav() {
             </Popover>
           ) : (
             <Link href={"/api/auth/login"}>
-              <Button className="rounded-[24px]">Login</Button>
+              <Button className="rounded-[24px]" variant={"outline"}>
+                Login
+              </Button>
             </Link>
           )}
         </div>

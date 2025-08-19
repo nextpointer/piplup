@@ -46,8 +46,6 @@ const page = () => {
         setloading(true);
         if (!FetchQuizDetail) {
           const data = await getAllDetailsOfUser();
-          console.log("Data", data);
-
           if (data.success) {
             setFetchQuizDetail(data.quizzes); // Store fetched quizzes in the atom
             setloading(false);
