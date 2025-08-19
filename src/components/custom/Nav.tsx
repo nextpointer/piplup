@@ -72,7 +72,7 @@ function Nav() {
 
   return (
     <>
-      <div className="h-12 w-full flex justify-between items-center pl-6 pr-6 md:pl-12 md:pr-12 pt-4 pb-4 absolute top-0 left-0 z-50">
+      <div className="h-12 w-full flex justify-between items-center p-[2rem] absolute top-0 left-0 z-50">
         <Link href={"/"} className="flex-center gap-2">
           <Image src={"/logo.png"} width={25} height={25} alt="Piplup Logo" />
           <h2 className="text-xl font-[600] tracking-wider">PiPluP</h2>
@@ -83,7 +83,7 @@ function Nav() {
           {NavElement.map((element, key) => (
             <MenubarMenu key={key}>
               <MenubarTrigger
-                className={`font-[Inter] font-normal tracking-wide ${
+                className={`tracking-wide ${
                   pathname === element.href
                     ? "bg-gradient-to-r from-primary to-accent text-white "
                     : ""
@@ -135,19 +135,26 @@ function Nav() {
         {/* Mobile Hamburger Menu */}
         <div className="flex items-center gap-4">
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger className="xl:hidden p-2">
+            <SheetTrigger className="xl:hidden p-2 transition-transform duration-300">
               {isOpen ? (
-                <X className="h-6 w-6" />
+                <X className="h-7 w-7 transition-transform duration-300 rotate-90" />
               ) : (
-                <Menu className="h-6 w-6" />
+                <Menu className="h-7 w-7 transition-transform duration-300" />
               )}
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px]">
+
+            <SheetContent
+              side="right"
+              className="w-[80%] max-w-sm bg-background/95 backdrop-blur-md border-l border-border
+                         transition-transform duration-500 ease-in-out"
+            >
               <SheetHeader>
-                <SheetTitle className="text-left">PiPluP Menu</SheetTitle>
+                <SheetTitle className="text-left text-2xl font-semibold tracking-tight">
+                  PiPluP
+                </SheetTitle>
               </SheetHeader>
 
-              <div className="flex flex-col gap-2 mt-6">
+              <div className="flex flex-col gap-4 mt-8">
                 {NavElement.map((element, key) => (
                   <div key={key} onClick={() => setIsOpen(false)}>
                     {element.name === "About" ? (
@@ -157,7 +164,7 @@ function Nav() {
                         <DrawerTrigger asChild>
                           <Button
                             variant="ghost"
-                            className="w-full justify-start"
+                            className="w-full justify-start text-xl font-medium py-3 hover:bg-accent/10 transition-all rounded-xl"
                             onClick={() => setIsOpen(false)}
                           >
                             {element.name}
@@ -168,9 +175,10 @@ function Nav() {
                             <DrawerTitle className="text-2xl md:text-3xl">
                               About
                             </DrawerTitle>
-                            <DrawerDescription className="text-center">
-                              The purpose of making that platform to gain your
-                              knowledge and create quiz for others playing well
+                            <DrawerDescription className="text-center text-base leading-relaxed">
+                              The purpose of making this platform is to gain
+                              your knowledge and create quizzes for others to
+                              enjoy.
                             </DrawerDescription>
                           </DrawerHeader>
                           <div className="flex-center p-4">
@@ -184,7 +192,7 @@ function Nav() {
                           </div>
                           <DrawerFooter>
                             <h2 className="text-base font-bold md:text-xl text-center">
-                              Made by @nextpointer❤️
+                              Made by @nextpointer ❤️
                             </h2>
                           </DrawerFooter>
                         </DrawerContent>
@@ -193,7 +201,7 @@ function Nav() {
                       <Link href={element.href}>
                         <Button
                           variant="ghost"
-                          className={`w-full justify-start ${
+                          className={`w-full justify-start text-xl font-medium py-3 hover:bg-accent/10 transition-all rounded-xl ${
                             pathname === element.href
                               ? "bg-accent/20 text-accent"
                               : ""
@@ -212,11 +220,11 @@ function Nav() {
           {/* User Auth Section */}
           {user ? (
             <Popover>
-              <PopoverTrigger className="h-8 w-8 rounded-full flex-center border-2 border-accent">
+              <PopoverTrigger className="h-8 w-8 rounded-full flex-center border-2 border-accent transition-transform hover:scale-105">
                 <p className="">{user.name?.at(0)?.toUpperCase()}</p>
               </PopoverTrigger>
               <PopoverContent className="shadow-lg p-4 rounded-[24px] flex flex-center gap-2 flex-col border mt-1 z-50 mr-4">
-                <div className="flex flex-row gap-1 flex-center rounded-[24px] border shadow p-1 ">
+                <div className="flex flex-row gap-1 flex-center rounded-[24px] border shadow p-1">
                   <Sun size={18} />
                   <Switch
                     onCheckedChange={handleDarkMode}
