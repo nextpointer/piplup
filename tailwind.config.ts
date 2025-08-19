@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import animate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
@@ -62,20 +63,20 @@ export default {
         "3xl": "32px",
       },
       keyframes: {
-		'infinite-scroll-left': {
-		  '0%': { transform: 'translateX(0)'},
-		  '100%': { transform: 'translateX(-50%)'},
-		},
-		'infinite-scroll-right': {
-		  '0%': { transform: 'translateX(-50%)'},
-		  '100%': { transform: 'translateX(0)' },
-		},
-	  },
-	  animation: {
-		'infinite-scroll-left': 'infinite-scroll-left 25s linear infinite',
-		'infinite-scroll-right': 'infinite-scroll-right 25s linear infinite',
-	  },
+        "infinite-scroll-left": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+        "infinite-scroll-right": {
+          "0%": { transform: "translateX(-50%)" },
+          "100%": { transform: "translateX(0)" },
+        },
+      },
+      animation: {
+        "infinite-scroll-left": "infinite-scroll-left 25s linear infinite",
+        "infinite-scroll-right": "infinite-scroll-right 25s linear infinite",
+      },
     },
-    plugins: [require("tailwindcss-animate")],
   },
+  plugins: [animate],
 } satisfies Config;
