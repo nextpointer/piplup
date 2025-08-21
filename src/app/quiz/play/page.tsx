@@ -12,7 +12,9 @@ import QuizCard, { colorSelect } from "@/components/custom/QuizCard";
 
 const Page = () => {
   const router = useRouter();
-  const [publicQuizDetails, setPublicQuizDetails] = useAtom<QuizDetails[] | undefined>(FetchedPublicQuizDetails);
+  const [publicQuizDetails, setPublicQuizDetails] = useAtom<
+    QuizDetails[] | undefined
+  >(FetchedPublicQuizDetails);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -43,16 +45,17 @@ const Page = () => {
     router.push(`/quiz/play/${quizId}`);
   };
 
-  const quizHeaderMap:{[key in QuizDetails['difficulty']]:string} = {
+  const quizHeaderMap: { [key in QuizDetails["difficulty"]]: string } = {
     Easy: "For Beginners",
     Medium: "Not for Beginners",
     Hard: "For Experts",
-  }
+  };
 
   // Categorizing quizzes by difficulty
   const categorizedQuizzes = {
     Easy: publicQuizDetails?.filter((quiz) => quiz.difficulty === "Easy") || [],
-    Medium: publicQuizDetails?.filter((quiz) => quiz.difficulty === "Medium") || [],
+    Medium:
+      publicQuizDetails?.filter((quiz) => quiz.difficulty === "Medium") || [],
     Hard: publicQuizDetails?.filter((quiz) => quiz.difficulty === "Hard") || [],
   };
 
@@ -68,33 +71,41 @@ const Page = () => {
         </main>
       ) : (
         <main className="flex flex-col justify-start px-4 h-auto">
-          <h1 className="text-3xl font-bold md:text-4xl mt-16">Explore Quizzes</h1>
+          <h1 className="text-3xl font-bold md:text-4xl mt-16 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            Explore Quizzes
+          </h1>
           <p className="text-base xl:text-2xl mb-8 xl:mt-2 text-center">
-            Explore quizzes. Embrace the opportunity to grow, learn, and test your knowledge.
+            Explore quizzes. Embrace the opportunity to grow, learn, and test
+            your knowledge.
           </p>
 
-          {Object.entries(categorizedQuizzes).map(([difficulty, quizzes]) => 
-            quizzes.length > 0 ? (
-              <div key={difficulty} className="w-full h-auto p-4">
-                <h2 className="text-[24px] xl:text-3xl font-bold flex flex-row items-center justify-between">
-                  {quizHeaderMap[difficulty]}
-                  <Link href={`/quiz/play/difficulty/${difficulty}`}>
-                    <Button className={`bg-${colorSelect[difficulty]} ${difficulty=="Easy"?"text-black":"text-white"}`}>Explore more</Button>
-                  </Link>
-                </h2>
-                <div className="w-full overflow-x-auto flex flex-row space-x-4 no-scrollbar">
-                  {quizzes.map((quiz) => (
-                    <div
-                      key={quiz.id}
-                      onClick={() => handleQuizClick(quiz.id)}
-                      className="cursor-pointer"
-                    >
-                      <QuizCard quiz={quiz} />
-                    </div>
-                  ))}
+          {Object.entries(categorizedQuizzes).map(
+            ([difficulty, quizzes]) =>
+              quizzes.length > 0 ? (
+                <div key={difficulty} className="w-full h-auto p-4">
+                  <h2 className="text-[24px] xl:text-3xl font-bold flex flex-row items-center justify-between">
+                    {quizHeaderMap[difficulty]}
+                    <Link href={`/quiz/play/difficulty/${difficulty}`}>
+                      <Button
+                        className={`bg-${colorSelect[difficulty]} ${difficulty == "Easy" ? "text-black" : "text-white"}`}
+                      >
+                        more
+                      </Button>
+                    </Link>
+                  </h2>
+                  <div className="w-full overflow-x-auto flex flex-row space-x-4 no-scrollbar">
+                    {quizzes.map((quiz) => (
+                      <div
+                        key={quiz.id}
+                        onClick={() => handleQuizClick(quiz.id)}
+                        className="cursor-pointer"
+                      >
+                        <QuizCard quiz={quiz} />
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ) : null // Return null if there are no quizzes for this difficulty
+              ) : null, // Return null if there are no quizzes for this difficulty
           )}
         </main>
       )}
