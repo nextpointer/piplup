@@ -183,7 +183,7 @@ const page = () => {
           <div className=" row-start-1 row-span-6 col-start-2 flex-col hidden xl:flex overflow-y-scroll no-scrollbar snap-y relative mt-2">
             <div className="flex flex-row gap-2 justify-start items-center mb-4">
               <History />
-              <h2 className="text-2xl font-bold sticky block">History</h2>
+              <h2 className="text-2xl font-bold sticky block">My Quizzes</h2>
             </div>
             {loading ? (
               <>

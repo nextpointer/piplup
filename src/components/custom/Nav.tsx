@@ -3,7 +3,7 @@ import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
 import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
-import { NavElement } from "@/lib/content";
+import { NavElement, NavElementForPhone } from "@/lib/content";
 import Link from "next/link";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { Switch } from "../ui/switch";
@@ -170,7 +170,7 @@ function Nav() {
               </SheetHeader>
 
               <div className="flex flex-col gap-4 mt-8">
-                {NavElement.map((element, key) => (
+                {NavElementForPhone.map((element, key) => (
                   <div key={key} onClick={() => setIsOpen(false)}>
                     {element.name === "About" ? (
                       <Drawer

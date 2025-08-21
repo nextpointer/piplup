@@ -7,6 +7,13 @@ export const NavElement = [
   { name: "Create Your Quiz", href: "/quiz/create" },
   { name: "About", href: "/about" },
 ];
+export const NavElementForPhone = [
+  { name: "Dashboard", href: "/dashboard" },
+  { name: "Play Quiz", href: "/quiz/play" },
+  { name: "Create Your Quiz", href: "/quiz/create" },
+  { name: "My Quizzes", href: "/dashboard/myquiz" },
+  { name: "About", href: "/about" },
+];
 
 export const quizData = [
   {
