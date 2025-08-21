@@ -66,7 +66,7 @@ const page = () => {
   return (
     <>
       <main>
-        <div className="grid h-screen xl:h-screen w-full grid-cols-1 xl:grid-cols-2 grid-rows-4 xl:grid-rows-3 pt-20 pb-4 gap-2">
+        <div className="grid h-dvh xl:h-screen w-full grid-cols-1 xl:grid-cols-2 grid-rows-4 xl:grid-rows-3 pt-20 pb-4 gap-2">
           <div className="col-span-1 row-start-1 row-span-2 xl:row-span-1 sm:row-span-2 ">
             <h3 className="text-xl md:text-[1.5rem] text-center xl:text-left">
               Hello{" "}
