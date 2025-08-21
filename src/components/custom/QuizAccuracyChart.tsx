@@ -1,6 +1,13 @@
 "use client";
 
-import { CartesianGrid, Dot, Line, LineChart, YAxis, ResponsiveContainer } from "recharts";
+import {
+  CartesianGrid,
+  Dot,
+  Line,
+  LineChart,
+  YAxis,
+  ResponsiveContainer,
+} from "recharts";
 import {
   ChartConfig,
   ChartContainer,
@@ -14,7 +21,7 @@ import { getParticipationData } from "@/app/db/queries/select";
 
 const QuizAccuracyChart = () => {
   const [PtData, setPtData] = useAtom<PartcipationDetails[] | undefined>(
-    ParticipationData
+    ParticipationData,
   );
   useEffect(() => {
     (async () => {
@@ -26,7 +33,7 @@ const QuizAccuracyChart = () => {
       }
     })();
   }, [setPtData]);
-  
+
   const last10Attempts = PtData?.slice(-10);
 
   const chartConfig = {
@@ -37,13 +44,13 @@ const QuizAccuracyChart = () => {
   } satisfies ChartConfig;
 
   const formatDate = (date: Date | string) => {
-    if (!date) return '';
+    if (!date) return "";
     const d = new Date(date);
-    return d.toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+    return d.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
@@ -68,7 +75,8 @@ const QuizAccuracyChart = () => {
               stroke="hsl(var(--muted))"
               strokeDasharray="3 3"
             />
-            <YAxis 
+            <YAxis
+              hide
               domain={[0, 100]}
               tickCount={6}
               tickFormatter={(value) => `${value}%`}

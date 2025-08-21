@@ -67,17 +67,23 @@ const page = () => {
     <>
       <main>
         <div className="grid h-screen xl:h-screen w-full grid-cols-1 xl:grid-cols-2 grid-rows-4 xl:grid-rows-3 pt-20 pb-4 gap-2">
-          <div className="col-span-1 row-start-1 row-span-2 xl:row-span-1 md:row-span-1 sm:row-span-1">
-            <h3 className="text-3xl ">Hello {user?.nickname}👋🏻</h3>
-            <div className="flex flex-row gap-4 flex-wrap p-4 items-center justify-center sm:h-full">
+          <div className="col-span-1 row-start-1 row-span-2 xl:row-span-1 sm:row-span-2 ">
+            <h3 className="text-xl md:text-[1.5rem] text-center xl:text-left">
+              Hello{" "}
+              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent ">
+                {user?.nickname}
+              </span>
+              👋🏻
+            </h3>
+            <div className="flex flex-col xl:flex-row gap-4 p-4 items-center justify-center h-full">
               <Link href="/quiz/create" className="w-full sm:w-auto sm:flex-1">
                 <Card className="p-4 xl:p-8 flex-center relative overflow-hidden group hover:border hover:border-zinc-500">
-                  <div className="flex gap-2 items-center">
+                  <div className="flex gap-2 items-center ">
                     <Box
                       size={72}
                       className="absolute -right-4 -bottom-4 opacity-10 group-hover:opacity-50 group-hover:scale-125 transition-transform duration-300 group-hover:text-primary"
                     />
-                    <span className="text-2xl">Create a Quiz</span>
+                    <span className="text-sm md:text-2xl">Create a Quiz</span>
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger>
@@ -101,7 +107,9 @@ const page = () => {
                           size={72}
                           className="absolute -right-4 -bottom-4 opacity-10 group-hover:opacity-50 group-hover:scale-125 transition-transform duration-300 group-hover:text-accent"
                         />
-                        <span className="text-2xl">Quiz with AI</span>
+                        <span className="text-sm md:text-2xl">
+                          Quiz with AI
+                        </span>
                         <TooltipProvider>
                           <Tooltip>
                             <TooltipTrigger>
@@ -126,7 +134,9 @@ const page = () => {
                       size={72}
                       className="absolute -right-4 -bottom-4 opacity-10 group-hover:opacity-50 group-hover:scale-125 transition-transform duration-300 group-hover:text-secondary"
                     />
-                    <span className="text-2xl">It&apos;s quiz time</span>
+                    <span className="text-sm md:text-2xl">
+                      It&apos;s quiz time
+                    </span>
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger>
@@ -150,7 +160,7 @@ const page = () => {
               </h2>
             </div>
 
-            <div className="m-2 mt-8 w-full flex items-start justify-center flex-col">
+            <div className="m-2 mt-4 md:mt-8 w-full flex items-start justify-center flex-col">
               <InfiniteScroll type="left" />
               <InfiniteScroll type="right" />
             </div>
@@ -162,7 +172,7 @@ const page = () => {
                 Stat of last participation
               </h2>
             </div>
-            <div className="h-[calc(100%-40px)] w-full">
+            <div className="h-[calc(100%-40px)] w-full mt-4">
               {loading ? (
                 <Skeleton className="h-full w-full rounded-[24px] m-4" />
               ) : (
